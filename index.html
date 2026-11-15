@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#FAF7F1">
-<meta name="description" content="@ai.onepage AI 툴·클로드 가이드 모음. 1번부터 최신 번호까지 한눈에 보고 노션 가이드로 바로 이동하세요.">
+<meta name="description" content="@ai.onepage AI 툴·클로드 가이드 모음. 1번부터 최신 번호까지 한눈에 보고 상세 가이드로 바로 이동하세요.">
 <title>ai.onepage — AI 툴 가이드 모음</title>
 <style>
   @font-face{font-family:"NotoKR";src:url("fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
@@ -178,7 +178,7 @@
   <main class="list" id="list"></main>
 
   <p class="footnote" id="footnote">@ai.onepage 가이드 모음 · 최신 릴스 순서<br>
-  카드를 누르면 노션 가이드가 새 탭에서 열려요.</p>
+  카드를 누르면 상세 가이드가 새 탭에서 열려요.</p>
 </div>
 
 <script>
@@ -271,7 +271,7 @@ function cardHTML(g){
         <div class="foot">
           <span>${esc(fmtDate(g.date))} 가이드</span><span class="dot">·</span>
           <span>${esc(g.category)}</span><span class="dot">·</span>
-          <span class="go">노션 바로보기&nbsp;›</span>
+          <span class="go">가이드 보기&nbsp;›</span>
         </div>
       </div>
       ${thumb}
@@ -323,7 +323,7 @@ fetch("./guides.json", {cache:"no-cache"})
       .sort((a,b)=>b.num - a.num);          /* 최신 번호가 위로 */
     buildPills();
     footnoteEl.innerHTML = `@ai.onepage 가이드 ${GUIDES.length}편 · 최신 릴스 순서<br>
-      카드를 누르면 노션 가이드가 새 탭에서 열려요.`;
+      카드를 누르면 상세 가이드가 새 탭에서 열려요.`;
     render();
   })
   .catch(err=>{
