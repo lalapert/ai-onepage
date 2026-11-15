@@ -9,6 +9,10 @@
 
 이 문서는 **인수인계용**입니다. 링크를 고치거나 디자인을 바꾸고 싶을 때 이 문서와 `CLAUDE.md` 만 읽으면 작업할 수 있게 적어 두었습니다.
 
+> **2026-11-15 역할 변경:** 이제 `@ai.onepage` 의 허브 갱신과 **상세 가이드(HTML + A4 PDF) 제작·배포를 Claude 단독**으로 합니다. 기존 1~23번의 카드 링크는 아직 노션 페이지이고, 새 편은 이 저장소 안의 정적 HTML + PDF 로 만듭니다. 역할·이유·레퍼런스 분석·제작 절차는 **[`GUIDE_HANDOFF.md`](GUIDE_HANDOFF.md)**, 실제 템플릿은 **[`templates/guide-template/`](templates/guide-template/)** 에 있습니다.
+
+**공식 프로필 링크는 이 허브입니다: <https://lalapert.github.io/ai-onepage/>**
+
 ---
 
 ## 1. 파일 구조
@@ -18,11 +22,14 @@
 ├─ index.html      # 화면 전체 (HTML + CSS + JS 한 파일)
 ├─ guides.json     # 가이드 목록 데이터 (23건, 최신 번호가 맨 앞)
 ├─ thumbs/         # 카드 썸네일 이미지 (예: 23_impeccable.jpg)
+├─ guides/{num}/   # 상세 가이드 한 편: index.html + print.html + guide.pdf
+├─ templates/guide-template/  # 상세 가이드를 찍어내는 범용 템플릿
 ├─ avatar.jpg      # 프로필 사진 (원형 68px)
 ├─ fonts/          # NotoSansKR 웹폰트 (Regular / Bold / Black .woff2)
 ├─ .nojekyll       # GitHub Pages 가 Jekyll 처리 없이 정적 파일을 그대로 서빙
 ├─ README.md       # 이 문서
-└─ CLAUDE.md       # Claude Code 작업용 안내
+├─ CLAUDE.md       # Claude Code 작업용 안내 (허브 규칙)
+└─ GUIDE_HANDOFF.md # 상세 가이드 HTML·PDF 인수인계
 ```
 
 ### `index.html` 안에서 어디를 보면 되는지
@@ -156,7 +163,25 @@
 
 ---
 
-## 5. 로컬에서 미리 보기
+## 5. 상세 가이드(HTML + PDF) 만들기
+
+카드를 눌렀을 때 열리는 **상세 페이지**는 노션이 아니라 이 저장소의 정적 HTML 이고, 같은 내용을 A4 PDF 로 미리 뽑아 두어 바로 내려받게 합니다(인스타 인앱 웹뷰에서는 인쇄가 막히는 기기가 많기 때문).
+
+```bash
+cp -r templates/guide-template guides/25      # 25 대신 "기존 최대 번호 + 1"
+cd guides/25
+# index.html 과 print.html 의 {{...}} 를 실제 내용으로 바꾼다
+python3 render.py --shots ./shots              # guide.pdf 생성 + 검증(쪽수·390px·복사 버튼)
+```
+
+- `guides.json` 의 `url` 을 `./guides/25/` 로 바꾸면 카드가 이 페이지로 연결됩니다.
+- PDF 카드의 `A4 N쪽` 숫자는 실제 PDF 쪽수와 같아야 합니다(`render.py` 가 대조).
+- 자리표시자 전체 목록·블록 복사 규칙: [`templates/guide-template/README.md`](templates/guide-template/README.md)
+- 역할·레퍼런스 분석·검증 체크리스트: [`GUIDE_HANDOFF.md`](GUIDE_HANDOFF.md)
+
+---
+
+## 6. 로컬에서 미리 보기
 
 `index.html` 은 `guides.json` 을 `fetch` 로 읽기 때문에 **`file://` 로 바로 열면 목록이 비어 보입니다.** 반드시 로컬 서버로 확인하세요.
 
@@ -168,7 +193,7 @@ python3 -m http.server 8080
 
 ---
 
-## 6. 배포
+## 7. 배포
 
 ```bash
 git add -A
@@ -188,7 +213,7 @@ git push origin main
 
 ---
 
-## 7. 주의 (공개 저장소)
+## 8. 주의 (공개 저장소)
 
 이 저장소는 **누구나 볼 수 있는 public 저장소**입니다. 아래는 절대 커밋하지 마세요.
 
@@ -196,3 +221,4 @@ git push origin main
 - 개인정보(전화번호, 주소, 주민번호, 계좌·카드 정보, 개인 이메일)
 - 내부 메모, 작업 스크립트, 비공개 통계·매출 자료, 초안 문서
 - 비공개 노션 페이지 주소나 초대 링크
+- **발행 전 편의 본문·HTML·PDF·수치·제목** (발행일에 `guides/{num}/` 로 커밋)

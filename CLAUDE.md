@@ -8,12 +8,15 @@
 
 `README.md` 는 사람용 설명서, 이 문서는 **Claude Code 가 이 저장소에서 바로 작업하기 위한 규칙**입니다. 둘 내용이 어긋나면 실제 파일이 기준입니다.
 
+> **2026-11-15 역할 변경:** 이제 `@ai.onepage` 의 **허브 갱신 + 상세 가이드 HTML + A4 PDF 제작·배포를 Claude 단독**으로 한다. 이전에 허브·DM 자동화를 보조하던 운영 AI는 이 채널에서 빠졌다(다른 채널 담당).
+> 상세 가이드를 처음 만든다면 **[`GUIDE_HANDOFF.md`](GUIDE_HANDOFF.md)** 부터 읽고, 실제 파일은 **[`templates/guide-template/`](templates/guide-template/)** 를 복사해서 만든다. 이 문서는 허브(목록·번호·카테고리·디자인) 규칙이다.
+
 ---
 
 ## 1. 작업 시작 전에
 
 1. `guides.json` 을 먼저 읽어 현재 최대 `num` 과 마지막 항목을 확인한다.
-2. 어떤 요청인지 구분한다: **① 가이드 추가/수정** → `guides.json` 만 고친다. **② 디자인·문구 변경** → `index.html` 의 `<style>` 또는 마크업만 고친다. ③ 둘 다면 둘 다.
+2. 어떤 요청인지 구분한다: **① 가이드 추가/수정** → `guides.json` 만 고친다. **② 디자인·문구 변경** → `index.html` 의 `<style>` 또는 마크업만 고친다. **③ 상세 가이드(HTML·PDF) 제작·수정** → `GUIDE_HANDOFF.md` 와 `templates/guide-template/` 를 따른다. ④ 여럿이면 여럿 다.
 3. 로컬 확인은 반드시 HTTP 서버로 한다 (`fetch` 때문에 `file://` 은 빈 목록):
    ```bash
    python3 -m http.server 8080   # → http://localhost:8080
@@ -25,14 +28,19 @@
 ## 2. 파일 구조
 
 ```
-index.html   화면 전체: <style> 안 CSS, 마크업, <script> 안 로직
-guides.json  가이드 목록 데이터(배열, 최신 번호가 맨 앞)
-thumbs/      카드 썸네일 {num}_{slug}.jpg (예: 23_impeccable.jpg)
-avatar.jpg   프로필 사진(원형)
-fonts/       NotoSansKR Regular/Bold/Black .woff2 (한글 서브셋)
-.nojekyll    GitHub Pages 가 정적 파일을 그대로 서빙하도록 하는 빈 파일 — 지우지 말 것
-README.md    사람용 문서
-CLAUDE.md    이 문서
+index.html        화면 전체: <style> 안 CSS, 마크업, <script> 안 로직
+guides.json       가이드 목록 데이터(배열, 최신 번호가 맨 앞)
+thumbs/           카드 썸네일 {num}_{slug}.jpg (예: 23_impeccable.jpg)
+guides/{num}/     상세 가이드 한 편: index.html + print.html + guide.pdf
+                  (카드가 여는 화면. 폰트는 ../../fonts/, 허브로는 ../../)
+templates/guide-template/
+                  위 상세 가이드를 찍어내는 범용 템플릿(자리표시자 {{NUM}} 등)
+avatar.jpg        프로필 사진(원형)
+fonts/            NotoSansKR Regular/Bold/Black .woff2 (한글 서브셋)
+.nojekyll         GitHub Pages 가 정적 파일을 그대로 서빙하도록 하는 빈 파일 — 지우지 말 것
+README.md         사람용 문서
+CLAUDE.md         이 문서(허브 규칙)
+GUIDE_HANDOFF.md  상세 가이드 HTML·PDF 인수인계(역할·레퍼런스·제작·배포 절차)
 ```
 
 ---
@@ -155,7 +163,20 @@ JSON 은 UTF-8 + 한글 그대로(이스케이프 없이), 2칸 들여쓰기. �
 
 ---
 
-## 9. 보안 — public 저장소
+## 9. 상세 가이드 (HTML + PDF)
+
+가이드 카드를 눌렀을 때 열리는 **상세 페이지**는 노션이 아니라 이 저장소의 정적 HTML 이고, 같은 내용을 A4 PDF 로 미리 뽑아 내려받게 한다.
+
+- 폴더: `guides/{num}/index.html` + `guides/{num}/print.html` + `guides/{num}/guide.pdf`
+- 만드는 법: `templates/guide-template/` 을 `guides/{num}/` 로 복사 → `{{...}}` 채우기 → `render.py` 로 PDF 생성·검증
+- `guides.json` 의 `url` 을 `./guides/{num}/` 로 연결하고, 썸네일은 `thumbs/{num}_{slug}.jpg`
+- **A4 {PAGES}쪽 숫자는 실제 PDF 쪽수와 같아야 한다**(`render.py` 가 대조하고, 다르면 실패로 알린다)
+- 모바일 390px 가로 넘침 없음·`[복사]` 버튼 실동작·PDF 전 페이지 눈 검증까지 마친 뒤 푸시
+- 역할·이유·레퍼런스 분석·상세 절차: [`GUIDE_HANDOFF.md`](GUIDE_HANDOFF.md) · 자리표시자 목록: [`templates/guide-template/README.md`](templates/guide-template/README.md)
+
+---
+
+## 10. 보안 — public 저장소
 
 이 저장소는 **전 세계에 공개**된다. 아래는 이 저장소에 **절대 커밋하지 않는다**.
 
@@ -163,5 +184,6 @@ JSON 은 UTF-8 + 한글 그대로(이스케이프 없이), 2칸 들여쓰기. �
 - 개인정보: 전화번호, 집·사무실 주소, 개인 이메일, 계좌·카드 정보, 주민번호
 - 내부 메모, 작업 스크립트, 초안·매출·통계 같은 비공개 자료
 - 비공개 노션 페이지 주소·초대 링크, 비공개 저장소 링크
+- **발행 전 편의 본문·HTML·PDF·수치·제목** — 발행일에 `guides/{num}/` 로 커밋한다. 먼저 올리면 릴스보다 가이드가 먼저 공개된다.
 
 작업 중 생긴 임시 파일(스크린샷, 로그, 백업)은 커밋 전에 지우고, `git status` 로 무엇이 올라가는지 확인한 뒤 커밋한다.
