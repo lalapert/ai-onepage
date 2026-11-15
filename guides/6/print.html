@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>Claude에게 PPT·엑셀을 진짜 파일로 받기: 스킬 켜는 법과 내 스킬 만들기 · ai.onepage #6</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:block}
+
+  :root{
+    --ink:#211E1A;
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+    --code-bg:#F5F1E9;
+    --paper:#FAF7F1;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#fff}
+  body{
+    font-family:"NotoKR",sans-serif;color:var(--ink);
+    font-size:9.35pt;line-height:1.56;word-break:keep-all;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  @page{size:A4;margin:14mm 15mm 16mm}
+
+  /* ── 머리글 ── */
+  .head{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:6.2mm 6.5mm 5.6mm;margin-bottom:4.2mm;
+  }
+  .head-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4mm}
+  .head-brand{font-size:8.4pt;font-weight:900;letter-spacing:.04em;color:var(--teal-dark)}
+  .head-num{
+    font-size:8pt;font-weight:700;color:var(--teal-dark);background:var(--teal-soft);
+    border-radius:20px;padding:1.2mm 3mm;
+  }
+  .head h1{margin:0;font-size:21pt;font-weight:900;letter-spacing:-.03em;line-height:1.24}
+  .head .sub{margin:2mm 0 0;font-size:11pt;font-weight:700;color:var(--teal-dark);letter-spacing:-.02em}
+  .head .lede{margin:3mm 0 0;font-size:9.4pt;line-height:1.66;color:#4E483E}
+  .head .pills{display:flex;gap:1.6mm;margin-top:3.4mm;flex-wrap:wrap}
+  .head .pill{
+    background:#fff;border:1px solid var(--line);border-radius:20px;
+    padding:1.1mm 2.6mm;font-size:8.4pt;font-weight:700;color:#3A342C;
+  }
+  .head .meta{margin-top:3mm;font-size:7.9pt;color:var(--muted)}
+  .head .meta b{color:#5F594F;font-weight:700}
+
+  /* ── 비교 (선택) ── */
+  .cmp{border:1px solid var(--line);border-radius:4mm;padding:4.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid}
+  .cmp h2{margin:0 0 3mm;font-size:10.5pt;font-weight:900;letter-spacing:-.02em}
+  .cmp h2 em{font-style:normal;font-weight:700;font-size:7.8pt;color:var(--muted);margin-left:2mm}
+  .cmp-row{display:flex;gap:6mm}
+  .cmp-col{flex:1 1 0;min-width:0}
+  .cmp-col + .cmp-col{border-left:1px solid var(--line);padding-left:6mm}
+  .cmp-label{font-size:7.9pt;font-weight:700;color:var(--muted);margin-bottom:2.4mm}
+  .bar-row{display:flex;align-items:center;gap:2mm;margin-bottom:1.8mm}
+  .bar-name{flex:0 0 27mm;font-size:7.9pt;color:#5F594F;line-height:1.3}
+  .bar-track{flex:1 1 auto;height:2.4mm;border-radius:20px;background:#F2EDE3;overflow:hidden}
+  .bar-fill{height:100%;border-radius:20px;background:var(--red)}
+  .bar-fill.mild{background:#E8B7AC}
+  .bar-fill.teal{background:var(--teal)}
+  .bar-val{flex:0 0 auto;font-size:8.2pt;font-weight:900;min-width:17mm;text-align:right}
+  .cmp-foot{margin-top:2mm;font-size:7.8pt;line-height:1.5;color:#5F594F}
+  .cmp-foot b{font-weight:700;color:var(--ink)}
+
+  /* ── 목차 ── */
+  .toc{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:3.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid;
+  }
+  .toc h2{margin:0 0 1.6mm;font-size:8pt;font-weight:900;color:var(--muted);letter-spacing:.06em}
+  .toc ol{list-style:none;margin:0;padding:0;columns:2;column-gap:7mm}
+  .toc li{font-size:8.4pt;color:#3A342C;padding:.7mm 0;break-inside:avoid}
+  .toc li b{color:var(--teal);font-weight:900;margin-right:1.4mm}
+  .toc li span{color:#A8A093;font-size:7.4pt}
+
+  /* ── 섹션 ── */
+  .sec{margin-bottom:3.4mm}
+  .sec-h{break-after:avoid}
+  .sec>.kicker{break-after:avoid}
+  p{orphans:3;widows:3}
+  li{orphans:2;widows:2}
+  .sec>.kicker:first-child{margin-top:0}
+  .sec-h{display:flex;align-items:baseline;gap:2mm;margin:0 0 1.6mm}
+  .sec-h .n{
+    flex:0 0 auto;font-size:8pt;font-weight:900;color:var(--teal-dark);
+    background:var(--teal-soft);border-radius:1.4mm;padding:.3mm 1.6mm;
+  }
+  .sec-h h2{margin:0;font-size:11.4pt;font-weight:900;letter-spacing:-.03em}
+  .sec p{margin:0 0 1.8mm;font-size:9.4pt;line-height:1.64;color:#2C2822}
+  .sec p:last-child{margin-bottom:0}
+  .sec b,.sec strong{font-weight:700;color:var(--ink)}
+  code.brk{white-space:normal;overflow-wrap:anywhere}
+  code{
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;font-size:8.3pt;
+    background:var(--code-bg);border:.4pt solid #E3DCCE;border-radius:1mm;padding:0 .8mm;
+    white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  }
+
+  ol.steps{margin:0 0 1.8mm;padding-left:5.2mm}
+  ol.steps li{font-size:9.1pt;line-height:1.55;margin-bottom:1mm;padding-left:.6mm}
+  ol.steps li::marker{color:var(--teal);font-weight:700}
+  ul.plain{margin:0 0 1.8mm;padding-left:4.4mm}
+  ul.plain li{font-size:9.1pt;line-height:1.56;margin-bottom:1.2mm}
+  ul.plain li::marker{color:#C0B7A8}
+
+  .ok{
+    background:var(--teal-soft);border-radius:2mm;padding:2.2mm 3mm;margin:1.6mm 0;
+    font-size:8.6pt;line-height:1.55;color:#0A4F42;break-inside:avoid;
+  }
+  .ok b{color:#0A4F42}
+  .ok .tag{
+    display:inline-block;background:var(--teal);color:#fff;font-size:7.2pt;font-weight:900;
+    border-radius:1mm;padding:0 1.4mm;margin-right:1.4mm;
+  }
+  .note{
+    background:var(--paper);border-left:.9mm solid #E3DCCE;border-radius:0 2mm 2mm 0;
+    padding:2mm 3mm;margin:1.6mm 0;font-size:8.5pt;line-height:1.58;color:#5F594F;break-inside:avoid;
+  }
+
+  /* ── 표 ── */
+  table{width:100%;border-collapse:collapse;margin:1mm 0 1.8mm;font-size:8.6pt;break-inside:avoid}
+  thead th{
+    background:var(--paper);text-align:left;font-weight:900;font-size:8pt;color:#5F594F;
+    padding:1.8mm 2.4mm;border-bottom:.5pt solid #DDD6C8;
+  }
+  tbody td{padding:1.8mm 2.4mm;border-bottom:.4pt solid var(--line);vertical-align:top;line-height:1.55}
+  tbody tr{break-inside:avoid}
+  tbody tr:last-child td{border-bottom:0}
+  tbody td:first-child{font-weight:700;color:var(--ink)}
+  td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  td.cut{
+    font-weight:900;color:var(--teal-dark);white-space:nowrap;text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  td.cut.low{color:#8A5A12}
+  a{color:var(--teal-dark);text-decoration:none;border-bottom:.3pt solid #C9DCD5}
+
+  /* ── 프롬프트 ── */
+  .prompt{border:.5pt solid #E0D8C8;border-radius:2.4mm;overflow:hidden;margin:1.6mm 0 2mm;break-inside:avoid}
+  .prompt-h{
+    background:#EDE7DA;padding:1.6mm 3mm;font-size:7.9pt;font-weight:700;color:#6F685D;
+    display:flex;justify-content:space-between;
+  }
+  .prompt-h span{font-weight:700}
+  .prompt-h em{font-style:normal;font-size:7.2pt;color:#8E877A}
+  .prompt pre{
+    margin:0;padding:2.6mm 3mm;background:var(--code-bg);
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;
+    font-size:8.2pt;line-height:1.6;color:#2A2620;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ── 푸터(마지막 페이지) ── */
+  .end{
+    margin-top:4mm;border-top:1px solid var(--line);padding-top:3mm;
+    display:flex;justify-content:space-between;gap:5mm;break-inside:avoid;
+  }
+  .end-brand{font-size:9pt;font-weight:900;color:var(--teal-dark);letter-spacing:.02em}
+  .end-desc{font-size:7.8pt;color:var(--muted);line-height:1.55;margin-top:.8mm;max-width:95mm}
+  .end-meta{font-size:7.4pt;color:#A8A093;text-align:right;line-height:1.6}
+
+  .kicker{font-size:7.6pt;font-weight:900;color:#A8A093;letter-spacing:.1em;margin:4mm 0 1.4mm}
+  .kicker:first-child{margin-top:0}
+  .measure-cap{font-size:7.9pt;color:var(--muted);margin:0 0 1.2mm}
+  .measure-cap b{color:var(--ink);font-weight:700}
+  .footer-note{
+    margin-top:3mm;background:var(--paper);border:1px solid var(--line);border-radius:2mm;
+    padding:2.4mm 3mm;font-size:7.9pt;line-height:1.58;color:#5F594F;
+  }
+</style>
+</head>
+<body>
+<div class="head">
+  <div class="head-top"><div class="head-brand">@ai.onepage · AI 툴 가이드</div><div class="head-num">#6 · 11월 6일</div></div>
+  <h1>Claude에게 PPT·엑셀을 진짜 파일로 받기: 스킬 켜는 법과 내 스킬 만들기</h1>
+  <p class="sub">스킬 켜는 법과 내 스킬 만들기</p>
+  <p class="lede">스킬은 Claude가 특정 작업을 일정한 방식으로 하도록 넣어 두는 지시·스크립트·자료 폴더예요. ‘코드 실행과 파일 만들기’를 켜 두면 Excel, Word, PowerPoint, PDF를 진짜 파일로 받아요. 내 규칙은 SKILL.md로 올려 두면 돼요.</p>
+  <div class="pills"><span class="pill">무료부터 Claude 앱에서 스킬</span><span class="pill">기본 4개 엑셀·워드·PPT·PDF</span><span class="pill">SKILL.md 내 규칙 올리기</span></div>
+  <div class="meta"><b>2026년 11월 6일 확인</b> · Claude 계정(무료 플랜부터) · Claude Code는 Pro 이상</div>
+</div>
+
+<div class="toc"><h2>목차</h2><ol><li><b>0</b>Claude Code</li><li><b>1</b>앱 vs Claude Code</li><li><b>2</b>AI에게 맡기기</li><li><b>3</b>한눈에 보기</li><li><b>4</b>꼭 알아 둘 점</li><li><b>5</b>켜기</li><li><b>6</b>내 스킬 올리기</li><li><b>7</b>스킬 템플릿</li><li><b>8</b>안 될 때</li></ol></div>
+<section class="sec"><div class="kicker">STEP 00 · 제일 빠른 방법</div><div class="sec-h"><span class="n">0</span><h2>Claude Code에 바로 붙여 넣기</h2></div><div class="note">Claude Code는 <b>Pro 이상 유료 플랜</b>에서 쓸 수 있어요(무료 플랜 미포함, 공식 문서 2026년 11월 6일 확인). 무료 플랜이면 이 단계는 건너뛰고 아래 순서대로 따라 하세요.</div><ul class="plain"><li><b>여는 법:</b> Claude 데스크톱 앱 왼쪽 위 <b>Code</b> 탭 → 작업할 폴더 선택. 또는 PowerShell·터미널에서 <code>claude</code> 입력.</li><li><b>Claude Code 설치:</b> Windows PowerShell <code class="brk">irm https://claude.ai/install.ps1 | iex</code> · Mac <code class="brk">curl -fsSL https://claude.ai/install.sh | bash</code></li><li><b>데스크톱 앱:</b> <a href="https://claude.ai/api/desktop/win32/x64/setup/latest/redirect" target="_blank" rel="noopener">Windows</a> / <a href="https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect" target="_blank" rel="noopener">Mac</a></li></ul><div class="prompt"><div class="prompt-h"><span>Claude Code에 붙여 넣기</span><em>복사해서 붙여 넣기</em></div><pre>Anthropic이 공개한 문서 스킬(엑셀·워드·파워포인트·PDF)을 Claude Code에 설치하고 확인해 줘.
+1. 아래 두 명령을 차례로 실행해 줘.
+   /plugin marketplace add anthropics/skills
+   /plugin install document-skills@anthropic-agent-skills
+2. /skills 로 설치된 스킬 목록을 보여 줘.
+3. 이 폴더에 '테스트_발표.pptx'를 슬라이드 3장(표지 / 핵심 3가지 / 다음 할 일)으로 만들어 줘.
+4. 파일이 생겼는지 확인하고 위치를 알려 줘. 파이썬 라이브러리 같은 게 더 필요하면 설치 전에 나에게 먼저 물어봐 줘.</pre></div></section><section class="sec"><div class="kicker">STEP 01 · 어디서 실행하나</div><div class="sec-h"><span class="n">1</span><h2>두 가지 실행법: Claude 앱 vs Claude Code</h2></div><p>같은 스킬이라도 <b>어디서 실행하느냐에 따라 결과가 다를 수 있어요.</b> A는 Claude 앱(웹·데스크톱 채팅), B는 Claude Code(앱의 Code 탭 / PowerShell·터미널)예요.</p><ul class="plain"><li><b>어디서 돌아가나</b><br>A. Claude 앱: Anthropic 쪽 격리된 실행 환경<br>B. Claude Code: 내 컴퓨터</li><li><b>켜는 법</b><br>A. Claude 앱: 설정 › Capabilities에서 '코드 실행과 파일 만들기'(새 화면 'Create and edit files') 켜기<br>B. Claude Code: STEP 00 명령으로 설치, 또는 <code class="brk">~/.claude/skills/[스킬이름]/SKILL.md</code>에 넣기</li><li><b>내 스킬 올리기</b><br>A. Claude 앱: Customize › Skills › + › Create skill › Upload a skill (ZIP)<br>B. Claude Code: 폴더째 <code>~/.claude/skills/</code>(나만) 또는 프로젝트의 <code>.claude/skills/</code>(팀 공유)</li><li><b>인터넷</b><br>A. Claude 앱: 설정에 따라 막히거나 일부만 열림<br>B. Claude Code: 내 컴퓨터의 다른 프로그램과 같음</li><li><b>필요한 프로그램</b><br>A. Claude 앱: 미리 깔린 것만<br>B. Claude Code: 내 컴퓨터에 없으면 설치해야 함</li><li><b>플랜</b><br>A. Claude 앱: STEP 04 참고<br>B. Claude Code: Pro 이상</li></ul><div class="note">앱에서 올린 스킬은 같은 계정으로 로그인한 Claude Code에 한 방향으로 동기화돼요(공식 도움말, Claude Code 2.1.273 이상). 이 차이는 공식 문서에 적힌 실행 환경 차이까지만 적었어요. 같은 스킬이 두 곳에서 똑같이 나오는지는 직접 비교하지 않았어요.</div></section><section class="sec"><div class="kicker">STEP 02 · AI에게 맡기기</div><div class="sec-h"><span class="n">2</span><h2>AI에게 바로 맡기기</h2></div><p><b>① 내 스킬 초안 만들기:</b> Claude에 붙여 넣으세요.</p><div class="prompt"><div class="prompt-h"><span>① Claude에 붙여 넣기 ([ ] 채우기)</span><em>복사해서 붙여 넣기</em></div><pre>나만의 Claude 스킬을 만들고 싶어. 아래 정보로 SKILL.md 파일 내용을 만들어 줘.
+- 스킬 이름(영어 소문자와 하이픈): [my-deck]
+- 언제 쓰는지 한 문장: [우리 팀 발표 자료를 만들 때]
+- 꼭 지킬 규칙: [표지는 남색 / 글꼴은 Pretendard / 슬라이드마다 핵심 한 줄 / 마지막 장은 다음 할 일]
+형식:
+1. 맨 위에 --- 로 감싼 name, description 두 줄.
+2. 그 아래 규칙, 예시, 하지 말 것.
+3. 다 쓰면, 이 파일을 넣은 폴더를 ZIP으로 압축해 Customize → Skills에 올리는 순서를 알려 줘.</pre></div><p><b>② 기본 스킬로 파일 받기:</b> 평소처럼 부탁하세요.</p><div class="prompt"><div class="prompt-h"><span>② 평소처럼 부탁하기 ([ ] 채우기)</span><em>복사해서 붙여 넣기</em></div><pre>3분기 실적 발표 PPT를 만들어 줘. 슬라이드 7장, 표지 / 매출 요약 / 지역별 비교 / 잘된 점 / 아쉬운 점 / 다음 분기 계획 / 질문 순서. 숫자는 [첨부 엑셀]에서만 가져오고, 없으면 빈칸으로 남겨 줘.</pre></div></section><section class="sec"><div class="kicker">STEP 03 · 먼저 이것만</div><div class="sec-h"><span class="n">3</span><h2>한눈에 보기</h2></div><ul class="plain"><li><b>무엇:</b> 스킬은 Claude가 특정 작업을 일정한 방식으로 하도록 넣어 두는 지시·스크립트·자료 폴더예요. Anthropic이 공개한 저장소 anthropics/skills는 GitHub 별 187,524개예요(2026년 11월 5일 기준).</li><li><b>누가:</b> 공식 도움말 기준 Free, Pro, Max, Ultra, Team, Enterprise 플랜에서 쓸 수 있어요. ‘코드 실행과 파일 만들기’가 켜져 있어야 해요.</li><li><b>기본 스킬:</b> Excel, Word, PowerPoint, PDF. 켜 두면 Claude가 필요할 때 알아서 사용해요.</li><li><b>내 스킬:</b> <code>SKILL.md</code>를 넣은 폴더를 ZIP으로 압축해 올리면 돼요.</li></ul><div class="ok"><span class="tag">핵심</span>설정 하나 켜면 PPT·엑셀·워드·PDF를 진짜 파일로 받아요. 내 규칙은 SKILL.md로 올려 둬요.</div></section><section class="sec"><div class="kicker">STEP 04 · 주의</div><div class="sec-h"><span class="n">4</span><h2>꼭 알아 둘 점</h2></div><ul class="plain"><li><b>남이 만든 스킬은 안의 코드가 그대로 실행될 수 있어요.</b> 공식 도움말도 믿을 수 있는 출처의 스킬만 설치하고, 올리기 전에 폴더 속 파일을 열어 읽어 보라고 안내해요.</li><li><b>'코드 실행과 파일 만들기'가 꺼져 있으면 스킬이 동작하지 않아요.</b> 회사·학교 계정은 관리자가 막아 둘 수도 있어요.</li><li><b>내 스킬 올리기(ZIP)의 플랜 안내가 공식 문서끼리 달라요.</b> 도움말은 무료 플랜도 된다고 하고, 개발자 문서는 Pro 이상이라고 해요(2026년 11월 6일 확인). 무료에서 업로드 메뉴가 안 보이면 플랜 때문일 수 있어요.</li><li><b>Claude Code에서 쓰려면 Pro 이상 플랜이 필요해요.</b> 앱과 Claude Code는 실행 환경이 달라서 결과가 다를 수 있어요(STEP 01 비교).</li><li><b>메뉴 이름은 앱 버전과 언어에 따라 달라요.</b> 'Create and edit files'처럼 다르게 보일 수 있어요.</li><li><b>만든 파일은 꼭 열어서 확인하세요.</b> 숫자나 이름이 틀릴 수 있어요. 첨부한 자료에 없는 숫자는 빈칸으로 두라고 부탁하면 덜 틀려요.</li></ul></section><section class="sec"><div class="kicker">STEP 05 · 처음 하는 사람용</div><div class="sec-h"><span class="n">5</span><h2>파일 만들기와 스킬 켜기</h2></div><p><b>파일 만들기 켜기 (개인 플랜)</b></p><ol class="steps"><li>Claude 앱 또는 <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a>에서 <b>Settings</b>(설정)를 열어요.</li><li><b>Capabilities</b>로 가요.</li><li><b>Code execution and file creation</b>을 켜요. 새 설정 화면에서는 이름이 <b>Create and edit files</b>예요.</li></ol><p><b>스킬 켜기</b></p><ol class="steps"><li><b>Customize → Skills</b>로 가요.</li><li>쓰고 싶은 스킬 옆 스위치를 켜요.</li><li>이제 “PPT 만들어 줘”처럼 부탁하면 Claude가 해당 스킬을 써서 파일을 만들어요.</li></ol><div class="note">Team·Enterprise는 관리자가 Organization settings → Plugins &amp; skills에서 먼저 허용해야 해요.</div></section><section class="sec"><div class="kicker">STEP 06 · 내 규칙 올리기</div><div class="sec-h"><span class="n">6</span><h2>내 스킬 올리기</h2></div><ol class="steps"><li>STEP 02의 ① 문장으로 <code>SKILL.md</code> 내용을 받아요.</li><li>컴퓨터에 스킬 이름과 같은 폴더를 만들고 그 안에 <code>SKILL.md</code>로 저장해요.</li><li>폴더를 ZIP으로 압축해요.</li><li><b>Customize → Skills → + → Create skill → Upload a skill</b>에서 ZIP을 올려요.</li><li>목록에 생기면 스위치를 켜요.</li></ol></section><section class="sec"><div class="kicker">STEP 07 · 복사해서 쓰기</div><div class="sec-h"><span class="n">7</span><h2>내 스킬 템플릿</h2></div><p>아래를 <code>SKILL.md</code>로 저장하고 내 규칙으로 바꿔 쓰세요.</p><div class="prompt"><div class="prompt-h"><span>SKILL.md 템플릿</span><em>복사해서 붙여 넣기</em></div><pre>---
+name: my-deck
+description: 우리 팀 발표 자료(PPT)를 만들 때 사용한다. 표지 색, 글꼴, 슬라이드 구성 규칙을 따른다.
+---
+
+# 우리 팀 발표 자료 규칙
+
+## 반드시
+- 표지 배경은 남색, 글꼴은 Pretendard
+- 슬라이드마다 맨 위에 핵심 한 줄
+- 마지막 장은 '다음 할 일'과 담당자
+
+## 하지 말 것
+- 출처 없는 숫자 넣기
+- 한 장에 글머리표 6개 넘기기</pre></div></section><section class="sec"><div class="kicker">STEP 08 · 막히면</div><div class="sec-h"><span class="n">8</span><h2>안 될 때</h2></div><ul class="plain"><li><b>Skills 메뉴가 안 보임:</b> 코드 실행·파일 만들기가 켜졌는지 확인해요. Settings → Capabilities에서 켜고 다시 Customize → Skills.</li><li><b>스킬이 회색:</b> 같은 설정을 확인해요. 팀 플랜이면 관리자 설정이에요. 개인은 Capabilities 확인, 팀은 관리자에게 요청해요.</li><li><b>스킬을 안 씀:</b> 스킬 스위치와 description 문장을 확인해요. “my-deck 스킬로 만들어 줘”처럼 이름을 직접 말해요.</li><li><b>업로드 실패:</b> 폴더 이름 = 스킬 이름인지, <code>SKILL.md</code>가 있는지 확인해요. 이름을 맞추고 다시 압축해요.</li></ul></section>
+<section class="sec">
+  <div class="kicker">한 장 요약 · 인쇄해서 책상에</div>
+  <div class="sec-h"><span class="n">✓</span><h2>이 순서대로만 하면 돼요</h2></div>
+  <table><thead><tr><th style="width:8%">순서</th><th style="width:32%">할 일</th><th style="width:34%">명령·도구</th><th style="width:26%">결과</th></tr></thead><tbody><tr><td>1</td><td>파일 만들기 켜기</td><td>Settings → Capabilities</td><td>스킬이 동작해요</td></tr><tr><td>2</td><td>스킬 켜기</td><td>Customize → Skills → 스위치</td><td>부탁하면 파일로 받아요</td></tr><tr><td>3</td><td>내 스킬 초안</td><td>STEP 02의 ① 문장</td><td>SKILL.md 내용</td></tr><tr><td>4</td><td>내 스킬 올리기</td><td>폴더 → ZIP → Upload a skill</td><td>목록에 생기면 켜기</td></tr></tbody></table>
+  <div class="note">만든 파일은 꼭 열어서 숫자와 이름을 확인하세요.</div>
+  <div class="kicker">출처</div>
+  <ul class="plain"><li>Use skills in Claude (Claude 도움말) — https://support.claude.com/en/articles/12512180-use-skills-in-claude · 2026년 11월 5일 확인</li><li>anthropics/skills (GitHub) — https://github.com/anthropics/skills · 2026년 11월 5일 확인(별 187,524개)</li></ul>
+  <div class="footer-note">2026년 11월 5일에 Claude 공식 도움말과 anthropics/skills 저장소를 보고 썼어요. 메뉴 이름은 앱 버전과 언어 설정에 따라 다르게 보일 수 있어요. 영상 속 채팅과 파일은 설명용 화면이에요.</div>
+  <div class="end">
+    <div><div class="end-brand">@ai.onepage</div><div class="end-desc">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요. 새 가이드는 인스타와 허브에 올라와요.</div></div>
+    <div class="end-meta">#6 · Claude에게 PPT·엑셀을 진짜 파일로 받기: 스킬 켜는 법과 내 스킬 만들기<br>11월 6일<br>lalapert.github.io/ai-onepage</div>
+  </div>
+</section>
+</body>
+</html>

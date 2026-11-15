@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>클로드 코드로 영상 한 편을: lemo-opuscar 설치와 사용법 · ai.onepage #21</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:block}
+
+  :root{
+    --ink:#211E1A;
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+    --code-bg:#F5F1E9;
+    --paper:#FAF7F1;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#fff}
+  body{
+    font-family:"NotoKR",sans-serif;color:var(--ink);
+    font-size:9.35pt;line-height:1.56;word-break:keep-all;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  @page{size:A4;margin:14mm 15mm 16mm}
+
+  /* ── 머리글 ── */
+  .head{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:6.2mm 6.5mm 5.6mm;margin-bottom:4.2mm;
+  }
+  .head-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4mm}
+  .head-brand{font-size:8.4pt;font-weight:900;letter-spacing:.04em;color:var(--teal-dark)}
+  .head-num{
+    font-size:8pt;font-weight:700;color:var(--teal-dark);background:var(--teal-soft);
+    border-radius:20px;padding:1.2mm 3mm;
+  }
+  .head h1{margin:0;font-size:21pt;font-weight:900;letter-spacing:-.03em;line-height:1.24}
+  .head .sub{margin:2mm 0 0;font-size:11pt;font-weight:700;color:var(--teal-dark);letter-spacing:-.02em}
+  .head .lede{margin:3mm 0 0;font-size:9.4pt;line-height:1.66;color:#4E483E}
+  .head .pills{display:flex;gap:1.6mm;margin-top:3.4mm;flex-wrap:wrap}
+  .head .pill{
+    background:#fff;border:1px solid var(--line);border-radius:20px;
+    padding:1.1mm 2.6mm;font-size:8.4pt;font-weight:700;color:#3A342C;
+  }
+  .head .meta{margin-top:3mm;font-size:7.9pt;color:var(--muted)}
+  .head .meta b{color:#5F594F;font-weight:700}
+
+  /* ── 비교 (선택) ── */
+  .cmp{border:1px solid var(--line);border-radius:4mm;padding:4.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid}
+  .cmp h2{margin:0 0 3mm;font-size:10.5pt;font-weight:900;letter-spacing:-.02em}
+  .cmp h2 em{font-style:normal;font-weight:700;font-size:7.8pt;color:var(--muted);margin-left:2mm}
+  .cmp-row{display:flex;gap:6mm}
+  .cmp-col{flex:1 1 0;min-width:0}
+  .cmp-col + .cmp-col{border-left:1px solid var(--line);padding-left:6mm}
+  .cmp-label{font-size:7.9pt;font-weight:700;color:var(--muted);margin-bottom:2.4mm}
+  .bar-row{display:flex;align-items:center;gap:2mm;margin-bottom:1.8mm}
+  .bar-name{flex:0 0 27mm;font-size:7.9pt;color:#5F594F;line-height:1.3}
+  .bar-track{flex:1 1 auto;height:2.4mm;border-radius:20px;background:#F2EDE3;overflow:hidden}
+  .bar-fill{height:100%;border-radius:20px;background:var(--red)}
+  .bar-fill.mild{background:#E8B7AC}
+  .bar-fill.teal{background:var(--teal)}
+  .bar-val{flex:0 0 auto;font-size:8.2pt;font-weight:900;min-width:17mm;text-align:right}
+  .cmp-foot{margin-top:2mm;font-size:7.8pt;line-height:1.5;color:#5F594F}
+  .cmp-foot b{font-weight:700;color:var(--ink)}
+
+  /* ── 목차 ── */
+  .toc{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:3.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid;
+  }
+  .toc h2{margin:0 0 1.6mm;font-size:8pt;font-weight:900;color:var(--muted);letter-spacing:.06em}
+  .toc ol{list-style:none;margin:0;padding:0;columns:2;column-gap:7mm}
+  .toc li{font-size:8.4pt;color:#3A342C;padding:.7mm 0;break-inside:avoid}
+  .toc li b{color:var(--teal);font-weight:900;margin-right:1.4mm}
+  .toc li span{color:#A8A093;font-size:7.4pt}
+
+  /* ── 섹션 ── */
+  .sec{margin-bottom:3.4mm}
+  .sec-h{break-after:avoid}
+  .sec>.kicker{break-after:avoid}
+  p{orphans:3;widows:3}
+  li{orphans:2;widows:2}
+  .sec>.kicker:first-child{margin-top:0}
+  .sec-h{display:flex;align-items:baseline;gap:2mm;margin:0 0 1.6mm}
+  .sec-h .n{
+    flex:0 0 auto;font-size:8pt;font-weight:900;color:var(--teal-dark);
+    background:var(--teal-soft);border-radius:1.4mm;padding:.3mm 1.6mm;
+  }
+  .sec-h h2{margin:0;font-size:11.4pt;font-weight:900;letter-spacing:-.03em}
+  .sec p{margin:0 0 1.8mm;font-size:9.4pt;line-height:1.64;color:#2C2822}
+  .sec p:last-child{margin-bottom:0}
+  .sec b,.sec strong{font-weight:700;color:var(--ink)}
+  code.brk{white-space:normal;overflow-wrap:anywhere}
+  code{
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;font-size:8.3pt;
+    background:var(--code-bg);border:.4pt solid #E3DCCE;border-radius:1mm;padding:0 .8mm;
+    white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  }
+
+  ol.steps{margin:0 0 1.8mm;padding-left:5.2mm}
+  ol.steps li{font-size:9.1pt;line-height:1.55;margin-bottom:1mm;padding-left:.6mm}
+  ol.steps li::marker{color:var(--teal);font-weight:700}
+  ul.plain{margin:0 0 1.8mm;padding-left:4.4mm}
+  ul.plain li{font-size:9.1pt;line-height:1.56;margin-bottom:1.2mm}
+  ul.plain li::marker{color:#C0B7A8}
+
+  .ok{
+    background:var(--teal-soft);border-radius:2mm;padding:2.2mm 3mm;margin:1.6mm 0;
+    font-size:8.6pt;line-height:1.55;color:#0A4F42;break-inside:avoid;
+  }
+  .ok b{color:#0A4F42}
+  .ok .tag{
+    display:inline-block;background:var(--teal);color:#fff;font-size:7.2pt;font-weight:900;
+    border-radius:1mm;padding:0 1.4mm;margin-right:1.4mm;
+  }
+  .note{
+    background:var(--paper);border-left:.9mm solid #E3DCCE;border-radius:0 2mm 2mm 0;
+    padding:2mm 3mm;margin:1.6mm 0;font-size:8.5pt;line-height:1.58;color:#5F594F;break-inside:avoid;
+  }
+
+  /* ── 표 ── */
+  table{width:100%;border-collapse:collapse;margin:1mm 0 1.8mm;font-size:8.6pt;break-inside:avoid}
+  thead th{
+    background:var(--paper);text-align:left;font-weight:900;font-size:8pt;color:#5F594F;
+    padding:1.8mm 2.4mm;border-bottom:.5pt solid #DDD6C8;
+  }
+  tbody td{padding:1.8mm 2.4mm;border-bottom:.4pt solid var(--line);vertical-align:top;line-height:1.55}
+  tbody tr{break-inside:avoid}
+  tbody tr:last-child td{border-bottom:0}
+  tbody td:first-child{font-weight:700;color:var(--ink)}
+  td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  td.cut{
+    font-weight:900;color:var(--teal-dark);white-space:nowrap;text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  td.cut.low{color:#8A5A12}
+  a{color:var(--teal-dark);text-decoration:none;border-bottom:.3pt solid #C9DCD5}
+
+  /* ── 프롬프트 ── */
+  .prompt{border:.5pt solid #E0D8C8;border-radius:2.4mm;overflow:hidden;margin:1.6mm 0 2mm;break-inside:avoid}
+  .prompt-h{
+    background:#EDE7DA;padding:1.6mm 3mm;font-size:7.9pt;font-weight:700;color:#6F685D;
+    display:flex;justify-content:space-between;
+  }
+  .prompt-h span{font-weight:700}
+  .prompt-h em{font-style:normal;font-size:7.2pt;color:#8E877A}
+  .prompt pre{
+    margin:0;padding:2.6mm 3mm;background:var(--code-bg);
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;
+    font-size:8.2pt;line-height:1.6;color:#2A2620;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ── 푸터(마지막 페이지) ── */
+  .end{
+    margin-top:4mm;border-top:1px solid var(--line);padding-top:3mm;
+    display:flex;justify-content:space-between;gap:5mm;break-inside:avoid;
+  }
+  .end-brand{font-size:9pt;font-weight:900;color:var(--teal-dark);letter-spacing:.02em}
+  .end-desc{font-size:7.8pt;color:var(--muted);line-height:1.55;margin-top:.8mm;max-width:95mm}
+  .end-meta{font-size:7.4pt;color:#A8A093;text-align:right;line-height:1.6}
+
+  .kicker{font-size:7.6pt;font-weight:900;color:#A8A093;letter-spacing:.1em;margin:4mm 0 1.4mm}
+  .kicker:first-child{margin-top:0}
+  .measure-cap{font-size:7.9pt;color:var(--muted);margin:0 0 1.2mm}
+  .measure-cap b{color:var(--ink);font-weight:700}
+  .footer-note{
+    margin-top:3mm;background:var(--paper);border:1px solid var(--line);border-radius:2mm;
+    padding:2.4mm 3mm;font-size:7.9pt;line-height:1.58;color:#5F594F;
+  }
+</style>
+</head>
+<body>
+<div class="head">
+  <div class="head-top"><div class="head-brand">@ai.onepage · AI 툴 가이드</div><div class="head-num">#21 · 11월 13일</div></div>
+  <h1>클로드 코드로 영상 한 편을: lemo-opuscar 설치와 사용법</h1>
+  <p class="sub">클로드에게 영상 한 편을 통째로 만들게 하는 플러그인</p>
+  <p class="lede">대본, 그림, 음악, 목소리까지 클로드가 만들어요. 영상 스타일 99가지(11월 12일 기준) 중 하나를 고르고 한 문장만 쓰면 돼요. 영상 만드는 AI는 쓰지 않고, 장면을 코드로 한 장씩 그려서 이어 붙여요.</p>
+  <div class="pills"><span class="pill">무료 코드 MIT</span><span class="pill">스타일 99가지</span><span class="pill">한 문장 대본·그림·음악·목소리</span></div>
+  <div class="meta"><b>2026년 11월 12일 확인</b> · Claude Code(Pro 이상) · 무료(코드 MIT, 스타일 설명서 CC BY-NC 4.0) · 한 편에 토큰이 꽤 들어요</div>
+</div>
+
+<div class="toc"><h2>목차</h2><ol><li><b>0</b>이게 뭐예요?</li><li><b>1</b>준비물</li><li><b>2</b>Claude Code 열기</li><li><b>3</b>플러그인 깔기</li><li><b>4</b>스타일 고르기</li><li><b>5</b>첫 영상 만들기</li><li><b>6</b>나만의 스타일</li><li><b>7</b>꼭 알아 둘 점</li><li><b>8</b>그래도 안 되면</li></ol></div>
+<section class="sec"><div class="kicker">STEP 00 · 먼저 이것만</div><div class="sec-h"><span class="n">0</span><h2>이게 뭐예요?</h2></div><ul class="plain"><li>클로드에게 <b>영상 한 편을 통째로 만들게 하는 도구</b>예요. 대본, 그림, 음악, 목소리까지 클로드가 만들어요.</li><li>영상 스타일이 99가지 있어요(11월 12일 기준). 수채화, 우키요에(일본 옛 판화), 네온 간판, 픽셀 게임 같은 것들이에요. 하나 고르고 한 문장만 쓰면 돼요.</li><li>이런 도구를 <b>플러그인</b>이라고 불러요. 클로드에 끼워서 새 기능을 더하는 확장 기능이에요.</li><li>플러그인은 <b>무료</b>예요. 대신 Claude 유료 플랜이 필요하고, 영상 한 편에 시간과 사용량이 꽤 들어요(7절).</li></ul></section><section class="sec"><div class="kicker">STEP 01 · 시작 전에</div><div class="sec-h"><span class="n">1</span><h2>준비물</h2></div><table><thead><tr><th style="width:30%">준비물</th><th style="width:42%">왜 필요해요?</th><th style="width:28%">어디서 받아요?</th></tr></thead><tbody><tr><td>Claude 유료 플랜(Pro 이상)</td><td>이 플러그인은 Claude Code에서 돌아가요. Claude Code는 유료 플랜에서만 돼요.</td><td><a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a>에 로그인 → 설정에서 내 플랜 확인</td></tr><tr><td>Claude 데스크톱 앱</td><td>Claude Code를 여는 가장 쉬운 방법이에요.</td><td><a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a></td></tr><tr><td>Node 20 이상, ffmpeg 7 이상, Python 3.11 이상</td><td>영상을 그리고 이어 붙이는 프로그램들이에요. 3절에서 클로드에게 확인과 설치를 맡겨요.</td><td>직접 받을 필요 없어요</td></tr></tbody></table></section><section class="sec"><div class="kicker">STEP 02 · 처음 한 번</div><div class="sec-h"><span class="n">2</span><h2>Claude Code 열기</h2></div><ol class="steps"><li><a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a>에서 내 컴퓨터(Windows 또는 Mac)에 맞는 앱을 받아요.</li><li>받은 파일을 열어 설치하고, 앱을 켜서 로그인해요.</li><li>앱 왼쪽 위에 있는 <b>Code</b> 탭을 눌러요.</li><li>폴더를 고르라는 창이 뜨면, 바탕화면에 새 폴더(예: <code>my-film</code>)를 하나 만들어서 골라요. 완성된 영상이 이 폴더에 생겨요.</li><li><b>이렇게 보이면 성공:</b> 화면 아래에 글을 쓰는 칸이 생겨요.</li></ol><p>터미널(까만 창에 글자로 명령을 치는 프로그램)을 쓸 줄 안다면 이렇게 해도 돼요.</p><ul class="plain"><li>Windows: PowerShell을 열고 <code class="brk">irm https://claude.ai/install.ps1 | iex</code>를 붙여 넣은 뒤 Enter</li><li>Mac: 터미널을 열고 <code class="brk">curl -fsSL https://claude.ai/install.sh | bash</code>를 붙여 넣은 뒤 Enter</li><li>다 깔리면 <code>claude</code>라고 치고 Enter</li></ul></section><section class="sec"><div class="kicker">STEP 03 · 붙여 넣기 한 번</div><div class="sec-h"><span class="n">3</span><h2>플러그인 깔기</h2></div><ol class="steps"><li>Claude Code의 글 쓰는 칸에 아래 상자 안 글을 <b>통째로</b> 복사해서 붙여 넣어요.</li><li>Enter를 눌러요.</li><li>클로드가 "이 명령을 실행해도 될까요?" 하고 물으면, 내용을 읽고 허락 버튼을 눌러요.</li><li>클로드가 설치가 끝났다고 말하면, 글 칸에 <code>/effort high</code>라고 치고 Enter를 눌러요. 설명서가 이 설정을 권해요. 클로드가 더 꼼꼼하게 일해요.</li><li><b>이렇게 보이면 성공:</b> 글 칸에 빗금 <code>/</code>를 쳤을 때 뜨는 목록에 <code>lemo-opuscar</code>가 보여요.</li></ol><div class="prompt"><div class="prompt-h"><span>1번에서 Claude Code에 붙여 넣기</span><em>복사해서 붙여 넣기</em></div><pre>https://github.com/lemomo-ai/lemo-opuscar
+이 플러그인 설치해 줘.
+먼저 내 컴퓨터에 Node 20 이상, ffmpeg 7 이상, Python 3.11 이상이 있는지 확인해 줘.
+없거나 버전이 낮으면 무엇을 깔아야 하는지 쉬운 말로 알려 주고, 깔기 전에 나한테 먼저 물어봐.
+다 되면 /lemo-opuscar:lemo-opuscar 가 되는지 확인해 줘.</pre></div><p><b>목록에 안 보이면</b></p><ul class="plain"><li>앱을 완전히 껐다가 다시 켜고, 다시 <code>/</code>를 쳐 봐요.</li><li>그래도 없으면 글 칸에 "lemo-opuscar 플러그인이 설치됐는지 확인해 줘"라고 써요.</li></ul></section><section class="sec"><div class="kicker">STEP 04 · 하나 고르기</div><div class="sec-h"><span class="n">4</span><h2>스타일 고르기</h2></div><ol class="steps"><li><a href="https://lemomo-ai.github.io/lemo-opuscar/" target="_blank" rel="noopener">스타일 갤러리</a>를 열어요.</li><li>마음에 드는 그림을 눌러요. 그 스타일로 만든 짧은 데모 영상이 나와요.</li><li>스타일 <b>영어 이름</b>을 적어 둬요(예: Watercolor, Ukiyo-e, Neon Tubes, Pixel RPG, Red Paper-Cut, Stained Glass, Low-Poly Island).</li></ol></section><section class="sec"><div class="kicker">STEP 05 · 한 문장</div><div class="sec-h"><span class="n">5</span><h2>첫 영상 만들기</h2></div><ol class="steps"><li>아래 상자 안 글을 복사해서, [ ] 안을 내 것으로 바꾼 뒤 붙여 넣어요.</li><li>클로드가 처음에 한 번 몇 가지를 물어봐요. 주제에서 정하기 어려운 것, 내 목소리나 음악 파일이 있는지 같은 것이에요. 답해 주면 돼요.</li><li>스토리보드가 나오면 보고 "좋아" 또는 고칠 점을 말해요.</li><li>30분~1시간 기다려요. 그동안 앱을 끄지 마세요.</li><li><b>이렇게 보이면 성공:</b> 2절에서 고른 폴더에 영상 파일(.mp4), 자막 파일(.srt), 쓴 자료 목록(CREDITS)이 생겨요.</li></ol><div class="prompt"><div class="prompt-h"><span>1번에서 붙여 넣기 ([ ] 채우기)</span><em>복사해서 붙여 넣기</em></div><pre>[스타일 영어 이름] 스타일로 [영상 주제] 이야기 30초 영상 만들어 줘.
+인스타 릴스용으로 1080×1920 세로로 해 줘.
+처음이니까 스토리보드(주요 장면 그림)를 먼저 보여 줘.</pre></div><p><b>뭘 할지 모르겠으면:</b> 글 칸에 <code class="brk">/lemo-opuscar:lemo-opuscar</code>만 쳐요. 어떤 말로 할지부터 물어보고, 순서대로 안내해 줘요.</p></section><section class="sec"><div class="kicker">STEP 06 · 선택</div><div class="sec-h"><span class="n">6</span><h2>나만의 스타일 만들기</h2></div><ol class="steps"><li>글 칸에 "I want to change the Ukiyo-e style into my own version."처럼 써요. 바꾸고 싶은 스타일 이름을 넣으면 돼요.</li><li>클로드가 브랜드 색, 글꼴, 캐릭터를 하나씩 물어봐요.</li><li>15~30초짜리 시험 영상이 나와요. 마음에 들면 "저장해 줘"라고 해요.</li><li><b>이렇게 보이면 성공:</b> 다음에 스타일을 고를 때 내 스타일이 목록 맨 위에 나와요.</li></ol></section><section class="sec"><div class="kicker">STEP 07 · 주의</div><div class="sec-h"><span class="n">7</span><h2>꼭 알아 둘 점</h2></div><ul class="plain"><li><b>오래 걸리고 사용량이 많이 들어요.</b> 영상 한 편에 30분~1시간이 걸려요. Claude 사용량(토큰: 클로드가 읽고 쓰는 글의 양)도 꽤 써요. 사용량 한도가 빠듯하면 짧은 영상부터 해 보세요.</li><li><b>기본은 가로 영상이에요.</b> 그냥 두면 1920×1080 가로로 나와요. 릴스·쇼츠용이면 "1080×1920 세로로"라고 꼭 말하세요.</li><li><b>한국어 목소리는 기본으로 들어 있지 않아요.</b> 기본 목소리 도구는 영어와 중국어만 안내돼 있어요. 한국어 내레이션은 내가 녹음한 파일을 주는 게 가장 확실해요. 클로드가 그 녹음을 그대로 쓰고 자막 시간을 맞춰요. 한국어 자동 목소리가 되는지는 직접 확인하지 못했어요.</li><li><b>세 스타일은 그림 만드는 도구가 따로 필요해요.</b> Manga Panels, Text Flash Cuts, Comic History Cartoon이에요. 나머지는 없어도 돼요.</li><li><b>영상 만드는 AI는 쓰지 않아요.</b> 장면을 코드로 한 장씩 그려서 이어 붙여요. 그래서 실제 사람이 찍은 것 같은 영상은 나오지 않아요.</li><li><b>만든 영상은 내 것이에요.</b> 상업용으로 써도 되고 출처를 안 밝혀도 돼요. 다만 영상에 넣은 남의 음악이나 사진은 그 자료의 규칙을 따라요. 스타일 설명서 자체를 묶어서 파는 건 안 돼요.</li><li><b>Claude에 맞춰 만든 도구예요.</b> 다른 AI로 돌리면 스타일이 잘 안 나올 수 있다고 설명서에 적혀 있어요.</li></ul></section><section class="sec"><div class="kicker">STEP 08 · 막히면</div><div class="sec-h"><span class="n">8</span><h2>그래도 안 되면</h2></div><ul class="plain"><li><b>영상이 안 뽑히면 ffmpeg 버전부터 확인해요.</b> 글 칸에 "ffmpeg 버전 확인해 줘"라고 써요. 6.x면 7 이상으로 바꿔야 해요. 클로드에게 "ffmpeg 7 이상으로 바꾸는 방법 알려 주고, 바꾸기 전에 물어봐"라고 하면 돼요.</li><li>다른 오류는 아래 글을 복사해서 [ ]를 채운 뒤 붙여 넣어요.</li></ul><div class="prompt"><div class="prompt-h"><span>Claude Code에 붙여 넣기 ([ ] 채우기)</span><em>복사해서 붙여 넣기</em></div><pre>lemo-opuscar로 [스타일 이름] 영상을 만들다가 이런 오류가 나왔어: [오류 문구 그대로]
+내 컴퓨터는 [Windows / Mac]이야.
+왜 그런지, 어떻게 고치는지 쉬운 말로 한 단계씩 알려 줘.</pre></div></section>
+<section class="sec" style="break-before:page">
+  <div class="kicker">한 장 요약 · 인쇄해서 책상에</div>
+  <div class="sec-h"><span class="n">✓</span><h2>이 순서대로만 하면 돼요</h2></div>
+  <table><thead><tr><th style="width:8%">순서</th><th style="width:32%">할 일</th><th style="width:34%">명령·도구</th><th style="width:26%">결과</th></tr></thead><tbody><tr><td>1</td><td>Claude Code 열기</td><td>claude.ai/download → Code 탭 → 폴더(my-film)</td><td>글 쓰는 칸이 생겨요</td></tr><tr><td>2</td><td>플러그인 깔기</td><td>설치 글 붙여 넣기 → 허락 → /effort high</td><td>/ 목록에 lemo-opuscar</td></tr><tr><td>3</td><td>스타일 고르기</td><td>스타일 갤러리</td><td>스타일 영어 이름 적어 두기</td></tr><tr><td>4</td><td>첫 영상 만들기</td><td>한 문장 붙여 넣기 → 스토리보드 확인</td><td>폴더에 .mp4·.srt·CREDITS</td></tr><tr><td>5</td><td>나만의 스타일(선택)</td><td>"I want to change the … style into my own version."</td><td>목록 맨 위에 내 스타일</td></tr></tbody></table>
+  <div class="note">한 편에 30분~1시간 걸려요. 릴스·쇼츠용이면 "1080×1920 세로로"라고 꼭 말하세요.</div>
+  <div class="kicker">출처</div>
+  <ul class="plain"><li>lemo-opuscar GitHub (README) — https://github.com/lemomo-ai/lemo-opuscar · 2026년 11월 12일 확인</li><li>lemo-opuscar 스타일 갤러리 — https://lemomo-ai.github.io/lemo-opuscar/ · 2026년 11월 12일 확인</li><li>데모 영상 라이선스: CC BY 4.0 — https://creativecommons.org/licenses/by/4.0/ · 영상에 쓴 lemo-opuscar 데모 영상의 라이선스</li></ul>
+  <div class="footer-note">2026년 11월 12일에 lemo-opuscar 설명서(README)를 보고 쓴 안내예요. 영상에 나온 데모는 lemo-opuscar의 실제 데모 영상이에요(Lemo-Opuscar by Lemomo (LemoLab), CC BY 4.0, 일부 잘라 씀). 터미널 화면은 이해를 돕는 그림이에요.</div>
+  <div class="end">
+    <div><div class="end-brand">@ai.onepage</div><div class="end-desc">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요. 새 가이드는 인스타와 허브에 올라와요.</div></div>
+    <div class="end-meta">#21 · 클로드 코드로 영상 한 편을: lemo-opuscar 설치와 사용법<br>11월 13일<br>lalapert.github.io/ai-onepage</div>
+  </div>
+</section>
+</body>
+</html>

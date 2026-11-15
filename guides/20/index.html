@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FAF7F1">
+<meta name="description" content="유튜브 채널 운영을 맡는 Claude 스킬 11개 묶음. 대본 훅 채점, 컷 목록, 쇼츠 찾기까지">
+<title>클로드 코드에 유튜브 팀을: youtube-agent-skill 설치와 사용법 · ai.onepage #20</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:swap}
+
+  :root{
+    --bg:#FAF7F1;
+    --card:#FFFFFF;
+    --ink:#211E1A;
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+    --code-bg:#F4F0E8;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:"NotoKR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.62;word-break:keep-all;
+    font-size:15px;
+  }
+  .page{max-width:480px;margin:0 auto;padding:0 18px 40px;overflow-x:hidden}
+  a{color:var(--teal-dark);text-decoration:underline;text-decoration-color:#BFDCD3;
+    text-decoration-thickness:1px;text-underline-offset:2px}
+  code.brk{white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+  code{
+    font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,"NotoKR",monospace;
+    font-size:.9em;background:var(--code-bg);border:1px solid #E6DFD2;
+    border-radius:5px;padding:1px 5px;white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  }
+
+  /* ── 상단 네비 ── */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:14px 0 0;
+  }
+  .back{
+    display:inline-flex;align-items:center;gap:5px;
+    text-decoration:none;color:#5A544A;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:6px 12px 6px 10px;font-size:12.5px;font-weight:700;letter-spacing:-.3px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04);
+  }
+  .back:active{transform:scale(.97)}
+  .back svg{width:12px;height:12px}
+  .num-badge{
+    font-size:11.5px;font-weight:700;letter-spacing:-.2px;
+    color:var(--teal-dark);background:var(--teal-soft);
+    border-radius:999px;padding:5px 11px;white-space:nowrap;
+  }
+
+  /* ── 히어로 ── */
+  .hero{padding:22px 2px 0}
+  .eyebrow{
+    font-size:11.5px;font-weight:700;color:var(--teal-dark);letter-spacing:-.1px;
+    display:flex;align-items:center;gap:6px;margin-bottom:9px;
+  }
+  .eyebrow i{width:5px;height:5px;border-radius:50%;background:var(--teal);display:inline-block}
+  h1{
+    margin:0;font-size:29px;font-weight:900;line-height:1.26;letter-spacing:-1.1px;
+  }
+  .sub{
+    margin:9px 0 0;font-size:16.5px;font-weight:700;color:var(--teal-dark);
+    line-height:1.45;letter-spacing:-.5px;
+  }
+  .lede{
+    margin:12px 0 0;font-size:14px;line-height:1.68;color:#5F594F;letter-spacing:-.2px;
+  }
+  .pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .pill{
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:6px 11px;font-size:12.3px;font-weight:700;color:#3A342C;letter-spacing:-.3px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04);
+  }
+  .pill b{color:var(--teal);font-weight:900}
+  .hero-meta{
+    margin-top:12px;font-size:11.5px;color:#8A8277;letter-spacing:-.2px;
+    display:flex;flex-wrap:wrap;align-items:center;gap:5px;
+  }
+  .hero-meta .dot{color:#C9C2B6}
+
+  /* ── 공통 카드 ── */
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:16px 16px 15px;margin-top:12px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04),0 6px 16px rgba(35,30,20,.035);
+  }
+  .card-h{display:flex;align-items:center;gap:8px;margin:0 0 8px}
+  .card-h .n{
+    flex:0 0 auto;width:22px;height:22px;border-radius:7px;
+    background:var(--teal-soft);color:var(--teal-dark);
+    font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;
+    letter-spacing:-.2px;
+  }
+  .card-h h2{margin:0;font-size:16.5px;font-weight:900;letter-spacing:-.55px;line-height:1.35}
+  .card p{margin:0 0 9px;font-size:14px;line-height:1.68;color:#3A342C;letter-spacing:-.2px}
+  .card p:last-child{margin-bottom:0}
+  .card b,.card strong{font-weight:700;color:var(--ink)}
+  .card ul{margin:0 0 2px;padding-left:17px}
+  .card ul li{font-size:14px;line-height:1.68;color:#3A342C;margin-bottom:7px;letter-spacing:-.2px}
+  .card ul li:last-child{margin-bottom:0}
+  .card ul li::marker{color:#C9C2B6}
+
+  /* ── 섹션 타이틀(카드 밖) ── */
+  .block-title{
+    display:flex;align-items:baseline;gap:7px;margin:26px 2px 0;
+    font-size:12px;font-weight:700;color:#8A8277;letter-spacing:.02em;
+  }
+  .block-title span{color:var(--teal-dark)}
+
+  /* ── 한눈에 비교 (필요 없으면 이 블록 통째로 삭제) ── */
+  .cmp{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:16px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04),0 8px 20px rgba(35,30,20,.04)}
+  .cmp h2{margin:0 0 12px;font-size:14px;font-weight:900;letter-spacing:-.4px;display:flex;align-items:center;gap:6px}
+  .cmp h2 em{font-style:normal;font-size:11px;font-weight:700;color:#8A8277;letter-spacing:-.1px}
+  .cmp-item{padding:12px 0;border-top:1px dashed #E6DFD2}
+  .cmp-item:first-of-type{border-top:0;padding-top:0}
+  .cmp-label{font-size:11.5px;font-weight:700;color:#8A8277;letter-spacing:-.2px;margin-bottom:8px}
+  .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+  .bar-row:last-of-type{margin-bottom:0}
+  .bar-name{flex:0 0 96px;font-size:11.6px;color:#5F594F;letter-spacing:-.3px;line-height:1.35}
+  .bar-track{flex:1 1 auto;height:9px;border-radius:999px;background:#F2EDE3;overflow:hidden}
+  .bar-fill{height:100%;border-radius:999px;background:var(--red)}
+  .bar-fill.mild{background:#E8B7AC}
+  .bar-fill.teal{background:var(--teal)}
+  .bar-val{flex:0 0 auto;font-size:12px;font-weight:900;color:var(--ink);letter-spacing:-.3px;min-width:66px;text-align:right}
+  .bar-val small{font-size:10.5px;font-weight:700;color:#8A8277}
+  .cmp-foot{
+    margin-top:10px;font-size:11.5px;line-height:1.55;color:#6F685D;letter-spacing:-.2px;
+    background:#FBF8F2;border-radius:9px;padding:8px 10px;
+  }
+  .x-tag{
+    display:inline-block;background:var(--red-soft);color:#B33320;font-weight:900;
+    font-size:11px;border-radius:6px;padding:1.5px 6px;margin-left:4px;letter-spacing:-.1px;
+  }
+
+  /* ── 목차 ── */
+  .toc{
+    background:#FBF8F2;border:1px solid var(--line);border-radius:16px;
+    padding:14px 16px 12px;margin-top:14px;
+  }
+  .toc h2{margin:0 0 8px;font-size:12px;font-weight:900;color:#8A8277;letter-spacing:.03em}
+  .toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+  .toc li{margin:0}
+  .toc a{
+    display:flex;align-items:baseline;gap:8px;
+    text-decoration:none;color:#3A342C;font-size:13.3px;letter-spacing:-.25px;
+    padding:5.5px 0;border-top:1px solid #EFE9DE;
+  }
+  .toc li:first-child a{border-top:0}
+  .toc a .i{flex:0 0 14px;font-size:11.5px;font-weight:900;color:var(--teal)}
+  .toc a .t{flex:1 1 auto}
+  .toc a .c{flex:0 0 auto;font-size:10.5px;font-weight:700;color:#A8A093}
+
+  /* ── 코드/프롬프트 박스 ── */
+  .prompt{
+    margin:10px 0 4px;border:1px solid #E2DACB;border-radius:12px;overflow:hidden;
+    background:var(--code-bg);
+  }
+  .prompt-h{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    background:#EDE7DA;padding:7px 9px 7px 11px;
+  }
+  .prompt-h .lbl{
+    font-size:11px;font-weight:700;color:#6F685D;letter-spacing:-.2px;
+    display:flex;align-items:center;gap:5px;min-width:0;
+  }
+  .prompt-h .lbl svg{width:12px;height:12px;flex:0 0 auto;color:#8A8277}
+  .copy-btn{
+    -webkit-appearance:none;appearance:none;font-family:inherit;cursor:pointer;
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--card);border:1px solid #DCD3C4;border-radius:7px;
+    padding:4px 9px;font-size:11.5px;font-weight:700;color:#3A342C;letter-spacing:-.2px;
+    line-height:1;white-space:nowrap;transition:background .15s,color .15s,border-color .15s;
+  }
+  .copy-btn svg{width:11px;height:11px}
+  .copy-btn:active{transform:scale(.96)}
+  .copy-btn.done{background:var(--teal);border-color:var(--teal);color:#fff}
+  .prompt pre{
+    margin:0;padding:11px 12px 12px;font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,"NotoKR",monospace;
+    font-size:12px;line-height:1.62;color:#2A2620;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ── 단계 목록 ── */
+  .steps{list-style:none;margin:2px 0 0;padding:0;counter-reset:s}
+  .steps li{
+    position:relative;padding-left:26px;margin-bottom:10px;
+    font-size:14px;line-height:1.66;color:#3A342C;letter-spacing:-.2px;
+  }
+  .steps li:last-child{margin-bottom:0}
+  .steps li::before{
+    counter-increment:s;content:counter(s);
+    position:absolute;left:0;top:1px;
+    width:18px;height:18px;border-radius:50%;
+    background:#F4F0E8;border:1px solid #E6DFD2;color:#6F685D;
+    font-size:10.5px;font-weight:900;display:flex;align-items:center;justify-content:center;
+    line-height:1;
+  }
+
+  .steps li .os{display:block;margin-top:3px}
+  .sources li{margin-bottom:9px}
+  .src-meta{display:block;margin-top:1px;font-size:11.5px;line-height:1.5;color:#A8A093;letter-spacing:-.1px}
+  .ok{
+    margin:11px 0 2px;background:var(--teal-soft);border-radius:10px;padding:9px 11px;
+    font-size:13px;line-height:1.6;color:#0A4F42;letter-spacing:-.2px;
+  }
+  .ok b{color:#0A4F42}
+  .ok .tag{
+    display:inline-block;font-size:10.5px;font-weight:900;background:var(--teal);color:#fff;
+    border-radius:5px;padding:1.5px 6px;margin-right:5px;letter-spacing:-.1px;vertical-align:1px;
+  }
+  .note{
+    margin:10px 0 2px;background:#FBF8F2;border-left:3px solid #E6DFD2;border-radius:0 9px 9px 0;
+    padding:9px 11px;font-size:12.8px;line-height:1.62;color:#5F594F;letter-spacing:-.2px;
+  }
+
+  /* ── 준비물 표: 모바일에서는 행마다 3칸을 세로로 쌓아 390px 가로 넘침을 막는다 ── */
+  .tbl{width:100%;border-collapse:collapse;margin:2px 0 0;font-size:13px;table-layout:fixed}
+  .tbl thead{display:none}
+  .tbl tr{display:block;border-top:1px solid var(--line);padding:10px 0}
+  .tbl tr:first-child{border-top:0;padding-top:2px}
+  .tbl td{display:block;padding:0;font-size:13px;line-height:1.6;color:#3A342C;letter-spacing:-.2px}
+  .tbl td[data-l="준비물"]{font-weight:700;color:var(--ink);font-size:13.6px;margin-bottom:3px}
+  .tbl td[data-l="왜 필요해요?"]{margin-bottom:4px}
+  .tbl td[data-l="왜 필요해요?"]::before{
+    content:"왜 ";font-weight:700;color:#A8A093;font-size:11.5px;
+  }
+  .tbl td[data-l="어디서 받아요?"]::before{
+    content:"받는 곳 ";font-weight:700;color:var(--teal-dark);font-size:11.5px;
+  }
+  .tbl td[data-l="어디서 받아요?"]{color:#4E483E;font-size:12.6px}
+
+  /* ── 측정 결과 막대 (숫자 비교 시각화) ── */
+  .measure{margin:14px 0 0 !important;line-height:1.45}
+  .measure b{display:block;font-size:14px;margin-bottom:2px}
+  .measure span{display:block;font-weight:400;color:#8A8277;font-size:11.8px;letter-spacing:-.2px}
+  .gain{list-style:none;margin:10px 0 0;padding:0}
+  .gain li{border-top:1px solid var(--line);padding:9px 0}
+  .gain li:first-child{border-top:0;padding-top:2px}
+  .gain .g-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .gain .g-cmd{font-size:13px;font-weight:700;color:var(--ink);letter-spacing:-.25px;line-height:1.4}
+  .gain .g-cut{
+    flex:0 0 auto;font-size:11.5px;font-weight:900;color:var(--teal-dark);
+    background:var(--teal-soft);border-radius:6px;padding:2px 6px;letter-spacing:-.2px;
+  }
+  .gain .g-cut.low{color:#8A5A12;background:#FBEFD8}
+  .gain .g-num{margin-top:3px;font-size:11.8px;color:#6F685D;letter-spacing:-.2px}
+  .gain .g-num b{color:var(--ink);font-weight:900}
+  .gain .g-bar{margin-top:6px;height:6px;border-radius:999px;background:#F2EDE3;overflow:hidden}
+  .gain .g-bar i{display:block;height:100%;border-radius:999px;background:var(--teal)}
+
+  /* ── 꼭 알아 둘 점 체크리스트 ── */
+  .checks{list-style:none;margin:0;padding:0}
+  .checks li{
+    position:relative;padding-left:22px;margin-bottom:11px;
+    font-size:13.6px;line-height:1.66;color:#3A342C;letter-spacing:-.2px;
+  }
+  .checks li:last-child{margin-bottom:0}
+  .checks li::before{
+    content:"";position:absolute;left:2px;top:7px;width:9px;height:9px;border-radius:3px;
+    background:var(--red-soft);border:1px solid #F0C9C1;
+  }
+
+  /* ── PDF 다운로드 카드 ── */
+  .pdf-card{
+    margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:16px;box-shadow:0 1px 2px rgba(35,30,20,.05),0 10px 24px rgba(35,30,20,.05);
+  }
+  .pdf-top{display:flex;align-items:center;gap:10px}
+  .pdf-badge{
+    flex:0 0 auto;width:40px;height:46px;border-radius:7px;background:var(--red);
+    color:#fff;font-size:10.5px;font-weight:900;letter-spacing:.04em;
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:7px;
+    position:relative;box-shadow:0 3px 8px rgba(224,69,46,.28);
+  }
+  .pdf-badge::before{
+    content:"";position:absolute;top:0;right:0;
+    border-width:0 11px 11px 0;border-style:solid;
+    border-color:transparent #FAF7F1 transparent transparent;
+  }
+  .pdf-tt{flex:1 1 auto;min-width:0}
+  .pdf-tt strong{display:block;font-size:14.8px;font-weight:900;letter-spacing:-.45px;line-height:1.35}
+  .pdf-tt span{display:block;margin-top:2px;font-size:11.8px;color:#8A8277;letter-spacing:-.2px}
+  .pdf-cta{
+    display:flex;align-items:center;justify-content:center;gap:7px;
+    margin-top:13px;text-decoration:none;
+    background:var(--ink);color:#fff;border-radius:11px;
+    padding:12px 14px;font-size:14px;font-weight:900;letter-spacing:-.4px;
+    box-shadow:0 3px 10px rgba(33,30,26,.16);
+  }
+  .pdf-cta:active{transform:scale(.99)}
+  .pdf-cta svg{width:15px;height:15px}
+  .pdf-fine{margin:9px 2px 0;font-size:11.3px;line-height:1.55;color:#A8A093;letter-spacing:-.1px;text-align:center}
+
+  /* ── 푸터 ── */
+  footer{
+    margin-top:26px;padding-top:18px;border-top:1px solid var(--line);text-align:center;
+  }
+  .foot-name{font-size:14px;font-weight:900;letter-spacing:-.4px}
+  .foot-name b{color:var(--teal-dark)}
+  .foot-desc{margin:5px auto 0;max-width:300px;font-size:11.5px;line-height:1.65;color:#8A8277;letter-spacing:-.2px}
+  .foot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:11px}
+  .foot-links a{
+    text-decoration:none;font-size:11.5px;font-weight:700;color:#5A544A;letter-spacing:-.2px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 11px;
+  }
+  .foot-copy{margin-top:14px;font-size:10.5px;color:#B3ABA0;line-height:1.7;letter-spacing:-.1px}
+
+  /* ── 토스트 ── */
+  #toast{
+    position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);
+    background:#211E1A;color:#fff;font-size:12.5px;font-weight:700;letter-spacing:-.2px;
+    padding:9px 15px;border-radius:999px;box-shadow:0 8px 22px rgba(33,30,26,.28);
+    opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:50;
+    white-space:nowrap;
+  }
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media (min-width:520px){
+    body{font-size:15.5px}
+    .page{padding:0 22px 56px}
+    h1{font-size:33px}
+  }
+  /* 인쇄로 뽑아도 깨지지 않게 */
+  @media print{
+    body{background:#fff}
+    .topbar .back,.pdf-card,#toast{display:none}
+    .card,.cmp,.toc{box-shadow:none;break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="topbar">
+    <a class="back" href="../../"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>전체 가이드</a>
+    <span class="num-badge">#20 · 11월 13일</span>
+  </nav>
+  <header class="hero">
+    <div class="eyebrow"><i></i>영상·이미지</div>
+    <h1>클로드 코드에<br>유튜브 팀을</h1>
+    <p class="sub">클로드한테 유튜브 팀이 하는 일을 시키는 스킬 묶음</p>
+    <p class="lede">대본 쓰기, 편집할 곳 찾기, 쇼츠 고르기 같은 일을 11가지로 나눠 놨어요. 붙여 넣기 한 번으로 깔고, <code>/yt-script</code>처럼 빗금(/)으로 시작하는 말로 불러요. 회원가입도 API 키도 필요 없어요.</p>
+    <div class="pills"><span class="pill"><b>무료</b> 가입·API 키 없음</span><span class="pill"><b>스킬</b> 11개 묶음</span><span class="pill"><b>복사</b> 붙여 넣기 한 번</span></div>
+    <div class="hero-meta"><span>2026년 11월 12일 확인</span><span class="dot">·</span><span>Claude Code(Pro 이상)</span><span class="dot">·</span><span>무료(MIT) · 회원가입·API 키 없음</span></div>
+  </header>
+  
+  <nav class="toc" aria-label="목차"><h2>목차</h2><ol><li><a href="#s0"><span class="i">0</span><span class="t">이게 뭐예요?</span><span class="c">개요</span></a></li><li><a href="#s1"><span class="i">1</span><span class="t">준비물</span><span class="c">3개</span></a></li><li><a href="#s2"><span class="i">2</span><span class="t">Claude Code 열기</span><span class="c">처음 한 번</span></a></li><li><a href="#s3"><span class="i">3</span><span class="t">스킬 깔기</span><span class="c">복사</span></a></li><li><a href="#s4"><span class="i">4</span><span class="t">내 말투 알려 주기</span><span class="c">10분</span></a></li><li><a href="#s5"><span class="i">5</span><span class="t">첫 대본</span><span class="c">/yt-script</span></a></li><li><a href="#s6"><span class="i">6</span><span class="t">스킬 11개</span><span class="c">한 줄씩</span></a></li><li><a href="#s7"><span class="i">7</span><span class="t">꼭 알아 둘 점</span><span class="c">주의</span></a></li><li><a href="#s8"><span class="i">8</span><span class="t">그래도 안 되면</span><span class="c">복사</span></a></li></ol></nav>
+  <div class="block-title"><span>STEP 00</span> 먼저 이것만</div><article class="card" id="s0"><div class="card-h"><span class="n">0</span><h2>이게 뭐예요?</h2></div><ul><li>클로드한테 <b>유튜브 팀이 하는 일</b>을 시키는 도구 묶음이에요. 대본 쓰기, 편집할 곳 찾기, 쇼츠 고르기 같은 일을 11가지로 나눠 놨어요.</li><li>도구 하나하나를 <b>스킬</b>이라고 불러요. 스킬은 "이 일은 이렇게 해" 하고 클로드에게 미리 써 준 설명서 파일이에요.</li><li>스킬을 깔아 두면, 클로드에게 <code>/yt-script</code>처럼 빗금(/)으로 시작하는 말을 쳐서 불러요.</li><li>스킬은 <b>무료</b>예요. 회원가입도, API 키(다른 서비스에 들어가는 비밀번호 같은 것)도 필요 없어요.</li></ul></article><div class="block-title"><span>STEP 01</span> 시작 전에</div><article class="card" id="s1"><div class="card-h"><span class="n">1</span><h2>준비물</h2></div><table class="tbl"><thead><tr><th>준비물</th><th>왜 필요해요?</th><th>어디서 받아요?</th></tr></thead><tbody><tr><td data-l="준비물">Claude 유료 플랜(Pro 이상)</td><td data-l="왜 필요해요?">이 스킬은 Claude Code에서 써요. Claude Code는 유료 플랜에서만 돼요.</td><td data-l="어디서 받아요?"><a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a>에 로그인 → 설정에서 내 플랜 확인</td></tr><tr><td data-l="준비물">Claude 데스크톱 앱</td><td data-l="왜 필요해요?">Claude Code를 여는 가장 쉬운 방법이에요.</td><td data-l="어디서 받아요?"><a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a></td></tr><tr><td data-l="준비물">내 유튜브 영상 3개(있으면)</td><td data-l="왜 필요해요?">내 말투를 클로드에게 알려 줄 때 써요.</td><td data-l="어디서 받아요?">내 채널</td></tr></tbody></table></article><div class="block-title"><span>STEP 02</span> 처음 한 번</div><article class="card" id="s2"><div class="card-h"><span class="n">2</span><h2>Claude Code 열기</h2></div><ol class="steps"><li><a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a>에서 내 컴퓨터(Windows 또는 Mac)에 맞는 앱을 받아요.</li><li>받은 파일을 열어 설치하고, 앱을 켜서 로그인해요.</li><li>앱 왼쪽 위에 있는 <b>Code</b> 탭을 눌러요.</li><li>폴더를 고르라는 창이 뜨면, 바탕화면에 새 폴더(예: <code>youtube-work</code>)를 하나 만들어서 골라요.</li><li><b>이렇게 보이면 성공:</b> 화면 아래에 글을 쓰는 칸이 생겨요.</li></ol><p>터미널(까만 창에 글자로 명령을 치는 프로그램)을 쓸 줄 안다면 이렇게 해도 돼요.</p><ul><li>Windows: PowerShell을 열고 <code class="brk">irm https://claude.ai/install.ps1 | iex</code>를 붙여 넣은 뒤 Enter</li><li>Mac: 터미널을 열고 <code class="brk">curl -fsSL https://claude.ai/install.sh | bash</code>를 붙여 넣은 뒤 Enter</li><li>다 깔리면 <code>claude</code>라고 치고 Enter</li></ul></article><div class="block-title"><span>STEP 03</span> 붙여 넣기 한 번</div><article class="card" id="s3"><div class="card-h"><span class="n">3</span><h2>스킬 깔기</h2></div><ol class="steps"><li>Claude Code의 글 쓰는 칸에 아래 상자 안 글을 <b>통째로</b> 복사해서 붙여 넣어요.</li><li>Enter를 눌러요.</li><li>클로드가 "이 명령을 실행해도 될까요?" 하고 물으면, 내용을 읽고 허락 버튼을 눌러요.</li><li>클로드가 설치가 끝났다고 말하면, 글 칸에 빗금 <code>/</code> 하나만 쳐 보세요.</li><li><b>이렇게 보이면 성공:</b> 뜨는 목록에 <code>yt-</code>로 시작하는 이름(<code>yt-script</code>, <code>yt-edit</code> 같은 것)이 보여요.</li></ol><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>1번에서 Claude Code에 붙여 넣기</span><button class="copy-btn" type="button" data-copy="p-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-1">https://github.com/Jakeschincariol/youtube-agent-skill
+이 스킬 설치해 줘.
+설치하면서 지금 뭘 하는지 쉬운 말로 알려 주고, 내 컴퓨터에 새로 깔아야 하는 게 있으면 깔기 전에 나한테 먼저 물어봐.
+다 되면 /yt-script가 되는지 확인해 줘.</pre></div><p><b>목록에 안 보이면</b></p><ul><li>앱을 완전히 껐다가 다시 켜고, 4번을 다시 해 봐요.</li><li>그래도 없으면 글 칸에 "youtube-agent-skill이 설치됐는지 확인해 줘"라고 써요.</li></ul></article><div class="block-title"><span>STEP 04</span> 처음 한 번만</div><article class="card" id="s4"><div class="card-h"><span class="n">4</span><h2>내 말투 알려 주기 (10분)</h2></div><ul><li>스킬 11개는 모두 <code>voice.md</code>라는 파일을 읽어요. 이 파일에 내 말투가 적혀 있어야 대본이 내 말처럼 나와요.</li><li>이 파일이 비어 있으면 남의 말투로 대본이 나와요. 그래서 이 단계를 꼭 해요.</li></ul><ol class="steps"><li>내 영상 3개의 대본(자막 내용)을 준비해요. 대본이 없으면 영상 주소라도 괜찮아요.</li><li>아래 상자 안 글을 복사해서, [ ] 안을 내 것으로 바꾼 뒤 붙여 넣어요.</li><li><b>이렇게 보이면 성공:</b> 클로드가 <code>voice.md</code>를 만들었다고 말하고, 내용 일부를 보여 줘요.</li></ol><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>2번에서 붙여 넣기 ([ ] 채우기)</span><button class="copy-btn" type="button" data-copy="p-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-2">youtube-agent-skill이 쓰는 voice.md를 만들어 줘.
+아래는 내 영상 3개야. 이걸 보고 내 말투, 자주 쓰는 표현, 영상 길이를 정리해 줘.
+1. [영상 1의 대본이나 주소]
+2. [영상 2의 대본이나 주소]
+3. [영상 3의 대본이나 주소]
+저장 위치는 youtube-agent-skill 설명서에 나온 위치(~/.claude/youtube/voice.md)로 해 줘.</pre></div></article><div class="block-title"><span>STEP 05</span> 써 보기</div><article class="card" id="s5"><div class="card-h"><span class="n">5</span><h2>첫 대본 만들기</h2></div><ol class="steps"><li>글 칸에 이렇게 써요: <code class="brk">/yt-script 다음 영상 아이디어: [내 아이디어 한 줄]</code></li><li>클로드가 영상 첫 문장(훅) 후보 5개와 점수를 보여 줘요.</li><li>마음에 드는 번호를 말하면 그걸로 대본을 써 줘요.</li></ol></article><div class="block-title"><span>STEP 06</span> 무엇이 있나</div><article class="card" id="s6"><div class="card-h"><span class="n">6</span><h2>스킬 11개, 한 줄씩</h2></div><ul><li><b>/yt-plan:</b> 내 시간에 맞춰 한 주 계획을 짜요.</li><li><b>/yt-script:</b> 아이디어 하나로 첫 문장 5개와 점수, 대본을 줘요.</li><li><b>/yt-package:</b> 제목과 썸네일을 한 쌍으로 점검해요.</li><li><b>/yt-edit:</b> 자막 파일을 보고 쉬는 곳·군더더기·다시 찍은 곳을 찾아 "몇 분 몇 초를 자르세요" 목록을 줘요.</li><li><b>/yt-shorts:</b> 긴 영상에서 쇼츠로 쓸 구간과 새 첫 문장을 찾아요.</li><li><b>/yt-chapters:</b> 유튜브 규칙에 맞는 챕터(목차)를 만들어요.</li><li><b>/yt-seo:</b> 설명글, 쓸 만한 태그, 노릴 검색어 3개를 줘요.</li><li><b>/yt-viral:</b> 내 분야에서 뜨는 영상을, 그 채널 평소보다 몇 배 잘됐는지로 줄 세워요.</li><li><b>/yt-retention:</b> 시청 지속 데이터를 보고 사람들이 빠지는 곳과 고칠 점을 알려 줘요.</li><li><b>/yt-comment:</b> 댓글을 나누고 내 말투로 답글을 써 줘요. 고정할 댓글도 골라 줘요.</li><li><b>/yt-audit:</b> 채널 전체를 보고 가장 먼저 고칠 것 하나를 알려 줘요.</li></ul></article><div class="block-title"><span>STEP 07</span> 주의</div><article class="card" id="s7"><div class="card-h"><span class="n">7</span><h2>꼭 알아 둘 점</h2></div><ul class="checks"><li><b>영상을 대신 올려 주지는 않아요.</b> 유튜브 업로드는 내가 직접 해요.</li><li><b>/yt-edit은 자막 파일(.srt)이 있어야 해요.</b> 영상을 직접 자르지는 않아요. 자를 곳 목록만 주고, 실제 편집은 편집 프로그램에서 해요.</li><li><b>/yt-viral은 누구나 볼 수 있는 목록만 읽어요.</b> 로그인해서 정보를 긁어 오지 않아요.</li><li><b>훅 점수 매기기, 쉬는 곳 찾기 같은 일은 Claude Code에서 해야 제대로 돼요.</b> 이 기능들은 컴퓨터에서 돌아가는 작은 프로그램(파이썬)을 써요. 컴퓨터에 파이썬 3가 없으면 클로드가 깔자고 물어볼 거예요(추정).</li><li><b>Claude 앱(채팅)만 쓴다면:</b> 스킬 하나의 <code>SKILL.md</code> 내용을 대화 맨 위에 붙여 넣으면 그 방식으로 움직여요. 다만 위의 작은 프로그램은 못 써서 /yt-script, /yt-edit, /yt-retention은 약해져요.</li></ul></article><div class="block-title"><span>STEP 08</span> 막히면</div><article class="card" id="s8"><div class="card-h"><span class="n">8</span><h2>그래도 안 되면</h2></div><p>아래 글을 복사해서 [ ]를 채운 뒤 Claude Code에 붙여 넣어요.</p><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>Claude Code에 붙여 넣기 ([ ] 채우기)</span><button class="copy-btn" type="button" data-copy="p-3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-3">youtube-agent-skill의 [스킬 이름]을 쓰다가 이런 오류가 나왔어: [오류 문구 그대로]
+내 컴퓨터는 [Windows / Mac]이야.
+왜 그런지, 어떻게 고치는지 쉬운 말로 한 단계씩 알려 줘.</pre></div></article>
+  <article class="card" id="src"><div class="card-h"><span class="n">↗</span><h2>출처</h2></div>
+    <ul class="sources"><li><a href="https://github.com/Jakeschincariol/youtube-agent-skill" target="_blank" rel="noopener">youtube-agent-skill GitHub (README)</a><span class="src-meta">2026년 11월 12일 확인</span></li></ul>
+    <div class="note">2026년 11월 12일에 youtube-agent-skill 설명서(README)를 보고 쓴 안내예요. 영상 속 화면은 이해를 돕는 그림이고, 점수와 숫자는 예시예요.</div>
+  </article>
+  <section class="pdf-card">
+    <div class="pdf-top"><div class="pdf-badge">PDF</div><div class="pdf-tt"><strong>이 가이드 PDF로 다운받기</strong><span>A4 4쪽 · 저장해 두고 따라 하세요</span></div></div>
+    <a class="pdf-cta" href="guide.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.8v10.4"/><path d="M7.6 10.2 12 14.6l4.4-4.4"/><path d="M4.6 19.4h14.8"/></svg>다운받기</a>
+    <p class="pdf-fine">인쇄해서 책상에 두고 봐도 되게 만들었어요. 폰에서 열어도 글씨가 깨지지 않아요.</p>
+  </section>
+  <footer>
+    <div class="foot-name"><b>@ai.onepage</b></div>
+    <p class="foot-desc">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요. 새 가이드는 인스타와 허브에 올라와요.</p>
+    <div class="foot-links"><a href="../../">전체 가이드 허브</a><a href="https://instagram.com/ai.onepage" target="_blank" rel="noopener">인스타 @ai.onepage</a></div>
+    <p class="foot-copy">#20 · 클로드 코드에 유튜브 팀을: youtube-agent-skill 설치와 사용법 · 11월 13일<br>youtube-agent-skill 설명서(README, 2026년 11월 12일 확인)를 보고 썼어요. 영상 속 점수와 숫자는 예시예요.</p>
+  </footer>
+</div>
+<div id="toast" role="status" aria-live="polite">복사됐어요 ✓</div>
+
+<script>
+/* 복사 버튼: navigator.clipboard → 실패하면 textarea + execCommand (인스타 인앱 웹뷰 대응).
+   이 스크립트는 손대지 않는다. 버튼은 .copy-btn, 대상은 data-copy="pre의 id". */
+(function(){
+  var timers = new WeakMap();
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1800);
+  }
+
+  function legacyCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly','');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '-9999px';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    var ok = false;
+    try {
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      ok = document.execCommand('copy');
+    } catch(e){ ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function copyText(text, done){
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function(){ done(true); },
+        function(){ done(legacyCopy(text)); });
+    } else {
+      done(legacyCopy(text));
+    }
+  }
+
+  document.querySelectorAll('.copy-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var box = document.getElementById(btn.getAttribute('data-copy'));
+      if (!box) return;
+      var text = box.innerText.replace(/\u00a0/g, ' ').trim();
+      var label = btn.querySelector('.copy-label');
+      copyText(text, function(ok){
+        if (ok) {
+          btn.classList.add('done');
+          if (label) label.textContent = '복사됨 ✓';
+        }
+        showToast(ok ? '복사됐어요 ✓' : '복사하지 못했어요');
+        clearTimeout(timers.get(btn));
+        timers.set(btn, setTimeout(function(){
+          btn.classList.remove('done');
+          if (label) label.textContent = '복사';
+        }, 2200));
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

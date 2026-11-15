@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>OpenAI 모델을 내 컴퓨터에서 무료로: Ollama 설치 가이드 · ai.onepage #7</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:block}
+
+  :root{
+    --ink:#211E1A;
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+    --code-bg:#F5F1E9;
+    --paper:#FAF7F1;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#fff}
+  body{
+    font-family:"NotoKR",sans-serif;color:var(--ink);
+    font-size:9.35pt;line-height:1.56;word-break:keep-all;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  @page{size:A4;margin:14mm 15mm 16mm}
+
+  /* ── 머리글 ── */
+  .head{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:6.2mm 6.5mm 5.6mm;margin-bottom:4.2mm;
+  }
+  .head-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4mm}
+  .head-brand{font-size:8.4pt;font-weight:900;letter-spacing:.04em;color:var(--teal-dark)}
+  .head-num{
+    font-size:8pt;font-weight:700;color:var(--teal-dark);background:var(--teal-soft);
+    border-radius:20px;padding:1.2mm 3mm;
+  }
+  .head h1{margin:0;font-size:21pt;font-weight:900;letter-spacing:-.03em;line-height:1.24}
+  .head .sub{margin:2mm 0 0;font-size:11pt;font-weight:700;color:var(--teal-dark);letter-spacing:-.02em}
+  .head .lede{margin:3mm 0 0;font-size:9.4pt;line-height:1.66;color:#4E483E}
+  .head .pills{display:flex;gap:1.6mm;margin-top:3.4mm;flex-wrap:wrap}
+  .head .pill{
+    background:#fff;border:1px solid var(--line);border-radius:20px;
+    padding:1.1mm 2.6mm;font-size:8.4pt;font-weight:700;color:#3A342C;
+  }
+  .head .meta{margin-top:3mm;font-size:7.9pt;color:var(--muted)}
+  .head .meta b{color:#5F594F;font-weight:700}
+
+  /* ── 비교 (선택) ── */
+  .cmp{border:1px solid var(--line);border-radius:4mm;padding:4.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid}
+  .cmp h2{margin:0 0 3mm;font-size:10.5pt;font-weight:900;letter-spacing:-.02em}
+  .cmp h2 em{font-style:normal;font-weight:700;font-size:7.8pt;color:var(--muted);margin-left:2mm}
+  .cmp-row{display:flex;gap:6mm}
+  .cmp-col{flex:1 1 0;min-width:0}
+  .cmp-col + .cmp-col{border-left:1px solid var(--line);padding-left:6mm}
+  .cmp-label{font-size:7.9pt;font-weight:700;color:var(--muted);margin-bottom:2.4mm}
+  .bar-row{display:flex;align-items:center;gap:2mm;margin-bottom:1.8mm}
+  .bar-name{flex:0 0 27mm;font-size:7.9pt;color:#5F594F;line-height:1.3}
+  .bar-track{flex:1 1 auto;height:2.4mm;border-radius:20px;background:#F2EDE3;overflow:hidden}
+  .bar-fill{height:100%;border-radius:20px;background:var(--red)}
+  .bar-fill.mild{background:#E8B7AC}
+  .bar-fill.teal{background:var(--teal)}
+  .bar-val{flex:0 0 auto;font-size:8.2pt;font-weight:900;min-width:17mm;text-align:right}
+  .cmp-foot{margin-top:2mm;font-size:7.8pt;line-height:1.5;color:#5F594F}
+  .cmp-foot b{font-weight:700;color:var(--ink)}
+
+  /* ── 목차 ── */
+  .toc{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:3.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid;
+  }
+  .toc h2{margin:0 0 1.6mm;font-size:8pt;font-weight:900;color:var(--muted);letter-spacing:.06em}
+  .toc ol{list-style:none;margin:0;padding:0;columns:2;column-gap:7mm}
+  .toc li{font-size:8.4pt;color:#3A342C;padding:.7mm 0;break-inside:avoid}
+  .toc li b{color:var(--teal);font-weight:900;margin-right:1.4mm}
+  .toc li span{color:#A8A093;font-size:7.4pt}
+
+  /* ── 섹션 ── */
+  .sec{margin-bottom:3.4mm}
+  .sec-h{break-after:avoid}
+  .sec>.kicker{break-after:avoid}
+  p{orphans:3;widows:3}
+  li{orphans:2;widows:2}
+  .sec>.kicker:first-child{margin-top:0}
+  .sec-h{display:flex;align-items:baseline;gap:2mm;margin:0 0 1.6mm}
+  .sec-h .n{
+    flex:0 0 auto;font-size:8pt;font-weight:900;color:var(--teal-dark);
+    background:var(--teal-soft);border-radius:1.4mm;padding:.3mm 1.6mm;
+  }
+  .sec-h h2{margin:0;font-size:11.4pt;font-weight:900;letter-spacing:-.03em}
+  .sec p{margin:0 0 1.8mm;font-size:9.4pt;line-height:1.64;color:#2C2822}
+  .sec p:last-child{margin-bottom:0}
+  .sec b,.sec strong{font-weight:700;color:var(--ink)}
+  code.brk{white-space:normal;overflow-wrap:anywhere}
+  code{
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;font-size:8.3pt;
+    background:var(--code-bg);border:.4pt solid #E3DCCE;border-radius:1mm;padding:0 .8mm;
+    white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  }
+
+  ol.steps{margin:0 0 1.8mm;padding-left:5.2mm}
+  ol.steps li{font-size:9.1pt;line-height:1.55;margin-bottom:1mm;padding-left:.6mm}
+  ol.steps li::marker{color:var(--teal);font-weight:700}
+  ul.plain{margin:0 0 1.8mm;padding-left:4.4mm}
+  ul.plain li{font-size:9.1pt;line-height:1.56;margin-bottom:1.2mm}
+  ul.plain li::marker{color:#C0B7A8}
+
+  .ok{
+    background:var(--teal-soft);border-radius:2mm;padding:2.2mm 3mm;margin:1.6mm 0;
+    font-size:8.6pt;line-height:1.55;color:#0A4F42;break-inside:avoid;
+  }
+  .ok b{color:#0A4F42}
+  .ok .tag{
+    display:inline-block;background:var(--teal);color:#fff;font-size:7.2pt;font-weight:900;
+    border-radius:1mm;padding:0 1.4mm;margin-right:1.4mm;
+  }
+  .note{
+    background:var(--paper);border-left:.9mm solid #E3DCCE;border-radius:0 2mm 2mm 0;
+    padding:2mm 3mm;margin:1.6mm 0;font-size:8.5pt;line-height:1.58;color:#5F594F;break-inside:avoid;
+  }
+
+  /* ── 표 ── */
+  table{width:100%;border-collapse:collapse;margin:1mm 0 1.8mm;font-size:8.6pt;break-inside:avoid}
+  thead th{
+    background:var(--paper);text-align:left;font-weight:900;font-size:8pt;color:#5F594F;
+    padding:1.8mm 2.4mm;border-bottom:.5pt solid #DDD6C8;
+  }
+  tbody td{padding:1.8mm 2.4mm;border-bottom:.4pt solid var(--line);vertical-align:top;line-height:1.55}
+  tbody tr{break-inside:avoid}
+  tbody tr:last-child td{border-bottom:0}
+  tbody td:first-child{font-weight:700;color:var(--ink)}
+  td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  td.cut{
+    font-weight:900;color:var(--teal-dark);white-space:nowrap;text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  td.cut.low{color:#8A5A12}
+  a{color:var(--teal-dark);text-decoration:none;border-bottom:.3pt solid #C9DCD5}
+
+  /* ── 프롬프트 ── */
+  .prompt{border:.5pt solid #E0D8C8;border-radius:2.4mm;overflow:hidden;margin:1.6mm 0 2mm;break-inside:avoid}
+  .prompt-h{
+    background:#EDE7DA;padding:1.6mm 3mm;font-size:7.9pt;font-weight:700;color:#6F685D;
+    display:flex;justify-content:space-between;
+  }
+  .prompt-h span{font-weight:700}
+  .prompt-h em{font-style:normal;font-size:7.2pt;color:#8E877A}
+  .prompt pre{
+    margin:0;padding:2.6mm 3mm;background:var(--code-bg);
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;
+    font-size:8.2pt;line-height:1.6;color:#2A2620;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ── 푸터(마지막 페이지) ── */
+  .end{
+    margin-top:4mm;border-top:1px solid var(--line);padding-top:3mm;
+    display:flex;justify-content:space-between;gap:5mm;break-inside:avoid;
+  }
+  .end-brand{font-size:9pt;font-weight:900;color:var(--teal-dark);letter-spacing:.02em}
+  .end-desc{font-size:7.8pt;color:var(--muted);line-height:1.55;margin-top:.8mm;max-width:95mm}
+  .end-meta{font-size:7.4pt;color:#A8A093;text-align:right;line-height:1.6}
+
+  .kicker{font-size:7.6pt;font-weight:900;color:#A8A093;letter-spacing:.1em;margin:4mm 0 1.4mm}
+  .kicker:first-child{margin-top:0}
+  .measure-cap{font-size:7.9pt;color:var(--muted);margin:0 0 1.2mm}
+  .measure-cap b{color:var(--ink);font-weight:700}
+  .footer-note{
+    margin-top:3mm;background:var(--paper);border:1px solid var(--line);border-radius:2mm;
+    padding:2.4mm 3mm;font-size:7.9pt;line-height:1.58;color:#5F594F;
+  }
+</style>
+</head>
+<body>
+<div class="head">
+  <div class="head-top"><div class="head-brand">@ai.onepage · AI 툴 가이드</div><div class="head-num">#7 · 11월 6일</div></div>
+  <h1>OpenAI 모델을 내 컴퓨터에서 무료로: Ollama 설치 가이드</h1>
+  <p class="sub">Ollama 설치부터 gpt-oss 첫 질문까지</p>
+  <p class="lede">Ollama는 오픈 AI 모델을 내 컴퓨터에서 돌려 주는 무료 프로그램이에요. OpenAI가 공개한 gpt-oss도 내려받아 쓸 수 있어요. 이름 끝이 <code>:cloud</code>인 모델은 내 컴퓨터가 아니라 서버에서 돌아가요.</p>
+  <div class="pills"><span class="pill">무료 로컬 모델은 0원</span><span class="pill">16GB gpt-oss:20b 메모리</span><span class="pill">주의 :cloud는 서버에서</span></div>
+  <div class="meta"><b>2026년 11월 6일 확인</b> · Windows·macOS·Linux PC · 무료 · :cloud 모델은 크레딧·유료 플랜</div>
+</div>
+
+<div class="toc"><h2>목차</h2><ol><li><b>0</b>Claude Code에 맡기기</li><li><b>1</b>AI에게 맡기기</li><li><b>2</b>이게 뭐예요?</li><li><b>3</b>꼭 알아 둘 점</li><li><b>4</b>준비물</li><li><b>5</b>따라 하기</li><li><b>6</b>질문 10개</li><li><b>7</b>안 될 때</li></ol></div>
+<section class="sec"><div class="kicker">STEP 00 · 제일 빠른 방법</div><div class="sec-h"><span class="n">0</span><h2>Claude Code에 바로 붙여 넣기</h2></div><div class="note">Claude Code는 <b>Pro 이상 유료 플랜</b>에서 쓸 수 있어요(무료 플랜 미포함, 공식 문서 2026-11-06 확인). 무료 플랜이면 이 부분은 건너뛰고 아래 순서대로 따라 하세요.</div><ul class="plain"><li><b>여는 법:</b> Claude 데스크톱 앱 왼쪽 위 <b>Code</b> 탭 → 작업할 폴더 선택. 또는 PowerShell·터미널에서 <code>claude</code> 입력.</li><li><b>Claude Code 설치:</b> Windows PowerShell <code class="brk">irm https://claude.ai/install.ps1 | iex</code> · Mac <code class="brk">curl -fsSL https://claude.ai/install.sh | bash</code></li><li><b>데스크톱 앱:</b> <a href="https://claude.ai/api/desktop/win32/x64/setup/latest/redirect" target="_blank" rel="noopener">Windows</a> / <a href="https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect" target="_blank" rel="noopener">Mac</a></li></ul><div class="prompt"><div class="prompt-h"><span>Claude Code에 붙여 넣기</span><em>복사해서 붙여 넣기</em></div><pre>내 컴퓨터에 Ollama를 설치하고 첫 모델까지 실행해 줘. 한 단계씩 하고, 각 단계 결과를 나에게 보여 줘.
+1. 먼저 내 운영체제와 메모리(RAM) 크기를 확인해 줘.
+2. 공식 설치 명령으로 Ollama를 설치해 줘.
+   - Windows: irm https://ollama.com/install.ps1 | iex
+   - macOS/Linux: curl -fsSL https://ollama.com/install.sh | sh
+3. ollama --version 으로 설치를 확인해 줘.
+4. 메모리가 16GB 이상이면 gpt-oss:20b(약 14GB), 그보다 적으면 gemma3:4b(약 3.4GB)를 추천하고, 내려받기 전에 나에게 물어봐 줘.
+5. 이름 끝에 :cloud가 붙은 모델은 내 컴퓨터가 아니라 서버에서 도니까 고르지 마.
+6. 모델을 받은 뒤 짧은 테스트 질문 하나로 동작을 확인하고, 다음에 내가 직접 쓰는 명령을 알려 줘.</pre></div></section><section class="sec"><div class="kicker">STEP 01 · 채팅 AI에게</div><div class="sec-h"><span class="n">1</span><h2>AI에게 바로 맡기기</h2></div><p>ChatGPT · Claude · Grok 어디든 붙여 넣으세요.</p><div class="prompt"><div class="prompt-h"><span>채팅 AI에 붙여 넣기 ([ ] 채우기)</span><em>복사해서 붙여 넣기</em></div><pre>내 컴퓨터에 Ollama를 설치하고, 내 사양에 맞는 AI 모델을 고르는 걸 처음부터 도와줘.
+- 운영체제: [Windows 11 / macOS / Linux]
+- 메모리(RAM): [8GB / 16GB / 32GB]
+- 그래픽카드: [모름 / 내장 그래픽 / NVIDIA 이름]
+하고 싶은 일: [회의록 요약 / 영어 메일 번역 / 공부 질문]
+
+규칙:
+1. 공식 사이트 ollama.com/download 기준으로, 내 운영체제에서 누를 버튼을 한 단계씩 알려 줘.
+2. 내 메모리에 맞는 모델을 2개만 추천하고, 각각 내려받는 용량과 이유를 알려 줘.
+   (참고: gpt-oss:20b는 약 14GB, 메모리 16GB부터. gemma3:4b는 약 3.4GB. gemma3:1b는 약 806MB)
+3. 설치가 끝났는지 확인하는 방법과 정상일 때 보이는 화면을 알려 줘.
+4. 이름 끝에 :cloud가 붙은 모델은 유료라서 추천하지 마.
+5. 내가 오류 메시지를 붙여 넣으면 원인과 해결 순서를 짧게 알려 줘.</pre></div><div class="note">이 채팅 AI들이 내 컴퓨터에 직접 설치해 주지는 못해요. 단계를 알려 주는 도우미로 쓰세요.</div></section><section class="sec"><div class="kicker">STEP 02 · 먼저 이것만</div><div class="sec-h"><span class="n">2</span><h2>이게 뭐예요?</h2></div><ul class="plain"><li><b>무엇:</b> Ollama는 오픈 AI 모델을 내 컴퓨터에서 돌려 주는 무료 프로그램이에요 (GitHub 별 185,959개, MIT 라이선스, 2026-11-05 기준).</li><li><b>할 수 있는 것:</b> macOS·Windows 앱에서 모델을 내려받아 채팅하고, PDF나 텍스트 파일을 끌어다 놓고 질문할 수 있어요 (공식 블로그 2025-07-30).</li><li><b>OpenAI 모델:</b> gpt-oss는 OpenAI가 공개한 모델이에요. 20b는 약 14GB이고 메모리 16GB부터 돌아가요. Apache 2.0 라이선스예요.</li><li><b>비용:</b> 내 컴퓨터에서 돌리는 로컬 모델은 무료예요. 이름 끝이 <code>:cloud</code>인 모델은 Ollama 서버에서 돌아가고 크레딧이나 유료 플랜이 필요해요.</li><li><b>속도:</b> 컴퓨터 사양에 따라 달라요. 큰 모델은 강한 그래픽카드가 없으면 느려요.</li></ul></section><section class="sec"><div class="kicker">STEP 03 · 주의</div><div class="sec-h"><span class="n">3</span><h2>꼭 알아 둘 점</h2></div><ul class="plain"><li><b>이름 끝에 <code>:cloud</code>가 붙은 모델은 내 컴퓨터가 아니라 Ollama 서버에서 돌아가요.</b> 파일 내용이 서버로 가고, 크레딧이나 유료 플랜이 필요해요. 회사 문서처럼 밖으로 나가면 안 되는 파일은 <code>:cloud</code>가 없는 로컬 모델로만 쓰세요.</li><li><b>속도는 내 컴퓨터 사양에 달려 있어요.</b> 그래픽카드가 약하면 큰 모델은 느려요. 느리면 한 단계 작은 모델로 바꿔요.</li><li><b>메모리가 모자라면 안 돌아가요.</b> gpt-oss:20b는 메모리 16GB부터 돌아가요. 그보다 적으면 gemma3를 쓰세요.</li><li><b>디스크 공간이 필요해요.</b> gpt-oss:20b는 내려받는 데만 약 14GB예요.</li><li>회사 문서는 회사 보안 규정을 먼저 확인하세요.</li></ul></section><section class="sec"><div class="kicker">STEP 04 · 시작 전에</div><div class="sec-h"><span class="n">4</span><h2>준비물과 공식 링크</h2></div><p><b>바로 받기</b> (2026-11-06 확인, 누르면 바로 내려받아요)</p><ul class="plain"><li><b>Windows:</b> <a href="https://ollama.com/download/OllamaSetup.exe" target="_blank" rel="noopener">OllamaSetup.exe</a> · PowerShell 명령 <code class="brk">irm https://ollama.com/install.ps1 | iex</code></li><li><b>macOS:</b> <a href="https://ollama.com/download/Ollama.dmg" target="_blank" rel="noopener">Ollama.dmg</a></li><li><b>Linux:</b> 터미널 명령 <code class="brk">curl -fsSL https://ollama.com/install.sh | sh</code></li><li><b>공식 다운로드 페이지:</b> <a href="https://ollama.com/download" target="_blank" rel="noopener">ollama.com/download</a></li></ul><table><thead><tr><th style="width:30%">준비물</th><th style="width:42%">왜 필요해요?</th><th style="width:28%">어디서 받아요?</th></tr></thead><tbody><tr><td>Ollama 앱</td><td>모델을 내려받고 실행</td><td><a href="https://ollama.com/download" target="_blank" rel="noopener">ollama.com/download</a> · 2026-11-05 확인</td></tr><tr><td>디스크 여유 공간</td><td>모델 파일을 저장 (gpt-oss:20b 약 14GB)</td><td><a href="https://ollama.com/library/gpt-oss" target="_blank" rel="noopener">ollama.com/library/gpt-oss</a> · 2026-11-05 확인</td></tr><tr><td>메모리(RAM) 확인</td><td>어떤 모델이 돌아갈지 결정</td><td>아래 '따라 하기'의 '내 메모리 확인하기' 참고</td></tr></tbody></table></section><section class="sec"><div class="kicker">STEP 05 · 처음 하는 사람용</div><div class="sec-h"><span class="n">5</span><h2>따라 하기</h2></div><p><b>내 메모리 확인하기</b></p><ul class="plain"><li><b>Windows 11:</b> 시작 → 설정 → 시스템 → 정보 → '설치된 RAM' 숫자를 봐요.</li><li><b>Mac:</b> 화면 왼쪽 위 사과 메뉴 → '이 Mac에 관하여' → '메모리' 숫자를 봐요.</li></ul><p><b>모델 고르기 (내 PC에 맞는 모델)</b></p><ul class="plain"><li><b>메모리 16GB 이상:</b> <code>gpt-oss:20b</code> (OpenAI 공개 모델) · 내려받는 용량 약 14GB</li><li><b>메모리 8GB 정도:</b> <code>gemma3:4b</code> (글·이미지 입력) · 약 3.4GB</li><li><b>그보다 적거나 처음 테스트:</b> <code>gemma3:1b</code> · 약 806MB</li></ul><div class="note">용량은 Ollama 라이브러리 표시값이에요. 실제로 필요한 메모리는 사용하는 길이(컨텍스트)에 따라 늘어날 수 있어요.</div><p><b>설치</b></p><ol class="steps"><li><a href="https://ollama.com/download" target="_blank" rel="noopener">https://ollama.com/download</a> 를 열어요.</li><li>내 운영체제를 골라 내려받아요. Windows는 설치 파일을 실행하고, Mac은 앱을 '응용 프로그램' 폴더로 옮겨요.</li><li>Ollama 앱을 열어요.</li><li><b>이렇게 보이면 성공:</b> 채팅창이 보이면 정상이에요.</li></ol><p>명령어가 편하다면 공식 설치 명령도 있어요.</p><ul class="plain"><li><b>macOS·Linux 터미널:</b> <code class="brk">curl -fsSL https://ollama.com/install.sh | sh</code></li><li><b>Windows PowerShell:</b> <code class="brk">irm https://ollama.com/install.ps1 | iex</code></li></ul><p><b>모델 받고 첫 질문</b></p><ul class="plain"><li><b>앱:</b> 채팅창의 모델 선택에서 위 '모델 고르기'의 모델을 골라요. 처음 쓰는 모델은 내려받기가 먼저 진행돼요. (화면 구성은 앱 버전에 따라 다를 수 있어요)</li><li><b>터미널:</b> <code>ollama run gemma3:4b</code> 처럼 입력하면 내려받은 뒤 바로 대화가 시작돼요.</li></ul><p><b>파일 넣고 물어보기</b></p><p>앱 채팅창에 PDF나 텍스트 파일을 끌어다 놓고 아래 '바로 쓰는 질문 10개'처럼 물어봐요. 긴 문서는 설정에서 컨텍스트 길이를 늘릴 수 있지만 메모리를 더 써요.</p></section><section class="sec"><div class="kicker">STEP 06 · 복사해서 쓰기</div><div class="sec-h"><span class="n">6</span><h2>바로 쓰는 질문 10개</h2></div><ol class="steps"><li><code class="brk">이 문서 핵심만 3줄로 정리해 줘.</code></li><li><code class="brk">이 회의록에서 결정된 일, 담당자, 마감일만 표로 뽑아 줘.</code></li><li><code class="brk">이 메일을 정중한 영어로 바꿔 줘. 원래 뜻은 바꾸지 마.</code></li><li><code class="brk">이 계약서에서 내가 꼭 확인해야 할 조항 5개를 알려 줘. 법률 조언이 아니라는 점도 같이 적어 줘.</code></li><li><code class="brk">이 글을 초등학생도 이해하게 쉽게 다시 써 줘.</code></li><li><code class="brk">이 자료로 퀴즈 5문제를 만들고 정답은 맨 아래에 따로 적어 줘.</code></li><li><code class="brk">이 보고서의 숫자들이 서로 맞는지 확인하고, 이상한 곳을 알려 줘.</code></li><li><code class="brk">이 내용을 발표용 슬라이드 제목 6개로 나눠 줘.</code></li><li><code class="brk">이 문장에서 맞춤법과 띄어쓰기만 고쳐 줘.</code></li><li><code class="brk">이 문서를 읽고 내가 다음에 물어봐야 할 질문 5개를 추천해 줘.</code></li></ol><div class="note">작은 모델은 긴 문서나 복잡한 계산에서 틀릴 수 있어요. 중요한 내용은 원문과 꼭 대조하세요.</div></section><section class="sec"><div class="kicker">STEP 07 · 막히면</div><div class="sec-h"><span class="n">7</span><h2>안 될 때</h2></div><ul class="plain"><li><b>답이 아주 느림</b> · 먼저 확인: 모델 크기와 내 메모리 → 한 단계 작은 모델로 바꿔요 (<code>gemma3:4b</code> → <code>gemma3:1b</code>)</li><li><b>내려받기가 멈춤</b> · 먼저 확인: 디스크 여유 공간, 인터넷 연결 → 공간을 비우고 다시 시도해요</li><li><b>모델 이름 오류</b> · 먼저 확인: 철자 (<code>gpt-oss:20b</code>) → <a href="https://ollama.com/library" target="_blank" rel="noopener">https://ollama.com/library</a> 에서 정확한 이름을 복사해요</li><li><b>유료 안내가 뜸</b> · 먼저 확인: 모델 이름 끝이 <code>:cloud</code>인지 → 로컬 모델(이름에 <code>:cloud</code> 없음)을 골라요</li></ul><div class="prompt"><div class="prompt-h"><span>오류 상담용 문장 ([ ] 채우기)</span><em>복사해서 붙여 넣기</em></div><pre>Ollama에서 아래 오류가 났어. 내 운영체제는 [ ], 메모리는 [ ], 실행한 모델은 [ ]야. 원인과 해결 순서를 쉬운 말로 알려 줘. 오류: [붙여 넣기]</pre></div></section>
+<section class="sec" style="break-before:page">
+  <div class="kicker">한 장 요약 · 인쇄해서 책상에</div>
+  <div class="sec-h"><span class="n">✓</span><h2>이 순서대로만 하면 돼요</h2></div>
+  <table><thead><tr><th style="width:8%">순서</th><th style="width:32%">할 일</th><th style="width:34%">명령·도구</th><th style="width:26%">결과</th></tr></thead><tbody><tr><td>1</td><td>내 메모리 확인</td><td>Windows: 설정 → 시스템 → 정보 · Mac: 이 Mac에 관하여</td><td>'설치된 RAM'·'메모리' 숫자</td></tr><tr><td>2</td><td>모델 고르기</td><td>16GB 이상 gpt-oss:20b · 8GB gemma3:4b · 그보다 적으면 gemma3:1b</td><td>내려받을 모델이 정해져요</td></tr><tr><td>3</td><td>Ollama 설치</td><td>ollama.com/download</td><td>앱에 채팅창이 보여요</td></tr><tr><td>4</td><td>모델 받고 첫 질문</td><td>앱의 모델 선택 또는 ollama run gemma3:4b</td><td>내려받은 뒤 대화가 시작돼요</td></tr><tr><td>5</td><td>파일 넣고 물어보기</td><td>PDF·텍스트 파일을 채팅창에 끌어다 놓기</td><td>바로 쓰는 질문 10개로 물어봐요</td></tr></tbody></table>
+  <div class="note">이름 끝이 :cloud인 모델은 내 컴퓨터가 아니라 Ollama 서버에서 돌아가고 유료예요.</div>
+  <div class="kicker">출처</div>
+  <ul class="plain"><li>Ollama GitHub — https://github.com/ollama/ollama · 2026년 11월 5일 확인</li><li>Ollama 다운로드 — https://ollama.com/download · 2026년 11월 5일 확인</li><li>Ollama 공식 블로그: 새 앱 — https://ollama.com/blog/new-app · 2026년 11월 5일 확인</li><li>Ollama 라이브러리: gpt-oss — https://ollama.com/library/gpt-oss · 2026년 11월 5일 확인</li><li>Ollama 라이브러리: gemma3 — https://ollama.com/library/gemma3 · 2026년 11월 5일 확인</li></ul>
+  <div class="footer-note">2026년 11월 5일에 Ollama 공식 자료를 보고 쓴 안내예요. 로컬 모델은 내 컴퓨터에서 처리해요. <code>:cloud</code> 모델은 Ollama 서버에서 처리하고 유료예요. 회사 문서는 회사 보안 규정을 먼저 확인하세요. 영상 속 채팅 답변은 설명용 화면이에요. 실제 답변은 모델과 파일에 따라 달라요.</div>
+  <div class="end">
+    <div><div class="end-brand">@ai.onepage</div><div class="end-desc">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요. 새 가이드는 인스타와 허브에 올라와요.</div></div>
+    <div class="end-meta">#7 · OpenAI 모델을 내 컴퓨터에서 무료로: Ollama 설치 가이드<br>11월 6일<br>lalapert.github.io/ai-onepage</div>
+  </div>
+</section>
+</body>
+</html>

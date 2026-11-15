@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>클로드한테 한 줄 쓰면 내 가게 홈페이지가 링크로 · ai.onepage #12</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:block}
+
+  :root{
+    --ink:#211E1A;
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+    --code-bg:#F5F1E9;
+    --paper:#FAF7F1;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#fff}
+  body{
+    font-family:"NotoKR",sans-serif;color:var(--ink);
+    font-size:9.35pt;line-height:1.56;word-break:keep-all;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  @page{size:A4;margin:14mm 15mm 16mm}
+
+  /* ── 머리글 ── */
+  .head{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:6.2mm 6.5mm 5.6mm;margin-bottom:4.2mm;
+  }
+  .head-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4mm}
+  .head-brand{font-size:8.4pt;font-weight:900;letter-spacing:.04em;color:var(--teal-dark)}
+  .head-num{
+    font-size:8pt;font-weight:700;color:var(--teal-dark);background:var(--teal-soft);
+    border-radius:20px;padding:1.2mm 3mm;
+  }
+  .head h1{margin:0;font-size:21pt;font-weight:900;letter-spacing:-.03em;line-height:1.24}
+  .head .sub{margin:2mm 0 0;font-size:11pt;font-weight:700;color:var(--teal-dark);letter-spacing:-.02em}
+  .head .lede{margin:3mm 0 0;font-size:9.4pt;line-height:1.66;color:#4E483E}
+  .head .pills{display:flex;gap:1.6mm;margin-top:3.4mm;flex-wrap:wrap}
+  .head .pill{
+    background:#fff;border:1px solid var(--line);border-radius:20px;
+    padding:1.1mm 2.6mm;font-size:8.4pt;font-weight:700;color:#3A342C;
+  }
+  .head .meta{margin-top:3mm;font-size:7.9pt;color:var(--muted)}
+  .head .meta b{color:#5F594F;font-weight:700}
+
+  /* ── 비교 (선택) ── */
+  .cmp{border:1px solid var(--line);border-radius:4mm;padding:4.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid}
+  .cmp h2{margin:0 0 3mm;font-size:10.5pt;font-weight:900;letter-spacing:-.02em}
+  .cmp h2 em{font-style:normal;font-weight:700;font-size:7.8pt;color:var(--muted);margin-left:2mm}
+  .cmp-row{display:flex;gap:6mm}
+  .cmp-col{flex:1 1 0;min-width:0}
+  .cmp-col + .cmp-col{border-left:1px solid var(--line);padding-left:6mm}
+  .cmp-label{font-size:7.9pt;font-weight:700;color:var(--muted);margin-bottom:2.4mm}
+  .bar-row{display:flex;align-items:center;gap:2mm;margin-bottom:1.8mm}
+  .bar-name{flex:0 0 27mm;font-size:7.9pt;color:#5F594F;line-height:1.3}
+  .bar-track{flex:1 1 auto;height:2.4mm;border-radius:20px;background:#F2EDE3;overflow:hidden}
+  .bar-fill{height:100%;border-radius:20px;background:var(--red)}
+  .bar-fill.mild{background:#E8B7AC}
+  .bar-fill.teal{background:var(--teal)}
+  .bar-val{flex:0 0 auto;font-size:8.2pt;font-weight:900;min-width:17mm;text-align:right}
+  .cmp-foot{margin-top:2mm;font-size:7.8pt;line-height:1.5;color:#5F594F}
+  .cmp-foot b{font-weight:700;color:var(--ink)}
+
+  /* ── 목차 ── */
+  .toc{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:3.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid;
+  }
+  .toc h2{margin:0 0 1.6mm;font-size:8pt;font-weight:900;color:var(--muted);letter-spacing:.06em}
+  .toc ol{list-style:none;margin:0;padding:0;columns:2;column-gap:7mm}
+  .toc li{font-size:8.4pt;color:#3A342C;padding:.7mm 0;break-inside:avoid}
+  .toc li b{color:var(--teal);font-weight:900;margin-right:1.4mm}
+  .toc li span{color:#A8A093;font-size:7.4pt}
+
+  /* ── 섹션 ── */
+  .sec{margin-bottom:3.4mm}
+  .sec-h{break-after:avoid}
+  .sec>.kicker{break-after:avoid}
+  p{orphans:3;widows:3}
+  li{orphans:2;widows:2}
+  .sec>.kicker:first-child{margin-top:0}
+  .sec-h{display:flex;align-items:baseline;gap:2mm;margin:0 0 1.6mm}
+  .sec-h .n{
+    flex:0 0 auto;font-size:8pt;font-weight:900;color:var(--teal-dark);
+    background:var(--teal-soft);border-radius:1.4mm;padding:.3mm 1.6mm;
+  }
+  .sec-h h2{margin:0;font-size:11.4pt;font-weight:900;letter-spacing:-.03em}
+  .sec p{margin:0 0 1.8mm;font-size:9.4pt;line-height:1.64;color:#2C2822}
+  .sec p:last-child{margin-bottom:0}
+  .sec b,.sec strong{font-weight:700;color:var(--ink)}
+  code.brk{white-space:normal;overflow-wrap:anywhere}
+  code{
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;font-size:8.3pt;
+    background:var(--code-bg);border:.4pt solid #E3DCCE;border-radius:1mm;padding:0 .8mm;
+    white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  }
+
+  ol.steps{margin:0 0 1.8mm;padding-left:5.2mm}
+  ol.steps li{font-size:9.1pt;line-height:1.55;margin-bottom:1mm;padding-left:.6mm}
+  ol.steps li::marker{color:var(--teal);font-weight:700}
+  ul.plain{margin:0 0 1.8mm;padding-left:4.4mm}
+  ul.plain li{font-size:9.1pt;line-height:1.56;margin-bottom:1.2mm}
+  ul.plain li::marker{color:#C0B7A8}
+
+  .ok{
+    background:var(--teal-soft);border-radius:2mm;padding:2.2mm 3mm;margin:1.6mm 0;
+    font-size:8.6pt;line-height:1.55;color:#0A4F42;break-inside:avoid;
+  }
+  .ok b{color:#0A4F42}
+  .ok .tag{
+    display:inline-block;background:var(--teal);color:#fff;font-size:7.2pt;font-weight:900;
+    border-radius:1mm;padding:0 1.4mm;margin-right:1.4mm;
+  }
+  .note{
+    background:var(--paper);border-left:.9mm solid #E3DCCE;border-radius:0 2mm 2mm 0;
+    padding:2mm 3mm;margin:1.6mm 0;font-size:8.5pt;line-height:1.58;color:#5F594F;break-inside:avoid;
+  }
+
+  /* ── 표 ── */
+  table{width:100%;border-collapse:collapse;margin:1mm 0 1.8mm;font-size:8.6pt;break-inside:avoid}
+  thead th{
+    background:var(--paper);text-align:left;font-weight:900;font-size:8pt;color:#5F594F;
+    padding:1.8mm 2.4mm;border-bottom:.5pt solid #DDD6C8;
+  }
+  tbody td{padding:1.8mm 2.4mm;border-bottom:.4pt solid var(--line);vertical-align:top;line-height:1.55}
+  tbody tr{break-inside:avoid}
+  tbody tr:last-child td{border-bottom:0}
+  tbody td:first-child{font-weight:700;color:var(--ink)}
+  td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  td.cut{
+    font-weight:900;color:var(--teal-dark);white-space:nowrap;text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  td.cut.low{color:#8A5A12}
+  a{color:var(--teal-dark);text-decoration:none;border-bottom:.3pt solid #C9DCD5}
+
+  /* ── 프롬프트 ── */
+  .prompt{border:.5pt solid #E0D8C8;border-radius:2.4mm;overflow:hidden;margin:1.6mm 0 2mm;break-inside:avoid}
+  .prompt-h{
+    background:#EDE7DA;padding:1.6mm 3mm;font-size:7.9pt;font-weight:700;color:#6F685D;
+    display:flex;justify-content:space-between;
+  }
+  .prompt-h span{font-weight:700}
+  .prompt-h em{font-style:normal;font-size:7.2pt;color:#8E877A}
+  .prompt pre{
+    margin:0;padding:2.6mm 3mm;background:var(--code-bg);
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;
+    font-size:8.2pt;line-height:1.6;color:#2A2620;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ── 푸터(마지막 페이지) ── */
+  .end{
+    margin-top:4mm;border-top:1px solid var(--line);padding-top:3mm;
+    display:flex;justify-content:space-between;gap:5mm;break-inside:avoid;
+  }
+  .end-brand{font-size:9pt;font-weight:900;color:var(--teal-dark);letter-spacing:.02em}
+  .end-desc{font-size:7.8pt;color:var(--muted);line-height:1.55;margin-top:.8mm;max-width:95mm}
+  .end-meta{font-size:7.4pt;color:#A8A093;text-align:right;line-height:1.6}
+
+  .kicker{font-size:7.6pt;font-weight:900;color:#A8A093;letter-spacing:.1em;margin:4mm 0 1.4mm}
+  .kicker:first-child{margin-top:0}
+  .measure-cap{font-size:7.9pt;color:var(--muted);margin:0 0 1.2mm}
+  .measure-cap b{color:var(--ink);font-weight:700}
+  .footer-note{
+    margin-top:3mm;background:var(--paper);border:1px solid var(--line);border-radius:2mm;
+    padding:2.4mm 3mm;font-size:7.9pt;line-height:1.58;color:#5F594F;
+  }
+</style>
+</head>
+<body>
+<div class="head">
+  <div class="head-top"><div class="head-brand">@ai.onepage · AI 툴 가이드</div><div class="head-num">#12 · 11월 9일</div></div>
+  <h1>클로드한테 한 줄 쓰면 내 가게 홈페이지가 링크로</h1>
+  <p class="sub">채팅으로 가게 페이지를 만들고 Publish로 공개 링크 받기</p>
+  <p class="lede">설치할 것은 없어요. 채팅 한 번으로 메뉴, 영업시간, 전화 버튼이 있는 한 페이지짜리 가게 소개 페이지를 만들고, 공개 링크로 손님에게 보내요. <b>무료 플랜도 돼요.</b></p>
+  <div class="pills"><span class="pill">무료 플랜도 Publish 가능</span><span class="pill">설치 없음 · 채팅만</span><span class="pill">링크 손님은 계정 없이 열어요</span></div>
+  <div class="meta"><b>2026년 11월 8일 확인</b> · Claude 계정(무료 가능) · PC 웹 또는 데스크톱 앱 · 무료 플랜 가능(채팅에서 만든 페이지의 Publish)</div>
+</div>
+
+<div class="toc"><h2>목차</h2><ol><li><b>0</b>채팅에 붙여 넣기</li><li><b>1</b>이게 뭐예요?</li><li><b>2</b>꼭 알아 둘 점</li><li><b>3</b>준비물</li><li><b>4</b>따라 하기</li><li><b>5</b>안 될 때</li><li><b>6</b>다음에 해 볼 것</li></ol></div>
+<section class="sec"><div class="kicker">STEP 00 · 제일 먼저</div><div class="sec-h"><span class="n">0</span><h2>클로드 채팅에 바로 붙여 넣기</h2></div><p>설치할 것은 없어요. <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a>(웹)나 Claude 데스크톱 앱에서 <b>새 채팅</b>을 열고 아래 문장을 붙여 넣으세요. [ ] 칸만 내 가게 정보로 바꾸면 돼요.</p><div class="prompt"><div class="prompt-h"><span>클로드 새 채팅에 붙여 넣기 ([ ] 채우기)</span><em>복사해서 붙여 넣기</em></div><pre>우리 가게 홈페이지를 한 페이지짜리 웹페이지(아티팩트)로 만들어 줘.
+- 가게 이름: [ ]
+- 한 줄 소개: [ ]
+- 메뉴와 가격: [메뉴1 0,000원 / 메뉴2 0,000원 ...]
+- 영업시간과 쉬는 날: [ ]
+- 주소: [ ]
+- 가게 전화번호: [ ]
+- 지도 링크(네이버 지도·카카오맵에서 '공유'로 복사): [ ]
+- 예약·주문 링크(있으면): [ ]
+- 원하는 분위기와 색: [예: 따뜻한 베이지, 깔끔하게]
+조건:
+1. 휴대폰 화면에서 먼저 보기 좋게 만들어 줘.
+2. 맨 위에 가게 이름과 '전화하기' 버튼을 두고, 누르면 바로 전화가 걸리게 해 줘.
+3. 내가 준 정보만 써. 가격, 후기, 수상 경력처럼 내가 안 준 정보는 지어내지 마. 빈칸은 [확인 필요]로 남겨 줘.
+4. 사진은 넣지 말고 사진 자리만 표시해 줘.
+5. 다 만들면 손님 입장에서 고칠 점 3가지를 짧게 말해 줘.</pre></div></section><section class="sec"><div class="kicker">STEP 01 · 먼저 이것만</div><div class="sec-h"><span class="n">1</span><h2>이게 뭐예요?</h2></div><ul class="plain"><li><b>무엇:</b> 채팅 한 번으로 메뉴, 영업시간, 전화 버튼이 있는 한 페이지짜리 가게 소개 페이지를 만들고, 공개 링크로 손님에게 보내요.</li><li><b>누구에게:</b> 홈페이지가 없는 작은 가게, 1인 사업자, 프리랜서 소개 페이지가 필요한 사람.</li><li><b>플랜:</b><br>· <b>무료 플랜도 돼요.</b> 채팅에서 만든 페이지는 <b>'Publish'</b> 버튼으로 공개 링크를 만들 수 있어요(Free·Pro·Max).<br>· Team·Enterprise 플랜은 'Share &amp; copy link' 방식이라 조직 설정에 따라 달라요.</li><li><b>링크를 받은 손님:</b> Claude 계정 없이 열어 보고 쓸 수 있어요(도움말 기준).</li><li><b>안 되는 것:</b><br>· 내 도메인 주소(가게이름.com)는 안 돼요. 링크는 claude.ai 주소예요.<br>· 네이버·구글 검색에 내 가게 홈페이지로 등록하는 일과는 달라요.<br>· 결제나 예약 시스템을 페이지 안에 직접 넣는 것은 이 가이드 범위 밖이에요.</li></ul></section><section class="sec"><div class="kicker">STEP 02 · 주의</div><div class="sec-h"><span class="n">2</span><h2>꼭 알아 둘 점</h2></div><ul class="plain"><li><b>'Unpublish'(공개 취소)를 누르면 같은 페이지는 다시 공개할 수 없어요.</b><br>· 다시 공유하려면 새로 만들어야 해요.<br>· 페이지에 저장된 데이터도 함께 지워져요(도움말).</li><li><b>버튼이 'Publish'가 아니라 'Share'로 보이면 무료 플랜에서는 공개 링크가 안 될 수 있어요.</b><br>· 도움말 기준으로 'Share' 방식에서 '링크가 있는 누구나'는 Pro 이상이에요.<br>· Pro 이상에서 'Share → 링크가 있는 누구나'로 공유하면 대부분 계정 없이 열려요(도움말 11/5 갱신, 11/9 확인).<br>· <b>채팅 안에서 만든 페이지</b>인지 확인하세요.</li><li><b>공개 링크는 누구나 볼 수 있어요.</b> 가게 번호만 넣고, 개인 휴대폰 번호나 집 주소는 넣지 마세요.</li><li><b>AI가 없는 정보를 지어낼 수 있어요.</b> 가격, 영업시간, 주소는 링크를 보내기 전에 한 번 더 확인하세요.</li><li><b>페이지를 고친 뒤에는 이미 보낸 링크를 다시 열어 바뀐 내용이 보이는지 확인하세요.</b> 고친 내용이 이미 보낸 링크에 그대로 반영되는지는 직접 확인하지 않았어요.</li><li><b>휴대폰 앱(iOS·Android)에서는 공유 설정을 바꿀 수 없어요(도움말).</b> 공개 링크는 PC 웹이나 데스크톱 앱에서 만드세요.</li><li><b>페이지 안에 Claude 기능(AI 답변 등)을 넣은 경우:</b> 손님이 그 기능을 쓰려면 가입하라는 안내가 떠요. 가게 소개 페이지는 Claude 기능 없이 만드는 걸 권해요.</li></ul></section><section class="sec"><div class="kicker">STEP 03 · 시작 전에</div><div class="sec-h"><span class="n">3</span><h2>준비물과 공식 링크</h2></div><p><b>바로 가기</b> (2026-11-08 확인)</p><ul class="plain"><li><a href="https://claude.ai" target="_blank" rel="noopener">Claude 시작하기 (claude.ai)</a></li><li><a href="https://claude.ai/download" target="_blank" rel="noopener">Claude 데스크톱 앱 받기</a></li><li><a href="https://support.claude.com/en/articles/9547008-share-artifacts" target="_blank" rel="noopener">공식 도움말: 아티팩트 공유하기</a></li></ul><table><thead><tr><th style="width:30%">준비물</th><th style="width:42%">왜 필요해요?</th><th style="width:28%">어디서 받아요?</th></tr></thead><tbody><tr><td>Claude 계정 (무료 가능)</td><td>채팅으로 페이지 만들기</td><td><a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> · 2026-11-08 확인</td></tr><tr><td>PC 웹 또는 데스크톱 앱</td><td>공개 링크 만들기(휴대폰 앱에서는 설정 변경 불가)</td><td><a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a> · 2026-11-08 확인</td></tr><tr><td>가게 정보 메모</td><td>메뉴·가격·영업시간·주소·전화번호</td><td>-</td></tr></tbody></table></section><section class="sec"><div class="kicker">STEP 04 · 처음 하는 사람용</div><div class="sec-h"><span class="n">4</span><h2>따라 하기</h2></div><p><b>페이지 만들기</b></p><ol class="steps"><li>PC에서 <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a>를 열고 로그인해요(없으면 무료로 가입).</li><li>왼쪽 위 <b>새 채팅</b>을 눌러요.</li><li>맨 위 '클로드 채팅에 바로 붙여 넣기'의 문장을 붙여 넣고 [ ] 칸을 채운 뒤 보내요.</li><li>정상이면 채팅 오른쪽에 페이지 미리보기(아티팩트)가 열려요.</li><li>미리보기에서 전화 버튼, 메뉴, 영업시간이 맞는지 확인해요.</li></ol><p><b>말로 고치기</b> · 같은 채팅에 이어서 쓰면 돼요. 예:</p><ul class="plain"><li><code class="brk">전화하기 버튼을 더 크게, 화면 아래에 계속 붙어 있게 해 줘</code></li><li><code class="brk">메뉴를 표 말고 카드 모양으로 바꿔 줘</code></li><li><code class="brk">색을 더 따뜻하게, 글자는 더 크게</code></li><li><code class="brk">영업시간을 오전 11시~오후 9시, 월요일 휴무로 고쳐 줘</code></li></ul><p><b>공개 링크 만들기</b></p><ol class="steps"><li>미리보기(아티팩트)를 열어요.</li><li>오른쪽 위 <b>Publish</b>를 눌러요.</li><li>공개 링크를 복사해요.</li><li>내 휴대폰으로 링크를 열어서 전화 버튼이 눌리는지 확인해요.</li><li>공개하면 왼쪽 메뉴 <b>Artifacts</b>에 들어가서, 나중에 채팅 밖에서도 찾을 수 있어요.</li></ol><p><b>링크 쓰는 곳</b></p><ul class="plain"><li>인스타그램 프로필 링크 칸, 카카오톡 채널 소개, 문자 안내, 가게 앞 QR 코드</li><li>QR 코드는 링크를 넣으면 만들어 주는 무료 사이트가 많아요. 만든 뒤 휴대폰으로 찍어서 열리는지 꼭 확인하세요.</li></ul><p><b>(선택) 다른 사이트에 넣기</b></p><ul class="plain"><li>Publish 뒤 <b>Get embed code</b>를 누르면 다른 웹사이트에 붙여 넣을 코드가 나와요.</li><li><b>Allowed domains</b> 칸에는 이 페이지를 넣을 사이트 주소를 쉼표로 나눠 적어요(도움말).</li></ul></section><section class="sec"><div class="kicker">STEP 05 · 막히면</div><div class="sec-h"><span class="n">5</span><h2>안 될 때</h2></div><ul class="plain"><li><b>미리보기가 안 열림</b> · 먼저 확인: 채팅 답에 페이지 카드가 있는지 → <code class="brk">아티팩트로 다시 만들어 줘</code>라고 쓰기</li><li><b>Publish 버튼이 없음</b> · 먼저 확인: 휴대폰 앱인지, 버튼이 'Share'인지 → PC 웹에서 열기 → 'Share'만 보이면 '꼭 알아 둘 점' 참고</li><li><b>손님이 링크를 못 엶</b> · 먼저 확인: 'Unpublish'를 눌렀는지 → 공개를 취소했다면 새로 만들어 다시 Publish</li><li><b>내용이 틀림</b> · 먼저 확인: 가격·시간을 내가 준 대로 썼는지 → <code class="brk">내가 준 정보만 써</code>라고 다시 말하고 고칠 곳 짚기</li><li><b>전화 버튼이 안 눌림</b> · 먼저 확인: 번호에 하이픈·공백이 섞였는지 → <code class="brk">전화 버튼을 tel: 링크로 다시 만들어 줘</code></li></ul><div class="prompt"><div class="prompt-h"><span>오류 상담용 문장 ([ ] 채우기)</span><em>복사해서 붙여 넣기</em></div><pre>클로드로 만든 가게 페이지가 [증상]이야. 내 플랜은 [무료/Pro], 쓰는 곳은 [PC 웹/데스크톱 앱/휴대폰 앱]이야. 원인과 고치는 순서를 쉬운 말로 알려 줘.</pre></div></section><section class="sec"><div class="kicker">STEP 06 · 다음에</div><div class="sec-h"><span class="n">6</span><h2>다음에 해 볼 것</h2></div><ul class="plain"><li>메뉴판만 따로 한 페이지로 만들어서 가게 안 QR로 붙이기</li><li>예약 문의 문장 버튼(카카오톡 채널 링크) 추가하기</li></ul></section>
+<section class="sec" style="break-before:page">
+  <div class="kicker">한 장 요약 · 인쇄해서 책상에</div>
+  <div class="sec-h"><span class="n">✓</span><h2>이 순서대로만 하면 돼요</h2></div>
+  <table><thead><tr><th style="width:8%">순서</th><th style="width:32%">할 일</th><th style="width:34%">명령·도구</th><th style="width:26%">결과</th></tr></thead><tbody><tr><td>1</td><td>새 채팅 열기</td><td>PC에서 claude.ai 로그인 → 새 채팅</td><td>채팅 준비</td></tr><tr><td>2</td><td>문장 붙여 넣기</td><td>[ ] 칸을 가게 정보로 채워서 보내기</td><td>오른쪽에 페이지 미리보기가 열려요</td></tr><tr><td>3</td><td>확인하고 말로 고치기</td><td>같은 채팅에 이어서 쓰기</td><td>전화 버튼·메뉴·영업시간 확인</td></tr><tr><td>4</td><td>공개 링크 만들기</td><td>미리보기 → Publish → 링크 복사</td><td>공개 링크</td></tr><tr><td>5</td><td>내 휴대폰으로 확인</td><td>링크를 열고 전화 버튼 눌러 보기</td><td>인스타·카톡 채널·QR에 쓰기</td></tr></tbody></table>
+  <div class="note">공개 링크는 누구나 볼 수 있어요. 가게 번호만 넣으세요. 'Unpublish'를 누르면 같은 페이지는 다시 공개할 수 없어요.</div>
+  <div class="kicker">출처</div>
+  <ul class="plain"><li>Share artifacts (Claude 도움말) — https://support.claude.com/en/articles/9547008-share-artifacts · 2026년 11월 8일 확인</li></ul>
+  <div class="footer-note">2026년 11월 8일에 Claude 공식 도움말을 기준으로 쓴 안내예요. 실제 가게 페이지를 만들어 공개해 보지는 않았어요. 버튼 이름과 위치는 바뀔 수 있어요. 영상 속 화면은 설명을 위해 만든 예시예요. 실제 화면 녹화가 아니에요.</div>
+  <div class="end">
+    <div><div class="end-brand">@ai.onepage</div><div class="end-desc">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요. 새 가이드는 인스타와 허브에 올라와요.</div></div>
+    <div class="end-meta">#12 · 클로드한테 한 줄 쓰면 내 가게 홈페이지가 링크로<br>11월 9일<br>lalapert.github.io/ai-onepage</div>
+  </div>
+</section>
+</body>
+</html>

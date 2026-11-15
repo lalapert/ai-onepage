@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FAF7F1">
+<meta name="description" content="무료 오픈소스 earshot을 Claude Code에 연결해 휙·쿵·딸깍 효과음을 컷에 맞춰 넣고 직접 들어서 확인">
+<title>클로드로 만든 영상에 효과음 252개: earshot 설치와 사용법 · ai.onepage #14</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:swap}
+
+  :root{
+    --bg:#FAF7F1;
+    --card:#FFFFFF;
+    --ink:#211E1A;
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+    --code-bg:#F4F0E8;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:"NotoKR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.62;word-break:keep-all;
+    font-size:15px;
+  }
+  .page{max-width:480px;margin:0 auto;padding:0 18px 40px;overflow-x:hidden}
+  a{color:var(--teal-dark);text-decoration:underline;text-decoration-color:#BFDCD3;
+    text-decoration-thickness:1px;text-underline-offset:2px}
+  code.brk{white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+  code{
+    font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,"NotoKR",monospace;
+    font-size:.9em;background:var(--code-bg);border:1px solid #E6DFD2;
+    border-radius:5px;padding:1px 5px;white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  }
+
+  /* ── 상단 네비 ── */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:14px 0 0;
+  }
+  .back{
+    display:inline-flex;align-items:center;gap:5px;
+    text-decoration:none;color:#5A544A;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:6px 12px 6px 10px;font-size:12.5px;font-weight:700;letter-spacing:-.3px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04);
+  }
+  .back:active{transform:scale(.97)}
+  .back svg{width:12px;height:12px}
+  .num-badge{
+    font-size:11.5px;font-weight:700;letter-spacing:-.2px;
+    color:var(--teal-dark);background:var(--teal-soft);
+    border-radius:999px;padding:5px 11px;white-space:nowrap;
+  }
+
+  /* ── 히어로 ── */
+  .hero{padding:22px 2px 0}
+  .eyebrow{
+    font-size:11.5px;font-weight:700;color:var(--teal-dark);letter-spacing:-.1px;
+    display:flex;align-items:center;gap:6px;margin-bottom:9px;
+  }
+  .eyebrow i{width:5px;height:5px;border-radius:50%;background:var(--teal);display:inline-block}
+  h1{
+    margin:0;font-size:29px;font-weight:900;line-height:1.26;letter-spacing:-1.1px;
+  }
+  .sub{
+    margin:9px 0 0;font-size:16.5px;font-weight:700;color:var(--teal-dark);
+    line-height:1.45;letter-spacing:-.5px;
+  }
+  .lede{
+    margin:12px 0 0;font-size:14px;line-height:1.68;color:#5F594F;letter-spacing:-.2px;
+  }
+  .pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .pill{
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:6px 11px;font-size:12.3px;font-weight:700;color:#3A342C;letter-spacing:-.3px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04);
+  }
+  .pill b{color:var(--teal);font-weight:900}
+  .hero-meta{
+    margin-top:12px;font-size:11.5px;color:#8A8277;letter-spacing:-.2px;
+    display:flex;flex-wrap:wrap;align-items:center;gap:5px;
+  }
+  .hero-meta .dot{color:#C9C2B6}
+
+  /* ── 공통 카드 ── */
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:16px 16px 15px;margin-top:12px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04),0 6px 16px rgba(35,30,20,.035);
+  }
+  .card-h{display:flex;align-items:center;gap:8px;margin:0 0 8px}
+  .card-h .n{
+    flex:0 0 auto;width:22px;height:22px;border-radius:7px;
+    background:var(--teal-soft);color:var(--teal-dark);
+    font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;
+    letter-spacing:-.2px;
+  }
+  .card-h h2{margin:0;font-size:16.5px;font-weight:900;letter-spacing:-.55px;line-height:1.35}
+  .card p{margin:0 0 9px;font-size:14px;line-height:1.68;color:#3A342C;letter-spacing:-.2px}
+  .card p:last-child{margin-bottom:0}
+  .card b,.card strong{font-weight:700;color:var(--ink)}
+  .card ul{margin:0 0 2px;padding-left:17px}
+  .card ul li{font-size:14px;line-height:1.68;color:#3A342C;margin-bottom:7px;letter-spacing:-.2px}
+  .card ul li:last-child{margin-bottom:0}
+  .card ul li::marker{color:#C9C2B6}
+
+  /* ── 섹션 타이틀(카드 밖) ── */
+  .block-title{
+    display:flex;align-items:baseline;gap:7px;margin:26px 2px 0;
+    font-size:12px;font-weight:700;color:#8A8277;letter-spacing:.02em;
+  }
+  .block-title span{color:var(--teal-dark)}
+
+  /* ── 한눈에 비교 (필요 없으면 이 블록 통째로 삭제) ── */
+  .cmp{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:16px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04),0 8px 20px rgba(35,30,20,.04)}
+  .cmp h2{margin:0 0 12px;font-size:14px;font-weight:900;letter-spacing:-.4px;display:flex;align-items:center;gap:6px}
+  .cmp h2 em{font-style:normal;font-size:11px;font-weight:700;color:#8A8277;letter-spacing:-.1px}
+  .cmp-item{padding:12px 0;border-top:1px dashed #E6DFD2}
+  .cmp-item:first-of-type{border-top:0;padding-top:0}
+  .cmp-label{font-size:11.5px;font-weight:700;color:#8A8277;letter-spacing:-.2px;margin-bottom:8px}
+  .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+  .bar-row:last-of-type{margin-bottom:0}
+  .bar-name{flex:0 0 96px;font-size:11.6px;color:#5F594F;letter-spacing:-.3px;line-height:1.35}
+  .bar-track{flex:1 1 auto;height:9px;border-radius:999px;background:#F2EDE3;overflow:hidden}
+  .bar-fill{height:100%;border-radius:999px;background:var(--red)}
+  .bar-fill.mild{background:#E8B7AC}
+  .bar-fill.teal{background:var(--teal)}
+  .bar-val{flex:0 0 auto;font-size:12px;font-weight:900;color:var(--ink);letter-spacing:-.3px;min-width:66px;text-align:right}
+  .bar-val small{font-size:10.5px;font-weight:700;color:#8A8277}
+  .cmp-foot{
+    margin-top:10px;font-size:11.5px;line-height:1.55;color:#6F685D;letter-spacing:-.2px;
+    background:#FBF8F2;border-radius:9px;padding:8px 10px;
+  }
+  .x-tag{
+    display:inline-block;background:var(--red-soft);color:#B33320;font-weight:900;
+    font-size:11px;border-radius:6px;padding:1.5px 6px;margin-left:4px;letter-spacing:-.1px;
+  }
+
+  /* ── 목차 ── */
+  .toc{
+    background:#FBF8F2;border:1px solid var(--line);border-radius:16px;
+    padding:14px 16px 12px;margin-top:14px;
+  }
+  .toc h2{margin:0 0 8px;font-size:12px;font-weight:900;color:#8A8277;letter-spacing:.03em}
+  .toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+  .toc li{margin:0}
+  .toc a{
+    display:flex;align-items:baseline;gap:8px;
+    text-decoration:none;color:#3A342C;font-size:13.3px;letter-spacing:-.25px;
+    padding:5.5px 0;border-top:1px solid #EFE9DE;
+  }
+  .toc li:first-child a{border-top:0}
+  .toc a .i{flex:0 0 14px;font-size:11.5px;font-weight:900;color:var(--teal)}
+  .toc a .t{flex:1 1 auto}
+  .toc a .c{flex:0 0 auto;font-size:10.5px;font-weight:700;color:#A8A093}
+
+  /* ── 코드/프롬프트 박스 ── */
+  .prompt{
+    margin:10px 0 4px;border:1px solid #E2DACB;border-radius:12px;overflow:hidden;
+    background:var(--code-bg);
+  }
+  .prompt-h{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    background:#EDE7DA;padding:7px 9px 7px 11px;
+  }
+  .prompt-h .lbl{
+    font-size:11px;font-weight:700;color:#6F685D;letter-spacing:-.2px;
+    display:flex;align-items:center;gap:5px;min-width:0;
+  }
+  .prompt-h .lbl svg{width:12px;height:12px;flex:0 0 auto;color:#8A8277}
+  .copy-btn{
+    -webkit-appearance:none;appearance:none;font-family:inherit;cursor:pointer;
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--card);border:1px solid #DCD3C4;border-radius:7px;
+    padding:4px 9px;font-size:11.5px;font-weight:700;color:#3A342C;letter-spacing:-.2px;
+    line-height:1;white-space:nowrap;transition:background .15s,color .15s,border-color .15s;
+  }
+  .copy-btn svg{width:11px;height:11px}
+  .copy-btn:active{transform:scale(.96)}
+  .copy-btn.done{background:var(--teal);border-color:var(--teal);color:#fff}
+  .prompt pre{
+    margin:0;padding:11px 12px 12px;font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,"NotoKR",monospace;
+    font-size:12px;line-height:1.62;color:#2A2620;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ── 단계 목록 ── */
+  .steps{list-style:none;margin:2px 0 0;padding:0;counter-reset:s}
+  .steps li{
+    position:relative;padding-left:26px;margin-bottom:10px;
+    font-size:14px;line-height:1.66;color:#3A342C;letter-spacing:-.2px;
+  }
+  .steps li:last-child{margin-bottom:0}
+  .steps li::before{
+    counter-increment:s;content:counter(s);
+    position:absolute;left:0;top:1px;
+    width:18px;height:18px;border-radius:50%;
+    background:#F4F0E8;border:1px solid #E6DFD2;color:#6F685D;
+    font-size:10.5px;font-weight:900;display:flex;align-items:center;justify-content:center;
+    line-height:1;
+  }
+
+  .steps li .os{display:block;margin-top:3px}
+  .sources li{margin-bottom:9px}
+  .src-meta{display:block;margin-top:1px;font-size:11.5px;line-height:1.5;color:#A8A093;letter-spacing:-.1px}
+  .ok{
+    margin:11px 0 2px;background:var(--teal-soft);border-radius:10px;padding:9px 11px;
+    font-size:13px;line-height:1.6;color:#0A4F42;letter-spacing:-.2px;
+  }
+  .ok b{color:#0A4F42}
+  .ok .tag{
+    display:inline-block;font-size:10.5px;font-weight:900;background:var(--teal);color:#fff;
+    border-radius:5px;padding:1.5px 6px;margin-right:5px;letter-spacing:-.1px;vertical-align:1px;
+  }
+  .note{
+    margin:10px 0 2px;background:#FBF8F2;border-left:3px solid #E6DFD2;border-radius:0 9px 9px 0;
+    padding:9px 11px;font-size:12.8px;line-height:1.62;color:#5F594F;letter-spacing:-.2px;
+  }
+
+  /* ── 준비물 표: 모바일에서는 행마다 3칸을 세로로 쌓아 390px 가로 넘침을 막는다 ── */
+  .tbl{width:100%;border-collapse:collapse;margin:2px 0 0;font-size:13px;table-layout:fixed}
+  .tbl thead{display:none}
+  .tbl tr{display:block;border-top:1px solid var(--line);padding:10px 0}
+  .tbl tr:first-child{border-top:0;padding-top:2px}
+  .tbl td{display:block;padding:0;font-size:13px;line-height:1.6;color:#3A342C;letter-spacing:-.2px}
+  .tbl td[data-l="준비물"]{font-weight:700;color:var(--ink);font-size:13.6px;margin-bottom:3px}
+  .tbl td[data-l="왜 필요해요?"]{margin-bottom:4px}
+  .tbl td[data-l="왜 필요해요?"]::before{
+    content:"왜 ";font-weight:700;color:#A8A093;font-size:11.5px;
+  }
+  .tbl td[data-l="어디서 받아요?"]::before{
+    content:"받는 곳 ";font-weight:700;color:var(--teal-dark);font-size:11.5px;
+  }
+  .tbl td[data-l="어디서 받아요?"]{color:#4E483E;font-size:12.6px}
+
+  /* ── 측정 결과 막대 (숫자 비교 시각화) ── */
+  .measure{margin:14px 0 0 !important;line-height:1.45}
+  .measure b{display:block;font-size:14px;margin-bottom:2px}
+  .measure span{display:block;font-weight:400;color:#8A8277;font-size:11.8px;letter-spacing:-.2px}
+  .gain{list-style:none;margin:10px 0 0;padding:0}
+  .gain li{border-top:1px solid var(--line);padding:9px 0}
+  .gain li:first-child{border-top:0;padding-top:2px}
+  .gain .g-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .gain .g-cmd{font-size:13px;font-weight:700;color:var(--ink);letter-spacing:-.25px;line-height:1.4}
+  .gain .g-cut{
+    flex:0 0 auto;font-size:11.5px;font-weight:900;color:var(--teal-dark);
+    background:var(--teal-soft);border-radius:6px;padding:2px 6px;letter-spacing:-.2px;
+  }
+  .gain .g-cut.low{color:#8A5A12;background:#FBEFD8}
+  .gain .g-num{margin-top:3px;font-size:11.8px;color:#6F685D;letter-spacing:-.2px}
+  .gain .g-num b{color:var(--ink);font-weight:900}
+  .gain .g-bar{margin-top:6px;height:6px;border-radius:999px;background:#F2EDE3;overflow:hidden}
+  .gain .g-bar i{display:block;height:100%;border-radius:999px;background:var(--teal)}
+
+  /* ── 꼭 알아 둘 점 체크리스트 ── */
+  .checks{list-style:none;margin:0;padding:0}
+  .checks li{
+    position:relative;padding-left:22px;margin-bottom:11px;
+    font-size:13.6px;line-height:1.66;color:#3A342C;letter-spacing:-.2px;
+  }
+  .checks li:last-child{margin-bottom:0}
+  .checks li::before{
+    content:"";position:absolute;left:2px;top:7px;width:9px;height:9px;border-radius:3px;
+    background:var(--red-soft);border:1px solid #F0C9C1;
+  }
+
+  /* ── PDF 다운로드 카드 ── */
+  .pdf-card{
+    margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:16px;box-shadow:0 1px 2px rgba(35,30,20,.05),0 10px 24px rgba(35,30,20,.05);
+  }
+  .pdf-top{display:flex;align-items:center;gap:10px}
+  .pdf-badge{
+    flex:0 0 auto;width:40px;height:46px;border-radius:7px;background:var(--red);
+    color:#fff;font-size:10.5px;font-weight:900;letter-spacing:.04em;
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:7px;
+    position:relative;box-shadow:0 3px 8px rgba(224,69,46,.28);
+  }
+  .pdf-badge::before{
+    content:"";position:absolute;top:0;right:0;
+    border-width:0 11px 11px 0;border-style:solid;
+    border-color:transparent #FAF7F1 transparent transparent;
+  }
+  .pdf-tt{flex:1 1 auto;min-width:0}
+  .pdf-tt strong{display:block;font-size:14.8px;font-weight:900;letter-spacing:-.45px;line-height:1.35}
+  .pdf-tt span{display:block;margin-top:2px;font-size:11.8px;color:#8A8277;letter-spacing:-.2px}
+  .pdf-cta{
+    display:flex;align-items:center;justify-content:center;gap:7px;
+    margin-top:13px;text-decoration:none;
+    background:var(--ink);color:#fff;border-radius:11px;
+    padding:12px 14px;font-size:14px;font-weight:900;letter-spacing:-.4px;
+    box-shadow:0 3px 10px rgba(33,30,26,.16);
+  }
+  .pdf-cta:active{transform:scale(.99)}
+  .pdf-cta svg{width:15px;height:15px}
+  .pdf-fine{margin:9px 2px 0;font-size:11.3px;line-height:1.55;color:#A8A093;letter-spacing:-.1px;text-align:center}
+
+  /* ── 푸터 ── */
+  footer{
+    margin-top:26px;padding-top:18px;border-top:1px solid var(--line);text-align:center;
+  }
+  .foot-name{font-size:14px;font-weight:900;letter-spacing:-.4px}
+  .foot-name b{color:var(--teal-dark)}
+  .foot-desc{margin:5px auto 0;max-width:300px;font-size:11.5px;line-height:1.65;color:#8A8277;letter-spacing:-.2px}
+  .foot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:11px}
+  .foot-links a{
+    text-decoration:none;font-size:11.5px;font-weight:700;color:#5A544A;letter-spacing:-.2px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 11px;
+  }
+  .foot-copy{margin-top:14px;font-size:10.5px;color:#B3ABA0;line-height:1.7;letter-spacing:-.1px}
+
+  /* ── 토스트 ── */
+  #toast{
+    position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);
+    background:#211E1A;color:#fff;font-size:12.5px;font-weight:700;letter-spacing:-.2px;
+    padding:9px 15px;border-radius:999px;box-shadow:0 8px 22px rgba(33,30,26,.28);
+    opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:50;
+    white-space:nowrap;
+  }
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media (min-width:520px){
+    body{font-size:15.5px}
+    .page{padding:0 22px 56px}
+    h1{font-size:33px}
+  }
+  /* 인쇄로 뽑아도 깨지지 않게 */
+  @media print{
+    body{background:#fff}
+    .topbar .back,.pdf-card,#toast{display:none}
+    .card,.cmp,.toc{box-shadow:none;break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="topbar">
+    <a class="back" href="../../"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>전체 가이드</a>
+    <span class="num-badge">#14 · 11월 9일</span>
+  </nav>
+  <header class="hero">
+    <div class="eyebrow"><i></i>영상·이미지</div>
+    <h1>클로드로 만든 영상에<br>효과음 252개</h1>
+    <p class="sub">AI 코딩 도구에 '귀'를 달아 주는 무료 오픈소스</p>
+    <p class="lede">코드로 만든 효과음 252개(휙, 쿵, 딸깍, 톡 등)를 영상 컷에 맞춰 넣어요. 소리와 화면이 맞는지는 AI가 직접 듣고 확인해요. earshot을 Claude Code에 연결해서 쓰는 법을 정리했어요.</p>
+    <div class="pills"><span class="pill"><b>무료</b> earshot MIT</span><span class="pill"><b>252개</b> 코드로 만든 효과음</span><span class="pill"><b>듣기</b> AI가 듣고 확인</span></div>
+    <div class="hero-meta"><span>2026년 11월 8일 확인</span><span class="dot">·</span><span>Claude Code(Pro 이상)</span><span class="dot">·</span><span>earshot 무료(MIT) · 그래픽카드 없이 CPU만</span></div>
+  </header>
+  
+  <nav class="toc" aria-label="목차"><h2>목차</h2><ol><li><a href="#s0"><span class="i">0</span><span class="t">이게 뭐예요?</span><span class="c">개요</span></a></li><li><a href="#s1"><span class="i">1</span><span class="t">Claude Code에 맡기기</span><span class="c">복사</span></a></li><li><a href="#s2"><span class="i">2</span><span class="t">효과음 넣기 문장</span><span class="c">복사</span></a></li><li><a href="#s3"><span class="i">3</span><span class="t">꼭 알아 둘 점</span><span class="c">주의</span></a></li><li><a href="#s4"><span class="i">4</span><span class="t">준비물</span><span class="c">4개</span></a></li><li><a href="#s5"><span class="i">5</span><span class="t">uv · ffmpeg</span><span class="c">설치 도구</span></a></li><li><a href="#s6"><span class="i">6</span><span class="t">earshot 설치·연결</span><span class="c">MCP</span></a></li><li><a href="#s7"><span class="i">7</span><span class="t">첫 효과음</span><span class="c">시험</span></a></li><li><a href="#s8"><span class="i">8</span><span class="t">영상에 넣기</span><span class="c">말로 고치기</span></a></li><li><a href="#s9"><span class="i">9</span><span class="t">안 될 때</span><span class="c">복사</span></a></li><li><a href="#s10"><span class="i">10</span><span class="t">다음에 해 볼 것</span><span class="c">2가지</span></a></li></ol></nav>
+  <div class="block-title"><span>STEP 00</span> 먼저 이것만</div><article class="card" id="s0"><div class="card-h"><span class="n">0</span><h2>이게 뭐예요?</h2></div><ul><li><b>무엇:</b> AI 코딩 도구에 '귀'를 달아 주는 무료 오픈소스예요. 코드로 만든 효과음 252개(휙, 쿵, 딸깍, 톡 등)를 영상 컷에 맞춰 넣고, 소리와 화면이 맞는지 AI가 직접 듣고 확인해요.</li><li><b>누구에게:</b> Claude Code로 영상(제품 소개, 짧은 영상, 게임 화면)을 만드는 사람.</li><li><b>필요한 것:</b> Claude Code(Pro 이상 유료), uv, ffmpeg. 그래픽카드는 필요 없어요. CPU만 써요(README).</li><li><b>무료 범위:</b> earshot 자체는 무료예요(MIT). 효과음 만들기(sfx, kit)는 모델도 인터넷도 필요 없어요. 듣고 평가하는 기능(describe, timeline 등)은 처음 한 번 모델 약 1.1GB를 받아요.</li></ul><div class="ok"><span class="tag">핵심</span>효과음은 코드로 만들고, 맞는지는 AI가 들어서 확인해요. 마지막 확인은 내 귀로 해요.</div></article><div class="block-title"><span>STEP 01</span> Pro 이상이면</div><article class="card" id="s1"><div class="card-h"><span class="n">1</span><h2>Claude Code에 설치와 연결 맡기기</h2></div><div class="note">Claude Code는 <b>Pro 이상 유료 플랜</b>에서 쓸 수 있어요(무료 플랜 미포함, 공식 문서 2026년 11월 6일 확인). 무료 플랜이면 이 단계는 건너뛰고 아래 'uv와 ffmpeg 깔기'부터 순서대로 따라 하세요. 다만 earshot을 AI가 직접 쓰게 하는 연결(MCP)은 Claude Code 같은 코딩 도구가 있어야 해요.</div><p>여는 법: Claude 데스크톱 앱 왼쪽 위 <b>Code</b> 탭 → 작업할 폴더 선택. 또는 PowerShell·터미널에서 <code>claude</code> 입력.</p><ul><li>Claude Code 설치(Windows PowerShell): <code class='brk'>irm https://claude.ai/install.ps1 | iex</code></li><li>Claude Code 설치(Mac): <code class='brk'>curl -fsSL https://claude.ai/install.sh | bash</code></li></ul><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>Claude Code에 붙여 넣기</span><button class="copy-btn" type="button" data-copy="p-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-1">earshot(https://github.com/Leonxlnx/earshot)을 설치하고 Claude Code에 연결해 줘. 한 단계씩 하고, 명령을 실행하기 전에 무엇을 하는지 먼저 말해 줘.
+1. 내 운영체제를 확인하고 uv, ffmpeg, ffprobe가 설치돼 있는지 확인해 줘. 없으면 공식 설치 방법을 알려 주고, 설치하기 전에 나에게 물어봐.
+2. uv tool install "earshot[mcp] @ git+https://github.com/Leonxlnx/earshot" 로 earshot을 설치해 줘.
+3. earshot doctor 로 설치 상태를 확인해 줘. 듣기 모델(약 1.1GB)은 내려받기 전에 나에게 물어봐.
+4. claude mcp add earshot --scope user -e EARSHOT_THREADS=3 -- earshot mcp 로 Claude Code에 연결하고, 연결됐는지 확인해 줘.
+5. 시험으로 earshot sfx list --kind whoosh 를 실행해서 쓸 수 있는 '휙' 소리 목록을 보여 줘.
+6. earshot sfx render whoosh_fast/crisp -o test_whoosh.wav --dur 0.8 로 소리 하나를 만들고, 파일이 생겼는지 확인해 줘.
+7. Gemini 기능(llm)은 쓰지 마. API 키를 파일에 적으라고 하지 마.</pre></div></article><div class="block-title"><span>STEP 02</span> 설치가 끝나면</div><article class="card" id="s2"><div class="card-h"><span class="n">2</span><h2>영상에 효과음 넣기를 맡기는 문장</h2></div><p>설치와 연결이 끝난 뒤, 효과음을 넣을 영상이 있는 폴더에서 Claude Code에 붙여 넣으세요.</p><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>Claude Code에 붙여 넣기 ([ ] 채우기)</span><button class="copy-btn" type="button" data-copy="p-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-2">이 영상 [내 영상.mp4] 에 효과음을 넣어 줘. earshot을 써.
+1. 먼저 영상을 보고 장면이 바뀌는 순간(컷)과 글자가 나타나는 순간을 시간 순서로 표로 정리해 줘.
+2. earshot kit init 으로 키트를 만들어 줘. 배경 음악이 있으면 launch, 없으면 calm 프리셋을 써.
+3. 컷에는 휙(whoosh), 글자가 뜰 때는 톡(ui_pop), 강조할 때는 쿵(cut_hit)을 넣어 줘. 같은 소리가 너무 촘촘하게 붙지 않게 해 줘.
+4. 넣은 뒤 earshot timeline 으로 소리와 화면 컷이 맞는지 확인하고, 어긋난 곳은 고쳐 줘.
+5. 원본 영상은 덮어쓰지 말고 [내 영상]_sfx.mp4 로 새로 저장해 줘.
+6. 마지막에 어떤 시간에 어떤 소리를 넣었는지 표로 보여 줘.</pre></div></article><div class="block-title"><span>STEP 03</span> 주의</div><article class="card" id="s3"><div class="card-h"><span class="n">3</span><h2>꼭 알아 둘 점</h2></div><ul class="checks"><li><b>Claude Code가 유료예요.</b> earshot은 무료지만, AI가 직접 쓰게 하려면 Claude Code 같은 코딩 도구가 필요해요.</li><li><b>듣기 모델이 약 1.1GB예요.</b> 명령을 한 번씩 따로 실행하면 매번 모델을 불러오느라 20~40초가 걸려요. MCP로 연결해 두면 한 번 불러온 뒤 계속 켜져 있어요(README).</li><li><b>취향은 판단하지 못해요.</b> README에 따르면 소리의 느낌, 감정, 라이선스, 말소리 내용은 판단하지 못하고, 14kHz 이상은 듣지 못해요. 마지막 확인은 내 귀로 하세요.</li><li><b>효과음 은행(bank)은 코드로 만든 소리예요.</b> 함께 들어 있는 real-sound 스킬은 실제 녹음을 찾아 쓰는 방식이에요. 그 녹음마다 라이선스를 따로 확인해야 해요. 상업용으로 쓰기 전에 LICENSE와 <code>docs/CREDITS_FIT.md</code>를 직접 확인하세요. 우리는 코드가 MIT라는 것까지만 확인했어요.</li><li><b>Gemini 기능(llm)은 선택이에요.</b> 내 Gemini API 키가 필요하고, 키를 파일에 직접 적지 말라고 README에 쓰여 있어요.</li><li><b>Windows에서는 직접 해 보지 않았어요.</b> 설치가 막히면 아래 '안 될 때'를 보세요.</li><li><b>느린 컴퓨터에서는 MCP 연결이 시간 초과로 끊길 수 있어요.</b> README는 <code>MCP_TIMEOUT=60000</code>으로 Claude Code를 켜라고 안내해요.</li></ul></article><div class="block-title"><span>STEP 04</span> 시작 전에</div><article class="card" id="s4"><div class="card-h"><span class="n">4</span><h2>준비물과 공식 링크</h2></div><table class="tbl"><thead><tr><th>준비물</th><th>왜 필요해요?</th><th>어디서 받아요?</th></tr></thead><tbody><tr><td data-l="준비물">Claude Code (Pro 이상)</td><td data-l="왜 필요해요?">earshot을 AI가 직접 쓰게 연결</td><td data-l="어디서 받아요?"><a href='https://claude.ai/download' target='_blank' rel='noopener'>claude.ai/download</a> (2026년 11월 6일 확인)</td></tr><tr><td data-l="준비물">uv</td><td data-l="왜 필요해요?">earshot 설치 도구</td><td data-l="어디서 받아요?"><a href='https://docs.astral.sh/uv/getting-started/installation/' target='_blank' rel='noopener'>uv 설치 안내</a></td></tr><tr><td data-l="준비물">ffmpeg·ffprobe</td><td data-l="왜 필요해요?">소리·영상 파일 읽고 쓰기</td><td data-l="어디서 받아요?"><a href='https://ffmpeg.org/download.html' target='_blank' rel='noopener'>ffmpeg.org/download.html</a></td></tr><tr><td data-l="준비물">디스크 여유 약 2GB</td><td data-l="왜 필요해요?">듣기 모델 약 1.1GB + 작업 파일</td><td data-l="어디서 받아요?">추정이에요</td></tr></tbody></table><p><b>바로 가기</b> (2026년 11월 8일 확인)</p><ul><li><a href='https://github.com/Leonxlnx/earshot' target='_blank' rel='noopener'>earshot GitHub (README)</a></li><li><a href='https://docs.astral.sh/uv/getting-started/installation/' target='_blank' rel='noopener'>uv 설치 안내</a></li><li><a href='https://ffmpeg.org/download.html' target='_blank' rel='noopener'>ffmpeg 다운로드</a></li><li><a href='https://claude.ai/download' target='_blank' rel='noopener'>Claude 데스크톱 앱 (Claude Code 포함)</a></li></ul></article><div class="block-title"><span>STEP 05</span> 처음 하는 분</div><article class="card" id="s5"><div class="card-h"><span class="n">5</span><h2>uv와 ffmpeg 깔기</h2></div><p><b>1) uv 설치</b></p><ul><li>Windows: PowerShell을 열고 <code class='brk'>powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"</code></li><li>Mac: 터미널을 열고 <code class='brk'>curl -LsSf https://astral.sh/uv/install.sh | sh</code></li><li>설치가 끝나면 PowerShell이나 터미널을 껐다 켜고 <code>uv --version</code>을 입력해요. 버전 숫자가 나오면 정상이에요.</li></ul><p><b>2) ffmpeg 설치</b></p><ul><li>Windows: <a href='https://ffmpeg.org/download.html' target='_blank' rel='noopener'>ffmpeg.org/download.html</a> → <b>Windows EXE Files</b>에 있는 빌드 사이트에서 받아요. 압축을 푼 뒤 bin 폴더를 PATH에 넣어야 해요. 어려우면 위 'Claude Code에 설치와 연결 맡기기'의 문장으로 Claude Code에 맡기세요.</li><li>Mac: Homebrew가 있으면 <code>brew install ffmpeg</code></li><li>확인: <code>ffmpeg -version</code>, <code>ffprobe -version</code>이 둘 다 버전을 보여 주면 정상이에요.</li></ul></article><div class="block-title"><span>STEP 06</span> 설치</div><article class="card" id="s6"><div class="card-h"><span class="n">6</span><h2>earshot 설치하고 Claude Code에 연결</h2></div><p><b>1) earshot 설치</b></p><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>PowerShell·터미널에 넣기</span><button class="copy-btn" type="button" data-copy="p-3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-3">uv tool install "earshot[mcp] @ git+https://github.com/Leonxlnx/earshot"
+earshot doctor</pre></div><ul><li><code>earshot doctor</code>가 설치 상태를 보여 줘요.</li><li>듣기 기능까지 쓰려면 <code>earshot doctor --fetch</code>로 모델 약 1.1GB를 미리 받아요.</li></ul><p><b>2) Claude Code에 연결 (MCP)</b></p><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>PowerShell·터미널에 넣기</span><button class="copy-btn" type="button" data-copy="p-4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-4">claude mcp add earshot --scope user -e EARSHOT_THREADS=3 -- earshot mcp</pre></div><p>연결한 뒤 Claude Code를 새로 열고 <code>earshot 도구가 보이는지 확인해 줘</code>라고 물어봐요.</p></article><div class="block-title"><span>STEP 07</span> 모델 없이 됨</div><article class="card" id="s7"><div class="card-h"><span class="n">7</span><h2>첫 효과음 만들어 보기</h2></div><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>PowerShell·터미널에 넣기</span><button class="copy-btn" type="button" data-copy="p-5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-5">earshot sfx list --kind whoosh
+earshot sfx render whoosh_fast/crisp -o w.wav --dur 0.8 --apex 0.32
+earshot sfx check w.wav</pre></div><ul><li><code>--dur</code>는 길이(초), <code>--apex</code>는 가장 큰 순간(초)이에요.</li><li><code>sfx check</code>는 튀는 소리, 잘린 꼬리, 클리핑이 있는지 검사해요.</li></ul></article><div class="block-title"><span>STEP 08</span> 실전</div><article class="card" id="s8"><div class="card-h"><span class="n">8</span><h2>영상에 넣기</h2></div><ul><li>위 '영상에 효과음 넣기를 맡기는 문장'을 Claude Code에 붙여 넣어요.</li><li>결과 영상을 직접 들어 보고, 크거나 어긋난 곳을 말로 고쳐 달라고 해요. 예: <code>2초 쿵 소리 줄여 줘</code>, <code>컷보다 조금 늦게</code>.</li></ul></article><div class="block-title"><span>STEP 09</span> 막히면</div><article class="card" id="s9"><div class="card-h"><span class="n">9</span><h2>안 될 때</h2></div><ul><li><b><code>earshot</code>을 찾을 수 없음</b> · uv 설치 뒤 터미널을 다시 열었는지 → 터미널 재시작 → <code>uv tool list</code>에 earshot이 있는지 확인</li><li><b>ffmpeg 오류</b> · <code>ffmpeg -version</code>이 되는지 → 'uv와 ffmpeg 깔기' 다시, Windows는 PATH 확인</li><li><b>모델 받다가 멈춤</b> · 디스크 여유, 인터넷 → <code>earshot doctor --fetch</code> 다시 실행</li><li><b>Claude Code에 도구가 안 보임</b> · <code>claude mcp list</code>에 earshot이 있는지 → 연결 명령 다시 → Claude Code 새로 열기 → 느리면 <code>MCP_TIMEOUT=60000</code></li><li><b>소리가 영상과 안 맞음</b> · timeline 확인을 했는지 → <code class='brk'>earshot timeline으로 다시 확인하고 고쳐 줘</code></li></ul><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>오류 상담용 문장 ([ ] 채우기)</span><button class="copy-btn" type="button" data-copy="p-6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-6">earshot 설치 중에 [오류 문구 그대로]가 나와. 운영체제는 [ ], uv 버전은 [ ], ffmpeg는 [설치됨/안 됨]이야. 원인과 고치는 순서를 쉬운 말로 알려 줘.</pre></div></article><div class="block-title"><span>STEP 10</span> 다음</div><article class="card" id="s10"><div class="card-h"><span class="n">10</span><h2>다음에 해 볼 것</h2></div><ul><li>키트 프리셋(calm, crisp, minimal, launch)을 바꿔 가며 같은 영상에 넣어 보고 비교하기</li><li><code>earshot critique 영상.mp4</code>로 제품 소개 영상 점수표 받아 보기(듣기 모델 필요)</li></ul></article>
+  <article class="card" id="src"><div class="card-h"><span class="n">↗</span><h2>출처</h2></div>
+    <ul class="sources"><li><a href="https://github.com/Leonxlnx/earshot" target="_blank" rel="noopener">earshot README (GitHub)</a><span class="src-meta">2026년 11월 8일 확인</span></li><li><a href="https://docs.astral.sh/uv/getting-started/installation/" target="_blank" rel="noopener">uv 설치 안내</a><span class="src-meta">2026년 11월 8일 확인</span></li><li><a href="https://ffmpeg.org/download.html" target="_blank" rel="noopener">ffmpeg 다운로드</a><span class="src-meta">2026년 11월 8일 확인</span></li></ul>
+    <div class="note">명령과 숫자는 earshot README 기준이에요(2026년 11월 8일 확인). 실제 영상에 끝까지 넣어 보지는 않았어요. 영상 속 화면은 설명을 위해 만든 예시예요. 실제 화면 녹화가 아니에요.</div>
+  </article>
+  <section class="pdf-card">
+    <div class="pdf-top"><div class="pdf-badge">PDF</div><div class="pdf-tt"><strong>이 가이드 PDF로 다운받기</strong><span>A4 5쪽 · 저장해 두고 따라 하세요</span></div></div>
+    <a class="pdf-cta" href="guide.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.8v10.4"/><path d="M7.6 10.2 12 14.6l4.4-4.4"/><path d="M4.6 19.4h14.8"/></svg>다운받기</a>
+    <p class="pdf-fine">인쇄해서 책상에 두고 봐도 되게 만들었어요. 폰에서 열어도 글씨가 깨지지 않아요.</p>
+  </section>
+  <footer>
+    <div class="foot-name"><b>@ai.onepage</b></div>
+    <p class="foot-desc">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요. 새 가이드는 인스타와 허브에 올라와요.</p>
+    <div class="foot-links"><a href="../../">전체 가이드 허브</a><a href="https://instagram.com/ai.onepage" target="_blank" rel="noopener">인스타 @ai.onepage</a></div>
+    <p class="foot-copy">#14 · 클로드로 만든 영상에 효과음 252개: earshot 설치와 사용법 · 11월 9일<br>earshot README와 uv·ffmpeg 공식 설치 안내(2026년 11월 8일 확인)를 보고 썼어요. 실제 영상에 끝까지 넣어 보지는 않았어요.</p>
+  </footer>
+</div>
+<div id="toast" role="status" aria-live="polite">복사됐어요 ✓</div>
+
+<script>
+/* 복사 버튼: navigator.clipboard → 실패하면 textarea + execCommand (인스타 인앱 웹뷰 대응).
+   이 스크립트는 손대지 않는다. 버튼은 .copy-btn, 대상은 data-copy="pre의 id". */
+(function(){
+  var timers = new WeakMap();
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1800);
+  }
+
+  function legacyCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly','');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '-9999px';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    var ok = false;
+    try {
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      ok = document.execCommand('copy');
+    } catch(e){ ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function copyText(text, done){
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function(){ done(true); },
+        function(){ done(legacyCopy(text)); });
+    } else {
+      done(legacyCopy(text));
+    }
+  }
+
+  document.querySelectorAll('.copy-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var box = document.getElementById(btn.getAttribute('data-copy'));
+      if (!box) return;
+      var text = box.innerText.replace(/\u00a0/g, ' ').trim();
+      var label = btn.querySelector('.copy-label');
+      copyText(text, function(ok){
+        if (ok) {
+          btn.classList.add('done');
+          if (label) label.textContent = '복사됨 ✓';
+        }
+        showToast(ok ? '복사됐어요 ✓' : '복사하지 못했어요');
+        clearTimeout(timers.get(btn));
+        timers.set(btn, setTimeout(function(){
+          btn.classList.remove('done');
+          if (label) label.textContent = '복사';
+        }, 2200));
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

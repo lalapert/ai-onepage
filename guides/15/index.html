@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FAF7F1">
+<meta name="description" content="ollama run gemma4 한 줄로 구글 오픈 모델을 내 컴퓨터에서 돌리고, 영수증·표 사진도 읽게 하는 법">
+<title>구글 Gemma 4를 내 컴퓨터에서 공짜로: Ollama 설치와 사용법 · ai.onepage #15</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:swap}
+
+  :root{
+    --bg:#FAF7F1;
+    --card:#FFFFFF;
+    --ink:#211E1A;
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+    --code-bg:#F4F0E8;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:"NotoKR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.62;word-break:keep-all;
+    font-size:15px;
+  }
+  .page{max-width:480px;margin:0 auto;padding:0 18px 40px;overflow-x:hidden}
+  a{color:var(--teal-dark);text-decoration:underline;text-decoration-color:#BFDCD3;
+    text-decoration-thickness:1px;text-underline-offset:2px}
+  code.brk{white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+  code{
+    font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,"NotoKR",monospace;
+    font-size:.9em;background:var(--code-bg);border:1px solid #E6DFD2;
+    border-radius:5px;padding:1px 5px;white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  }
+
+  /* ── 상단 네비 ── */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:14px 0 0;
+  }
+  .back{
+    display:inline-flex;align-items:center;gap:5px;
+    text-decoration:none;color:#5A544A;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:6px 12px 6px 10px;font-size:12.5px;font-weight:700;letter-spacing:-.3px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04);
+  }
+  .back:active{transform:scale(.97)}
+  .back svg{width:12px;height:12px}
+  .num-badge{
+    font-size:11.5px;font-weight:700;letter-spacing:-.2px;
+    color:var(--teal-dark);background:var(--teal-soft);
+    border-radius:999px;padding:5px 11px;white-space:nowrap;
+  }
+
+  /* ── 히어로 ── */
+  .hero{padding:22px 2px 0}
+  .eyebrow{
+    font-size:11.5px;font-weight:700;color:var(--teal-dark);letter-spacing:-.1px;
+    display:flex;align-items:center;gap:6px;margin-bottom:9px;
+  }
+  .eyebrow i{width:5px;height:5px;border-radius:50%;background:var(--teal);display:inline-block}
+  h1{
+    margin:0;font-size:29px;font-weight:900;line-height:1.26;letter-spacing:-1.1px;
+  }
+  .sub{
+    margin:9px 0 0;font-size:16.5px;font-weight:700;color:var(--teal-dark);
+    line-height:1.45;letter-spacing:-.5px;
+  }
+  .lede{
+    margin:12px 0 0;font-size:14px;line-height:1.68;color:#5F594F;letter-spacing:-.2px;
+  }
+  .pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .pill{
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:6px 11px;font-size:12.3px;font-weight:700;color:#3A342C;letter-spacing:-.3px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04);
+  }
+  .pill b{color:var(--teal);font-weight:900}
+  .hero-meta{
+    margin-top:12px;font-size:11.5px;color:#8A8277;letter-spacing:-.2px;
+    display:flex;flex-wrap:wrap;align-items:center;gap:5px;
+  }
+  .hero-meta .dot{color:#C9C2B6}
+
+  /* ── 공통 카드 ── */
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:16px 16px 15px;margin-top:12px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04),0 6px 16px rgba(35,30,20,.035);
+  }
+  .card-h{display:flex;align-items:center;gap:8px;margin:0 0 8px}
+  .card-h .n{
+    flex:0 0 auto;width:22px;height:22px;border-radius:7px;
+    background:var(--teal-soft);color:var(--teal-dark);
+    font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;
+    letter-spacing:-.2px;
+  }
+  .card-h h2{margin:0;font-size:16.5px;font-weight:900;letter-spacing:-.55px;line-height:1.35}
+  .card p{margin:0 0 9px;font-size:14px;line-height:1.68;color:#3A342C;letter-spacing:-.2px}
+  .card p:last-child{margin-bottom:0}
+  .card b,.card strong{font-weight:700;color:var(--ink)}
+  .card ul{margin:0 0 2px;padding-left:17px}
+  .card ul li{font-size:14px;line-height:1.68;color:#3A342C;margin-bottom:7px;letter-spacing:-.2px}
+  .card ul li:last-child{margin-bottom:0}
+  .card ul li::marker{color:#C9C2B6}
+
+  /* ── 섹션 타이틀(카드 밖) ── */
+  .block-title{
+    display:flex;align-items:baseline;gap:7px;margin:26px 2px 0;
+    font-size:12px;font-weight:700;color:#8A8277;letter-spacing:.02em;
+  }
+  .block-title span{color:var(--teal-dark)}
+
+  /* ── 한눈에 비교 (필요 없으면 이 블록 통째로 삭제) ── */
+  .cmp{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:16px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04),0 8px 20px rgba(35,30,20,.04)}
+  .cmp h2{margin:0 0 12px;font-size:14px;font-weight:900;letter-spacing:-.4px;display:flex;align-items:center;gap:6px}
+  .cmp h2 em{font-style:normal;font-size:11px;font-weight:700;color:#8A8277;letter-spacing:-.1px}
+  .cmp-item{padding:12px 0;border-top:1px dashed #E6DFD2}
+  .cmp-item:first-of-type{border-top:0;padding-top:0}
+  .cmp-label{font-size:11.5px;font-weight:700;color:#8A8277;letter-spacing:-.2px;margin-bottom:8px}
+  .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+  .bar-row:last-of-type{margin-bottom:0}
+  .bar-name{flex:0 0 96px;font-size:11.6px;color:#5F594F;letter-spacing:-.3px;line-height:1.35}
+  .bar-track{flex:1 1 auto;height:9px;border-radius:999px;background:#F2EDE3;overflow:hidden}
+  .bar-fill{height:100%;border-radius:999px;background:var(--red)}
+  .bar-fill.mild{background:#E8B7AC}
+  .bar-fill.teal{background:var(--teal)}
+  .bar-val{flex:0 0 auto;font-size:12px;font-weight:900;color:var(--ink);letter-spacing:-.3px;min-width:66px;text-align:right}
+  .bar-val small{font-size:10.5px;font-weight:700;color:#8A8277}
+  .cmp-foot{
+    margin-top:10px;font-size:11.5px;line-height:1.55;color:#6F685D;letter-spacing:-.2px;
+    background:#FBF8F2;border-radius:9px;padding:8px 10px;
+  }
+  .x-tag{
+    display:inline-block;background:var(--red-soft);color:#B33320;font-weight:900;
+    font-size:11px;border-radius:6px;padding:1.5px 6px;margin-left:4px;letter-spacing:-.1px;
+  }
+
+  /* ── 목차 ── */
+  .toc{
+    background:#FBF8F2;border:1px solid var(--line);border-radius:16px;
+    padding:14px 16px 12px;margin-top:14px;
+  }
+  .toc h2{margin:0 0 8px;font-size:12px;font-weight:900;color:#8A8277;letter-spacing:.03em}
+  .toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+  .toc li{margin:0}
+  .toc a{
+    display:flex;align-items:baseline;gap:8px;
+    text-decoration:none;color:#3A342C;font-size:13.3px;letter-spacing:-.25px;
+    padding:5.5px 0;border-top:1px solid #EFE9DE;
+  }
+  .toc li:first-child a{border-top:0}
+  .toc a .i{flex:0 0 14px;font-size:11.5px;font-weight:900;color:var(--teal)}
+  .toc a .t{flex:1 1 auto}
+  .toc a .c{flex:0 0 auto;font-size:10.5px;font-weight:700;color:#A8A093}
+
+  /* ── 코드/프롬프트 박스 ── */
+  .prompt{
+    margin:10px 0 4px;border:1px solid #E2DACB;border-radius:12px;overflow:hidden;
+    background:var(--code-bg);
+  }
+  .prompt-h{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    background:#EDE7DA;padding:7px 9px 7px 11px;
+  }
+  .prompt-h .lbl{
+    font-size:11px;font-weight:700;color:#6F685D;letter-spacing:-.2px;
+    display:flex;align-items:center;gap:5px;min-width:0;
+  }
+  .prompt-h .lbl svg{width:12px;height:12px;flex:0 0 auto;color:#8A8277}
+  .copy-btn{
+    -webkit-appearance:none;appearance:none;font-family:inherit;cursor:pointer;
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--card);border:1px solid #DCD3C4;border-radius:7px;
+    padding:4px 9px;font-size:11.5px;font-weight:700;color:#3A342C;letter-spacing:-.2px;
+    line-height:1;white-space:nowrap;transition:background .15s,color .15s,border-color .15s;
+  }
+  .copy-btn svg{width:11px;height:11px}
+  .copy-btn:active{transform:scale(.96)}
+  .copy-btn.done{background:var(--teal);border-color:var(--teal);color:#fff}
+  .prompt pre{
+    margin:0;padding:11px 12px 12px;font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,"NotoKR",monospace;
+    font-size:12px;line-height:1.62;color:#2A2620;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ── 단계 목록 ── */
+  .steps{list-style:none;margin:2px 0 0;padding:0;counter-reset:s}
+  .steps li{
+    position:relative;padding-left:26px;margin-bottom:10px;
+    font-size:14px;line-height:1.66;color:#3A342C;letter-spacing:-.2px;
+  }
+  .steps li:last-child{margin-bottom:0}
+  .steps li::before{
+    counter-increment:s;content:counter(s);
+    position:absolute;left:0;top:1px;
+    width:18px;height:18px;border-radius:50%;
+    background:#F4F0E8;border:1px solid #E6DFD2;color:#6F685D;
+    font-size:10.5px;font-weight:900;display:flex;align-items:center;justify-content:center;
+    line-height:1;
+  }
+
+  .steps li .os{display:block;margin-top:3px}
+  .sources li{margin-bottom:9px}
+  .src-meta{display:block;margin-top:1px;font-size:11.5px;line-height:1.5;color:#A8A093;letter-spacing:-.1px}
+  .ok{
+    margin:11px 0 2px;background:var(--teal-soft);border-radius:10px;padding:9px 11px;
+    font-size:13px;line-height:1.6;color:#0A4F42;letter-spacing:-.2px;
+  }
+  .ok b{color:#0A4F42}
+  .ok .tag{
+    display:inline-block;font-size:10.5px;font-weight:900;background:var(--teal);color:#fff;
+    border-radius:5px;padding:1.5px 6px;margin-right:5px;letter-spacing:-.1px;vertical-align:1px;
+  }
+  .note{
+    margin:10px 0 2px;background:#FBF8F2;border-left:3px solid #E6DFD2;border-radius:0 9px 9px 0;
+    padding:9px 11px;font-size:12.8px;line-height:1.62;color:#5F594F;letter-spacing:-.2px;
+  }
+
+  /* ── 준비물 표: 모바일에서는 행마다 3칸을 세로로 쌓아 390px 가로 넘침을 막는다 ── */
+  .tbl{width:100%;border-collapse:collapse;margin:2px 0 0;font-size:13px;table-layout:fixed}
+  .tbl thead{display:none}
+  .tbl tr{display:block;border-top:1px solid var(--line);padding:10px 0}
+  .tbl tr:first-child{border-top:0;padding-top:2px}
+  .tbl td{display:block;padding:0;font-size:13px;line-height:1.6;color:#3A342C;letter-spacing:-.2px}
+  .tbl td[data-l="준비물"]{font-weight:700;color:var(--ink);font-size:13.6px;margin-bottom:3px}
+  .tbl td[data-l="왜 필요해요?"]{margin-bottom:4px}
+  .tbl td[data-l="왜 필요해요?"]::before{
+    content:"왜 ";font-weight:700;color:#A8A093;font-size:11.5px;
+  }
+  .tbl td[data-l="어디서 받아요?"]::before{
+    content:"받는 곳 ";font-weight:700;color:var(--teal-dark);font-size:11.5px;
+  }
+  .tbl td[data-l="어디서 받아요?"]{color:#4E483E;font-size:12.6px}
+
+  /* ── 측정 결과 막대 (숫자 비교 시각화) ── */
+  .measure{margin:14px 0 0 !important;line-height:1.45}
+  .measure b{display:block;font-size:14px;margin-bottom:2px}
+  .measure span{display:block;font-weight:400;color:#8A8277;font-size:11.8px;letter-spacing:-.2px}
+  .gain{list-style:none;margin:10px 0 0;padding:0}
+  .gain li{border-top:1px solid var(--line);padding:9px 0}
+  .gain li:first-child{border-top:0;padding-top:2px}
+  .gain .g-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .gain .g-cmd{font-size:13px;font-weight:700;color:var(--ink);letter-spacing:-.25px;line-height:1.4}
+  .gain .g-cut{
+    flex:0 0 auto;font-size:11.5px;font-weight:900;color:var(--teal-dark);
+    background:var(--teal-soft);border-radius:6px;padding:2px 6px;letter-spacing:-.2px;
+  }
+  .gain .g-cut.low{color:#8A5A12;background:#FBEFD8}
+  .gain .g-num{margin-top:3px;font-size:11.8px;color:#6F685D;letter-spacing:-.2px}
+  .gain .g-num b{color:var(--ink);font-weight:900}
+  .gain .g-bar{margin-top:6px;height:6px;border-radius:999px;background:#F2EDE3;overflow:hidden}
+  .gain .g-bar i{display:block;height:100%;border-radius:999px;background:var(--teal)}
+
+  /* ── 꼭 알아 둘 점 체크리스트 ── */
+  .checks{list-style:none;margin:0;padding:0}
+  .checks li{
+    position:relative;padding-left:22px;margin-bottom:11px;
+    font-size:13.6px;line-height:1.66;color:#3A342C;letter-spacing:-.2px;
+  }
+  .checks li:last-child{margin-bottom:0}
+  .checks li::before{
+    content:"";position:absolute;left:2px;top:7px;width:9px;height:9px;border-radius:3px;
+    background:var(--red-soft);border:1px solid #F0C9C1;
+  }
+
+  /* ── PDF 다운로드 카드 ── */
+  .pdf-card{
+    margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:16px;box-shadow:0 1px 2px rgba(35,30,20,.05),0 10px 24px rgba(35,30,20,.05);
+  }
+  .pdf-top{display:flex;align-items:center;gap:10px}
+  .pdf-badge{
+    flex:0 0 auto;width:40px;height:46px;border-radius:7px;background:var(--red);
+    color:#fff;font-size:10.5px;font-weight:900;letter-spacing:.04em;
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:7px;
+    position:relative;box-shadow:0 3px 8px rgba(224,69,46,.28);
+  }
+  .pdf-badge::before{
+    content:"";position:absolute;top:0;right:0;
+    border-width:0 11px 11px 0;border-style:solid;
+    border-color:transparent #FAF7F1 transparent transparent;
+  }
+  .pdf-tt{flex:1 1 auto;min-width:0}
+  .pdf-tt strong{display:block;font-size:14.8px;font-weight:900;letter-spacing:-.45px;line-height:1.35}
+  .pdf-tt span{display:block;margin-top:2px;font-size:11.8px;color:#8A8277;letter-spacing:-.2px}
+  .pdf-cta{
+    display:flex;align-items:center;justify-content:center;gap:7px;
+    margin-top:13px;text-decoration:none;
+    background:var(--ink);color:#fff;border-radius:11px;
+    padding:12px 14px;font-size:14px;font-weight:900;letter-spacing:-.4px;
+    box-shadow:0 3px 10px rgba(33,30,26,.16);
+  }
+  .pdf-cta:active{transform:scale(.99)}
+  .pdf-cta svg{width:15px;height:15px}
+  .pdf-fine{margin:9px 2px 0;font-size:11.3px;line-height:1.55;color:#A8A093;letter-spacing:-.1px;text-align:center}
+
+  /* ── 푸터 ── */
+  footer{
+    margin-top:26px;padding-top:18px;border-top:1px solid var(--line);text-align:center;
+  }
+  .foot-name{font-size:14px;font-weight:900;letter-spacing:-.4px}
+  .foot-name b{color:var(--teal-dark)}
+  .foot-desc{margin:5px auto 0;max-width:300px;font-size:11.5px;line-height:1.65;color:#8A8277;letter-spacing:-.2px}
+  .foot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:11px}
+  .foot-links a{
+    text-decoration:none;font-size:11.5px;font-weight:700;color:#5A544A;letter-spacing:-.2px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 11px;
+  }
+  .foot-copy{margin-top:14px;font-size:10.5px;color:#B3ABA0;line-height:1.7;letter-spacing:-.1px}
+
+  /* ── 토스트 ── */
+  #toast{
+    position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);
+    background:#211E1A;color:#fff;font-size:12.5px;font-weight:700;letter-spacing:-.2px;
+    padding:9px 15px;border-radius:999px;box-shadow:0 8px 22px rgba(33,30,26,.28);
+    opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:50;
+    white-space:nowrap;
+  }
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media (min-width:520px){
+    body{font-size:15.5px}
+    .page{padding:0 22px 56px}
+    h1{font-size:33px}
+  }
+  /* 인쇄로 뽑아도 깨지지 않게 */
+  @media print{
+    body{background:#fff}
+    .topbar .back,.pdf-card,#toast{display:none}
+    .card,.cmp,.toc{box-shadow:none;break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="topbar">
+    <a class="back" href="../../"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>전체 가이드</a>
+    <span class="num-badge">#15 · 11월 10일</span>
+  </nav>
+  <header class="hero">
+    <div class="eyebrow"><i></i>로컬·무료 AI</div>
+    <h1>구글 Gemma 4를<br>내 컴퓨터에서 공짜로</h1>
+    <p class="sub">구글 딥마인드의 오픈 모델을 Ollama로 돌리기</p>
+    <p class="lede">Gemma 4(젬마 4)는 구글 딥마인드가 만든 오픈 모델이에요. Ollama에 <code>ollama run gemma4</code> 한 줄을 넣으면 내 컴퓨터에서 돌아가요. 글과 사진을 넣으면 글로 답해서, 영수증·표 사진도 읽게 할 수 있어요.</p>
+    <div class="pills"><span class="pill"><b>무료</b> 내 컴퓨터에서 실행</span><span class="pill"><b>한 줄</b> ollama run gemma4</span><span class="pill"><b>사진</b> 영수증·표 읽기</span></div>
+    <div class="hero-meta"><span>2026년 11월 9일 확인</span><span class="dot">·</span><span>Ollama가 깔린 컴퓨터</span><span class="dot">·</span><span>무료 · cloud 붙은 모델만 유료</span></div>
+  </header>
+  
+  <nav class="toc" aria-label="목차"><h2>목차</h2><ol><li><a href="#s0"><span class="i">0</span><span class="t">이게 뭐예요?</span><span class="c">개요</span></a></li><li><a href="#s1"><span class="i">1</span><span class="t">바로 따라 하기</span><span class="c">한 줄</span></a></li><li><a href="#s2"><span class="i">2</span><span class="t">꼭 알아 둘 점</span><span class="c">주의</span></a></li><li><a href="#s3"><span class="i">3</span><span class="t">모델 고르기</span><span class="c">5가지</span></a></li><li><a href="#s4"><span class="i">4</span><span class="t">설치 확인·모델 받기</span><span class="c">ollama list</span></a></li><li><a href="#s5"><span class="i">5</span><span class="t">사진 읽히기</span><span class="c">복사</span></a></li><li><a href="#s6"><span class="i">6</span><span class="t">다 쓰고 나서</span><span class="c">ollama stop</span></a></li><li><a href="#s7"><span class="i">7</span><span class="t">안 될 때</span><span class="c">복사</span></a></li><li><a href="#s8"><span class="i">8</span><span class="t">다음에 해 볼 것</span><span class="c">3가지</span></a></li></ol></nav>
+  <div class="block-title"><span>STEP 00</span> 먼저 이것만</div><article class="card" id="s0"><div class="card-h"><span class="n">0</span><h2>이게 뭐예요?</h2></div><ul><li><b>무엇:</b> 구글 딥마인드가 만든 오픈 모델 Gemma 4(젬마 4)를 Ollama로 내 컴퓨터에서 돌려요. 글과 사진을 넣으면 글로 답해요.</li><li><b>누구에게:</b> ChatGPT 같은 AI를 사용료 없이, 내 파일을 인터넷에 올리지 않고 쓰고 싶은 사람.</li><li><b>가격:</b> 내 컴퓨터에서 돌리면 무료예요. 이름에 <code>cloud</code>가 붙은 모델만 Ollama 클라우드에서 돌아가요('꼭 알아 둘 점' 참고).</li><li><b>인기:</b> Ollama에서 2,880만 번 내려받았어요(11/9, Ollama 다운로드 수. 사용자 수가 아니에요).</li></ul><div class="note">이 가이드를 쓰면서 직접 돌려 보지는 않았어요. 속도와 답의 질은 컴퓨터 사양과 모델 크기에 따라 달라요.</div></article><div class="block-title"><span>STEP 01</span> Ollama가 있으면</div><article class="card" id="s1"><div class="card-h"><span class="n">1</span><h2>바로 따라 하기</h2></div><p>Ollama가 없으면 먼저 허브 7번 'OpenAI 모델을 내 컴퓨터에서 무료로: Ollama 설치 가이드' 가이드로 설치하세요. PowerShell(Windows)이나 터미널(Mac)에 아래 한 줄을 넣어요.</p><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>PowerShell·터미널에 넣기</span><button class="copy-btn" type="button" data-copy="p-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-1">ollama run gemma4</pre></div><ul><li>처음 한 번 모델을 내려받아요. 기본(gemma4)은 e4b 모델이고 6.6GB부터예요.</li><li><code>&gt;&gt;&gt;</code> 표시가 나오면 한국어로 물어보면 돼요. 끝낼 때는 <code>/bye</code>.</li></ul><p>노트북이나 메모리가 적은 컴퓨터는 제일 작은 모델부터 받으세요.</p><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>메모리가 적으면 이것부터</span><button class="copy-btn" type="button" data-copy="p-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-2">ollama run gemma4:e2b</pre></div></article><div class="block-title"><span>STEP 02</span> 주의</div><article class="card" id="s2"><div class="card-h"><span class="n">2</span><h2>꼭 알아 둘 점</h2></div><ul class="checks"><li><b>이름에 cloud가 붙은 모델은 내 컴퓨터에서 돌지 않아요.</b> <code>gemma4:cloud</code>, <code>gemma4:31b-cloud</code>는 Ollama 클라우드에서 돌아가요. Ollama 클라우드는 무료 범위 없이 쓴 만큼 내는 방식이에요(11/9 확인). 무료로 쓰려면 cloud가 없는 이름을 고르세요.</li><li><b>모델 크기만큼 디스크를 써요.</b> 아래 '어떤 모델을 고를까'를 보고 여유 공간을 먼저 확인하세요.</li><li><b>메모리가 부족하면 느리거나 안 돌아가요.</b> 구글 문서 기준으로 4비트 모델을 올리는 데 E2B 약 2.9GB, E4B 약 4.5GB 메모리가 들어요. 대화가 길어지면 더 들어요. 느리면 허브 13번 '올라마가 느릴 때: 원인 찾기와 빨라지는 3가지' 가이드를 보세요.</li><li><b>답이 틀릴 수 있어요.</b> 작은 모델일수록 더 그래요. 영수증 금액, 날짜 같은 숫자는 원본과 꼭 맞춰 보세요.</li><li><b>사진은 질문보다 먼저 넣으세요.</b> Ollama 모델 설명에 있는 권장 순서예요.</li><li><b>상업적으로 쓸 거면 Gemma 이용 약관을 직접 확인하세요.</b> 구글 문서는 '책임 있는 상업적 사용'을 허용한다고 써요.</li></ul></article><div class="block-title"><span>STEP 03</span> 크기 고르기</div><article class="card" id="s3"><div class="card-h"><span class="n">3</span><h2>어떤 모델을 고를까</h2></div><p>ollama.com 11/9 기준이에요. 이름 · 내려받는 용량 · 대화 길이 · 설명 순서로 적었어요.</p><ul><li><b>gemma4:e2b</b> · 4.6GB~7.5GB · 128K · 가장 작음. 노트북·휴대기기용으로 만든 모델</li><li><b>gemma4:e4b (기본)</b> · 6.6GB~9.5GB · 128K · <code>ollama run gemma4</code> 하면 이것</li><li><b>gemma4:12b</b> · 7.7GB~8.0GB · 256K · 작업용 컴퓨터용</li><li><b>gemma4:26b</b> · 16GB~19GB · 256K · 작업용. 여러 전문가 중 일부만 쓰는 구조(MoE)</li><li><b>gemma4:31b</b> · 19GB~20GB · 256K · 가장 큼</li></ul><div class="note">모든 모델이 글과 사진을 받아요(Ollama 표기: Text, Image). 용량에 범위가 있는 건 컴퓨터 종류(예: Mac용 MLX)에 따라 받는 파일이 달라서예요(추정).</div></article><div class="block-title"><span>STEP 04</span> 처음 하는 분</div><article class="card" id="s4"><div class="card-h"><span class="n">4</span><h2>설치 확인하고 모델 받기</h2></div><p><b>1) Ollama 설치 확인</b></p><ul><li>PowerShell이나 터미널에 <code>ollama --version</code>을 넣어요. 버전 숫자가 나오면 설치된 거예요.</li><li>안 나오면 허브 7번 'OpenAI 모델을 내 컴퓨터에서 무료로: Ollama 설치 가이드' 가이드로 설치해요.</li><li>오래전에 설치했다면 새 모델이 안 받아질 수 있어요. Ollama를 최신으로 업데이트하세요(추정).</li></ul><p><b>2) 모델 받고 대화하기</b></p><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>PowerShell·터미널에 넣기</span><button class="copy-btn" type="button" data-copy="p-3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-3">ollama run gemma4:e2b</pre></div><ul><li>받은 모델 보기: <code>ollama list</code></li><li>지우기: <code>ollama rm gemma4:e2b</code></li></ul></article><div class="block-title"><span>STEP 05</span> 영수증, 표</div><article class="card" id="s5"><div class="card-h"><span class="n">5</span><h2>사진 읽히기</h2></div><ul><li><b>Ollama 앱(Windows·Mac):</b> 대화창에 사진을 끌어다 놓고 아래 문장을 보내요.</li><li><b>터미널:</b> 질문 맨 앞에 사진 파일 경로를 넣어요. 파일 이름은 영어로, 띄어쓰기 없이 두는 게 안전해요(추정).</li></ul><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>터미널에서 넣는 예</span><button class="copy-btn" type="button" data-copy="p-4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-4">ollama run gemma4:e2b "./receipt.jpg 이 영수증을 표로 정리해 줘"</pre></div><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>바로 쓰는 문장</span><button class="copy-btn" type="button" data-copy="p-5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-5">이 사진 속 영수증을 표로 정리해 줘.
+- 칸: 날짜 | 가게 | 품목 | 수량 | 금액
+- 사진에서 안 보이는 칸은 비워 두고 [확인 필요]라고 써 줘
+- 마지막 줄에 합계를 쓰고, 영수증에 적힌 합계와 다르면 알려 줘</pre></div></article><div class="block-title"><span>STEP 06</span> 정리</div><article class="card" id="s6"><div class="card-h"><span class="n">6</span><h2>다 쓰고 나서</h2></div><ul><li>모델은 마지막으로 쓴 뒤 기본 5분 동안 메모리에 남아요(Ollama FAQ).</li><li>바로 내리려면 <code>ollama stop gemma4:e2b</code>.</li></ul></article><div class="block-title"><span>STEP 07</span> 막히면</div><article class="card" id="s7"><div class="card-h"><span class="n">7</span><h2>안 될 때</h2></div><ul><li><b><code>ollama</code>를 찾을 수 없음</b> · 설치했는지 → Ollama 설치 가이드(허브 7번) → PowerShell·터미널 다시 열기</li><li><b>받다가 멈춤, 디스크 부족</b> · 디스크 여유 공간 → 더 작은 모델(e2b)로 → 모델 저장 위치를 다른 드라이브로(환경 변수 <code>OLLAMA_MODELS</code>)</li><li><b>답이 너무 느림</b> · <code>ollama ps</code>의 PROCESSOR 칸 → 올라마가 느릴 때 가이드(허브 13번)</li><li><b>사진을 못 읽음</b> · 파일 경로, 이름의 띄어쓰기 → 영어 이름으로 바꾸고 경로를 질문 맨 앞에</li><li><b>cloud가 붙은 모델이 돌아감</b> · <code>ollama list</code>의 이름 → cloud 없는 이름으로 다시 받기</li></ul><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>오류 상담용 문장 ([ ] 채우기)</span><button class="copy-btn" type="button" data-copy="p-6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-6">Ollama로 gemma4를 쓰는데 [증상/오류 문구 그대로]가 나와. 운영체제는 [ ], 메모리는 [ ]GB, 그래픽카드는 [있음/없음]이야. 원인과 고치는 순서를 쉬운 말로 알려 줘.</pre></div></article><div class="block-title"><span>STEP 08</span> 다음</div><article class="card" id="s8"><div class="card-h"><span class="n">8</span><h2>다음에 해 볼 것</h2></div><ul><li>같은 질문을 e2b와 e4b에 해 보고 답과 속도 비교하기</li><li>사진 대신 화면 캡처(표, 그래프)를 넣고 요약시키기</li><li>Ollama 모델 페이지에는 Claude Code와 잇는 명령(<code class='brk'>ollama launch claude --model gemma4</code>)도 있어요. 사양 조건을 아직 확인 중이라 이 가이드에서는 다루지 않았어요.</li></ul></article>
+  <article class="card" id="src"><div class="card-h"><span class="n">↗</span><h2>출처</h2></div>
+    <ul class="sources"><li><a href="https://ollama.com/library/gemma4" target="_blank" rel="noopener">Ollama gemma4 모델 페이지</a><span class="src-meta">2026년 11월 9일 확인</span></li><li><a href="https://ollama.com/library/gemma4/tags" target="_blank" rel="noopener">Ollama gemma4 전체 목록</a><span class="src-meta">2026년 11월 9일 확인</span></li><li><a href="https://ai.google.dev/gemma/docs/core" target="_blank" rel="noopener">Google Gemma 문서</a><span class="src-meta">2026년 11월 9일 확인</span></li></ul>
+    <div class="note">2026년 11월 9일에 Ollama 모델 페이지와 구글 Gemma 문서를 보고 쓴 안내예요. 이 가이드를 쓰면서 직접 돌려 보지는 않았어요. 속도와 답의 질은 컴퓨터 사양과 모델 크기에 따라 달라요. 영상 속 화면은 설명을 위해 만든 예시예요. 실제 화면 녹화가 아니에요.</div>
+  </article>
+  <section class="pdf-card">
+    <div class="pdf-top"><div class="pdf-badge">PDF</div><div class="pdf-tt"><strong>이 가이드 PDF로 다운받기</strong><span>A4 4쪽 · 저장해 두고 따라 하세요</span></div></div>
+    <a class="pdf-cta" href="guide.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.8v10.4"/><path d="M7.6 10.2 12 14.6l4.4-4.4"/><path d="M4.6 19.4h14.8"/></svg>다운받기</a>
+    <p class="pdf-fine">인쇄해서 책상에 두고 봐도 되게 만들었어요. 폰에서 열어도 글씨가 깨지지 않아요.</p>
+  </section>
+  <footer>
+    <div class="foot-name"><b>@ai.onepage</b></div>
+    <p class="foot-desc">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요. 새 가이드는 인스타와 허브에 올라와요.</p>
+    <div class="foot-links"><a href="../../">전체 가이드 허브</a><a href="https://instagram.com/ai.onepage" target="_blank" rel="noopener">인스타 @ai.onepage</a></div>
+    <p class="foot-copy">#15 · 구글 Gemma 4를 내 컴퓨터에서 공짜로: Ollama 설치와 사용법 · 11월 10일<br>Ollama gemma4 모델 페이지와 Google Gemma 문서(2026년 11월 9일 확인)를 보고 썼어요. 이 가이드를 쓰면서 직접 돌려 보지는 않았어요.</p>
+  </footer>
+</div>
+<div id="toast" role="status" aria-live="polite">복사됐어요 ✓</div>
+
+<script>
+/* 복사 버튼: navigator.clipboard → 실패하면 textarea + execCommand (인스타 인앱 웹뷰 대응).
+   이 스크립트는 손대지 않는다. 버튼은 .copy-btn, 대상은 data-copy="pre의 id". */
+(function(){
+  var timers = new WeakMap();
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1800);
+  }
+
+  function legacyCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly','');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '-9999px';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    var ok = false;
+    try {
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      ok = document.execCommand('copy');
+    } catch(e){ ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function copyText(text, done){
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function(){ done(true); },
+        function(){ done(legacyCopy(text)); });
+    } else {
+      done(legacyCopy(text));
+    }
+  }
+
+  document.querySelectorAll('.copy-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var box = document.getElementById(btn.getAttribute('data-copy'));
+      if (!box) return;
+      var text = box.innerText.replace(/\u00a0/g, ' ').trim();
+      var label = btn.querySelector('.copy-label');
+      copyText(text, function(ok){
+        if (ok) {
+          btn.classList.add('done');
+          if (label) label.textContent = '복사됨 ✓';
+        }
+        showToast(ok ? '복사됐어요 ✓' : '복사하지 못했어요');
+        clearTimeout(timers.get(btn));
+        timers.set(btn, setTimeout(function(){
+          btn.classList.remove('done');
+          if (label) label.textContent = '복사';
+        }, 2200));
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

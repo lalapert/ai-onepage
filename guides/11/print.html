@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>광고 대행 전에: Claude Code 마케팅 스킬 53개 설치·사용법 · ai.onepage #11</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:block}
+
+  :root{
+    --ink:#211E1A;
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+    --code-bg:#F5F1E9;
+    --paper:#FAF7F1;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#fff}
+  body{
+    font-family:"NotoKR",sans-serif;color:var(--ink);
+    font-size:9.35pt;line-height:1.56;word-break:keep-all;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  @page{size:A4;margin:14mm 15mm 16mm}
+
+  /* ── 머리글 ── */
+  .head{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:6.2mm 6.5mm 5.6mm;margin-bottom:4.2mm;
+  }
+  .head-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4mm}
+  .head-brand{font-size:8.4pt;font-weight:900;letter-spacing:.04em;color:var(--teal-dark)}
+  .head-num{
+    font-size:8pt;font-weight:700;color:var(--teal-dark);background:var(--teal-soft);
+    border-radius:20px;padding:1.2mm 3mm;
+  }
+  .head h1{margin:0;font-size:21pt;font-weight:900;letter-spacing:-.03em;line-height:1.24}
+  .head .sub{margin:2mm 0 0;font-size:11pt;font-weight:700;color:var(--teal-dark);letter-spacing:-.02em}
+  .head .lede{margin:3mm 0 0;font-size:9.4pt;line-height:1.66;color:#4E483E}
+  .head .pills{display:flex;gap:1.6mm;margin-top:3.4mm;flex-wrap:wrap}
+  .head .pill{
+    background:#fff;border:1px solid var(--line);border-radius:20px;
+    padding:1.1mm 2.6mm;font-size:8.4pt;font-weight:700;color:#3A342C;
+  }
+  .head .meta{margin-top:3mm;font-size:7.9pt;color:var(--muted)}
+  .head .meta b{color:#5F594F;font-weight:700}
+
+  /* ── 비교 (선택) ── */
+  .cmp{border:1px solid var(--line);border-radius:4mm;padding:4.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid}
+  .cmp h2{margin:0 0 3mm;font-size:10.5pt;font-weight:900;letter-spacing:-.02em}
+  .cmp h2 em{font-style:normal;font-weight:700;font-size:7.8pt;color:var(--muted);margin-left:2mm}
+  .cmp-row{display:flex;gap:6mm}
+  .cmp-col{flex:1 1 0;min-width:0}
+  .cmp-col + .cmp-col{border-left:1px solid var(--line);padding-left:6mm}
+  .cmp-label{font-size:7.9pt;font-weight:700;color:var(--muted);margin-bottom:2.4mm}
+  .bar-row{display:flex;align-items:center;gap:2mm;margin-bottom:1.8mm}
+  .bar-name{flex:0 0 27mm;font-size:7.9pt;color:#5F594F;line-height:1.3}
+  .bar-track{flex:1 1 auto;height:2.4mm;border-radius:20px;background:#F2EDE3;overflow:hidden}
+  .bar-fill{height:100%;border-radius:20px;background:var(--red)}
+  .bar-fill.mild{background:#E8B7AC}
+  .bar-fill.teal{background:var(--teal)}
+  .bar-val{flex:0 0 auto;font-size:8.2pt;font-weight:900;min-width:17mm;text-align:right}
+  .cmp-foot{margin-top:2mm;font-size:7.8pt;line-height:1.5;color:#5F594F}
+  .cmp-foot b{font-weight:700;color:var(--ink)}
+
+  /* ── 목차 ── */
+  .toc{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:3.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid;
+  }
+  .toc h2{margin:0 0 1.6mm;font-size:8pt;font-weight:900;color:var(--muted);letter-spacing:.06em}
+  .toc ol{list-style:none;margin:0;padding:0;columns:2;column-gap:7mm}
+  .toc li{font-size:8.4pt;color:#3A342C;padding:.7mm 0;break-inside:avoid}
+  .toc li b{color:var(--teal);font-weight:900;margin-right:1.4mm}
+  .toc li span{color:#A8A093;font-size:7.4pt}
+
+  /* ── 섹션 ── */
+  .sec{margin-bottom:3.4mm}
+  .sec-h{break-after:avoid}
+  .sec>.kicker{break-after:avoid}
+  p{orphans:3;widows:3}
+  li{orphans:2;widows:2}
+  .sec>.kicker:first-child{margin-top:0}
+  .sec-h{display:flex;align-items:baseline;gap:2mm;margin:0 0 1.6mm}
+  .sec-h .n{
+    flex:0 0 auto;font-size:8pt;font-weight:900;color:var(--teal-dark);
+    background:var(--teal-soft);border-radius:1.4mm;padding:.3mm 1.6mm;
+  }
+  .sec-h h2{margin:0;font-size:11.4pt;font-weight:900;letter-spacing:-.03em}
+  .sec p{margin:0 0 1.8mm;font-size:9.4pt;line-height:1.64;color:#2C2822}
+  .sec p:last-child{margin-bottom:0}
+  .sec b,.sec strong{font-weight:700;color:var(--ink)}
+  code.brk{white-space:normal;overflow-wrap:anywhere}
+  code{
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;font-size:8.3pt;
+    background:var(--code-bg);border:.4pt solid #E3DCCE;border-radius:1mm;padding:0 .8mm;
+    white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  }
+
+  ol.steps{margin:0 0 1.8mm;padding-left:5.2mm}
+  ol.steps li{font-size:9.1pt;line-height:1.55;margin-bottom:1mm;padding-left:.6mm}
+  ol.steps li::marker{color:var(--teal);font-weight:700}
+  ul.plain{margin:0 0 1.8mm;padding-left:4.4mm}
+  ul.plain li{font-size:9.1pt;line-height:1.56;margin-bottom:1.2mm}
+  ul.plain li::marker{color:#C0B7A8}
+
+  .ok{
+    background:var(--teal-soft);border-radius:2mm;padding:2.2mm 3mm;margin:1.6mm 0;
+    font-size:8.6pt;line-height:1.55;color:#0A4F42;break-inside:avoid;
+  }
+  .ok b{color:#0A4F42}
+  .ok .tag{
+    display:inline-block;background:var(--teal);color:#fff;font-size:7.2pt;font-weight:900;
+    border-radius:1mm;padding:0 1.4mm;margin-right:1.4mm;
+  }
+  .note{
+    background:var(--paper);border-left:.9mm solid #E3DCCE;border-radius:0 2mm 2mm 0;
+    padding:2mm 3mm;margin:1.6mm 0;font-size:8.5pt;line-height:1.58;color:#5F594F;break-inside:avoid;
+  }
+
+  /* ── 표 ── */
+  table{width:100%;border-collapse:collapse;margin:1mm 0 1.8mm;font-size:8.6pt;break-inside:avoid}
+  thead th{
+    background:var(--paper);text-align:left;font-weight:900;font-size:8pt;color:#5F594F;
+    padding:1.8mm 2.4mm;border-bottom:.5pt solid #DDD6C8;
+  }
+  tbody td{padding:1.8mm 2.4mm;border-bottom:.4pt solid var(--line);vertical-align:top;line-height:1.55}
+  tbody tr{break-inside:avoid}
+  tbody tr:last-child td{border-bottom:0}
+  tbody td:first-child{font-weight:700;color:var(--ink)}
+  td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  td.cut{
+    font-weight:900;color:var(--teal-dark);white-space:nowrap;text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  td.cut.low{color:#8A5A12}
+  a{color:var(--teal-dark);text-decoration:none;border-bottom:.3pt solid #C9DCD5}
+
+  /* ── 프롬프트 ── */
+  .prompt{border:.5pt solid #E0D8C8;border-radius:2.4mm;overflow:hidden;margin:1.6mm 0 2mm;break-inside:avoid}
+  .prompt-h{
+    background:#EDE7DA;padding:1.6mm 3mm;font-size:7.9pt;font-weight:700;color:#6F685D;
+    display:flex;justify-content:space-between;
+  }
+  .prompt-h span{font-weight:700}
+  .prompt-h em{font-style:normal;font-size:7.2pt;color:#8E877A}
+  .prompt pre{
+    margin:0;padding:2.6mm 3mm;background:var(--code-bg);
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;
+    font-size:8.2pt;line-height:1.6;color:#2A2620;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ── 푸터(마지막 페이지) ── */
+  .end{
+    margin-top:4mm;border-top:1px solid var(--line);padding-top:3mm;
+    display:flex;justify-content:space-between;gap:5mm;break-inside:avoid;
+  }
+  .end-brand{font-size:9pt;font-weight:900;color:var(--teal-dark);letter-spacing:.02em}
+  .end-desc{font-size:7.8pt;color:var(--muted);line-height:1.55;margin-top:.8mm;max-width:95mm}
+  .end-meta{font-size:7.4pt;color:#A8A093;text-align:right;line-height:1.6}
+
+  .kicker{font-size:7.6pt;font-weight:900;color:#A8A093;letter-spacing:.1em;margin:4mm 0 1.4mm}
+  .kicker:first-child{margin-top:0}
+  .measure-cap{font-size:7.9pt;color:var(--muted);margin:0 0 1.2mm}
+  .measure-cap b{color:var(--ink);font-weight:700}
+  .footer-note{
+    margin-top:3mm;background:var(--paper);border:1px solid var(--line);border-radius:2mm;
+    padding:2.4mm 3mm;font-size:7.9pt;line-height:1.58;color:#5F594F;
+  }
+</style>
+</head>
+<body>
+<div class="head">
+  <div class="head-top"><div class="head-brand">@ai.onepage · AI 툴 가이드</div><div class="head-num">#11 · 11월 8일</div></div>
+  <h1>광고 대행 전에: Claude Code 마케팅 스킬 53개 설치·사용법</h1>
+  <p class="sub">Claude Code에 무료 마케팅 스킬 모음 깔고 쓰기</p>
+  <p class="lede">마케터가 만든 무료 마케팅 스킬 53개를 Claude Code에 깔면 광고 문구·가격·랜딩 페이지·검색 노출을 마케팅 틀에 맞춰 도와줘요. 결과는 초안이에요. 매출을 보장하지는 않아요.</p>
+  <div class="pills"><span class="pill">53개 마케팅 스킬</span><span class="pill">무료 MIT 라이선스</span><span class="pill">설치 npx 명령 한 줄</span></div>
+  <div class="meta"><b>2026년 11월 7일 확인</b> · Claude Code(Pro 이상) · Node.js · 스킬 모음 무료(MIT)</div>
+</div>
+
+<div class="toc"><h2>목차</h2><ol><li><b>0</b>Claude Code에 맡기기</li><li><b>1</b>질문 10개</li><li><b>2</b>이게 뭐예요?</li><li><b>3</b>꼭 알아 둘 점</li><li><b>4</b>준비물</li><li><b>5</b>따라 하기</li><li><b>6</b>안 될 때</li><li><b>7</b>다음에 해 볼 것</li></ol></div>
+<section class="sec"><div class="kicker">STEP 00 · 설치를 대신 맡기기</div><div class="sec-h"><span class="n">0</span><h2>Claude Code에 바로 붙여 넣기</h2></div><div class="note">Claude Code는 <b>Pro 이상 유료 플랜</b>에서 쓸 수 있어요(무료 플랜 미포함, 공식 문서 2026-11-06 확인).</div><ul class="plain"><li><b>여는 법:</b> Claude 데스크톱 앱 왼쪽 위 <b>Code</b> 탭 → 내 가게·서비스 작업 폴더 선택. 또는 PowerShell·터미널에서 <code>claude</code> 입력.</li><li><b>Claude Code 설치:</b> Windows PowerShell <code class="brk">irm https://claude.ai/install.ps1 | iex</code> · Mac <code class="brk">curl -fsSL https://claude.ai/install.sh | bash</code></li><li><b>데스크톱 앱:</b> <a href="https://claude.ai/api/desktop/win32/x64/setup/latest/redirect" target="_blank" rel="noopener">Windows</a> / <a href="https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect" target="_blank" rel="noopener">Mac</a></li></ul><div class="prompt"><div class="prompt-h"><span>Claude Code에 붙여 넣기</span><em>복사해서 붙여 넣기</em></div><pre>마케팅 스킬 모음 marketingskills(github.com/coreyhaines31/marketingskills)를 이 폴더에 설치하고 첫 세팅까지 해 줘. 한 단계씩 하고, 명령을 실행하기 전에 무엇을 하는지 먼저 말해 줘.
+1. node와 npx가 있는지 확인해 줘. 없으면 Node.js 설치 방법만 알려 주고 멈춰.
+2. 아래 명령으로 설치해 줘. 끝의 -a claude-code를 빼면 Claude Code가 못 읽는 폴더에 깔릴 수 있어.
+   npx skills add coreyhaines31/marketingskills -a claude-code
+3. .claude/skills/ 폴더에 스킬이 들어갔는지 목록으로 보여 줘.
+4. product-marketing 스킬로 내 제품 소개 문서를 같이 만들자. 질문을 하나씩 해 줘. 다른 스킬들이 이 문서를 먼저 읽어.
+5. 광고 계정이나 분석 도구 연결은 지금 하지 마.
+6. 실제 돈이 나가거나 공개로 올라가는 일(광고 집행, 게시, 메일 발송)은 하기 전에 나한테 먼저 물어봐.</pre></div></section><section class="sec"><div class="kicker">STEP 01 · 설치 후 붙여 넣기</div><div class="sec-h"><span class="n">1</span><h2>바로 쓰는 질문 10개</h2></div><p>괄호 안은 그 질문에 쓰이는 스킬 이름이에요. 질문에 스킬 이름을 같이 적으면 더 잘 골라 써요.</p><div class="prompt"><div class="prompt-h"><span>설치 후 Claude Code에 붙여 넣기 ([ ] 채우기)</span><em>복사해서 붙여 넣기</em></div><pre>1. (copywriting) 우리 [가게/서비스] 첫 화면 문구를 다시 써 줘. 지금 문구는 [ ]야. 3가지 버전으로.
+2. (cro) 이 상세페이지를 점검해 줘: [링크 또는 파일]. 고칠 곳을 중요한 순서로 5개만.
+3. (ad-creative) 인스타 광고 문구 5개 써 줘. 타깃은 [ ], 혜택은 [ ].
+4. (pricing) 지금 가격은 [ ]이고 경쟁 상품은 [ ]야. 가격 구성(기본·추천·프리미엄)을 제안해 줘.
+5. (seo-audit) 내 블로그 [주소]의 검색 노출 문제를 점검하고 고칠 순서를 알려 줘.
+6. (ai-seo) ChatGPT나 Claude 같은 AI 검색에 우리 서비스가 소개되려면 뭘 고쳐야 할까?
+7. (emails) 처음 가입한 고객에게 보낼 안내 메일 3통을 순서대로 써 줘.
+8. (social) 이번 주 인스타 게시물 5개 주제와 첫 문장을 짜 줘.
+9. (launch) 새 메뉴/상품 [ ] 출시 계획을 2주 일정으로 짜 줘.
+10. (marketing-ideas) 돈 안 드는 홍보 아이디어 10개를 우리 업종 [ ]에 맞게 골라 줘.</pre></div><div class="note">결과는 초안이에요. 숫자·후기·효과 같은 내용은 실제로 확인된 것만 남기고 고치세요.</div></section><section class="sec"><div class="kicker">STEP 02 · 먼저 이것만</div><div class="sec-h"><span class="n">2</span><h2>이게 뭐예요?</h2></div><ul class="plain"><li><b>무엇:</b> 마케팅 대행사를 운영하는 마케터가 만든 AI 에이전트용 마케팅 스킬 모음이에요. 스킬은 AI에게 '이 일은 이런 순서로 하라'는 마케팅 틀을 알려 주는 문서예요. GitHub 별 5만 8천 개가 넘어요(2026-11-07 기준).</li><li><b>몇 개:</b> 53개예요(README 표 기준). 광고 문구(copywriting), 전환율 점검(cro), 가격(pricing), 검색 노출(seo-audit, ai-seo), 광고 소재(ad-creative), 영업 메일(cold-email) 등.</li><li><b>얼마:</b> 스킬 모음은 무료(MIT 라이선스)예요. 쓰는 에이전트 요금은 따로예요(Claude Code는 Pro 이상).</li><li><b>어디서:</b> Claude Code, OpenAI Codex, Cursor, Windsurf처럼 Agent Skills를 읽는 코딩 에이전트에서 써요. 일반 ChatGPT·Claude 채팅창에 바로 설치하는 방식은 아니에요.</li><li><b>시작점:</b> product-marketing 스킬이 기본이에요. 다른 스킬이 이 스킬이 만든 제품 소개 문서를 먼저 읽고 일해요.</li></ul></section><section class="sec"><div class="kicker">STEP 03 · 주의</div><div class="sec-h"><span class="n">3</span><h2>꼭 알아 둘 점</h2></div><ul class="plain"><li><b>Claude Code 안에서 설치를 시키면 끝에 -a claude-code를 붙이세요.</b> 안 붙이면 .agents/skills/ 폴더에만 깔릴 수 있는데, Claude Code는 그 폴더를 읽지 않아요(README 안내).</li><li><b>/plugin 명령은 내 컴퓨터의 대화형 Claude Code에서만 돼요.</b> 웹판 Claude Code나 GitHub Actions에서는 'isn't available in this environment'가 떠요. 그때는 npx 방식으로 설치하세요.</li><li><b>매출을 보장하지 않아요.</b> 스킬은 마케팅 순서를 잡아 주는 틀이에요. 결과 문구는 내가 확인하고 고쳐야 해요.</li><li><b>README의 Partners(파트너) 도구는 선택이에요.</b> 유료 연동 서비스라 설치에 필요 없어요.</li><li><b>광고 계정 연결은 나중에, 읽기 전용부터 하세요.</b> README에 계정 연결 안내(<code>tools/SETUP.md</code>)가 있지만, 처음에는 연결하지 않아도 스킬을 다 쓸 수 있어요.</li><li><b>스킬이 만든 광고는 내가 확인한 뒤 내 손으로 올리세요.</b> 광고 계정을 연결하더라도 광고 집행·예산 변경·게시 권한은 주지 마세요. 테스트할 때는 예산 칸에 실제 금액을 넣지 마세요.</li><li><b>영업 메일(cold-email)은 초안만 받으세요.</b> 자동 발송을 연결하면 한 번에 여러 사람에게 나갈 수 있어요. 한국에서는 받는 사람의 명시적인 사전 동의 없이 영리 목적 광고 메일을 보내면 안 돼요(정보통신망법 제50조, 2026-11-07 확인). 오후 9시~오전 8시 발송은 동의를 따로 받아야 해요.</li><li><b>광고 문구는 사실만 넣으세요.</b> 확인 안 된 효과, 가짜 후기, 근거 없는 '1위' 같은 말은 빼세요.</li></ul></section><section class="sec"><div class="kicker">STEP 04 · 시작 전에</div><div class="sec-h"><span class="n">4</span><h2>준비물과 공식 링크</h2></div><p><b>바로 가기</b> (2026-11-07 확인)</p><ul class="plain"><li><a href="https://github.com/coreyhaines31/marketingskills" target="_blank" rel="noopener">marketingskills GitHub</a>: 스킬 목록과 설치 안내</li></ul><table><thead><tr><th style="width:30%">준비물</th><th style="width:42%">왜 필요해요?</th><th style="width:28%">어디서 받아요?</th></tr></thead><tbody><tr><td>Claude Code</td><td>스킬을 읽고 일하는 에이전트</td><td><a href="https://claude.com/claude-code" target="_blank" rel="noopener">claude.com/claude-code</a> · Pro 이상 유료 플랜</td></tr><tr><td>Node.js</td><td>npx 명령을 쓰려고</td><td><a href="https://nodejs.org/" target="_blank" rel="noopener">nodejs.org</a> · 무료</td></tr><tr><td>marketingskills</td><td>마케팅 스킬 53개</td><td><a href="https://github.com/coreyhaines31/marketingskills" target="_blank" rel="noopener">GitHub</a> · 무료, MIT</td></tr></tbody></table></section><section class="sec"><div class="kicker">STEP 05 · 처음 하는 사람용</div><div class="sec-h"><span class="n">5</span><h2>따라 하기</h2></div><ol class="steps"><li>Node.js를 설치해요(이미 있으면 건너뛰기).</li><li>내 가게·서비스 작업 폴더를 만들고, 그 폴더에서 PowerShell·터미널을 열어요.</li><li>설치 명령을 입력해요: <code class="brk">npx skills add coreyhaines31/marketingskills</code></li><li>어디에 깔지 물어보면 <b>Claude Code</b>를 골라요. 스킬이 <code>.claude/skills/</code>에 들어가요.</li><li>같은 폴더에서 Claude Code를 열고, product-marketing 스킬로 제품 소개 문서부터 만들어요.</li><li>위 '바로 쓰는 질문 10개'를 하나씩 붙여 넣어 써 봐요.</li></ol><p>몇 개만 깔고 싶으면 <code class="brk">npx skills add coreyhaines31/marketingskills --skill cro copywriting</code>, 목록만 보려면 <code>--list</code>를 붙여요.</p><div class="note">버튼 이름과 질문 순서는 바뀔 수 있어요. 화면에 보이는 대로 따라가세요.</div></section><section class="sec"><div class="kicker">STEP 06 · 막히면</div><div class="sec-h"><span class="n">6</span><h2>안 될 때</h2></div><ul class="plain"><li><b>깔았는데 스킬을 안 써요</b> · 먼저 확인: 스킬이 .agents/skills/에 깔렸는지 → <code class="brk">npx skills add coreyhaines31/marketingskills -a claude-code</code>로 다시 설치해요</li><li><b>'npx' 명령을 못 찾아요</b> · 먼저 확인: Node.js 설치 → Node.js를 설치하고 터미널을 새로 열어요</li><li><b>/plugin isn't available in this environment</b> · 먼저 확인: 웹판·원격 환경인지 → npx 방식으로 설치해요</li><li><b>답이 우리 가게와 안 맞아요</b> · 먼저 확인: 제품 소개 문서 → product-marketing 스킬로 소개 문서를 먼저 만들어요</li></ul><div class="prompt"><div class="prompt-h"><span>오류 상담용 문장 ([ ] 채우기)</span><em>복사해서 붙여 넣기</em></div><pre>Claude Code에 marketingskills를 설치하다가 아래 문제가 생겼어. 운영체제는 [ ], 입력한 명령은 [ ], 오류 문구는 [ ]야. 원인과 고치는 순서를 쉬운 말로 알려 줘.</pre></div></section><section class="sec"><div class="kicker">STEP 07 · 다음에</div><div class="sec-h"><span class="n">7</span><h2>다음에 해 볼 것</h2></div><ul class="plain"><li>광고 소재 이미지가 필요하면 image 스킬, 영상이 필요하면 video 스킬을 같이 써 보세요.</li><li>쇼츠를 많이 만들고 싶으면 같은 날 올린 10번 가이드 「주제 한 줄로 쇼츠 만들기: MoneyPrinterTurbo 사용법」을 보세요.</li></ul></section>
+<section class="sec" style="break-before:page">
+  <div class="kicker">한 장 요약 · 인쇄해서 책상에</div>
+  <div class="sec-h"><span class="n">✓</span><h2>이 순서대로만 하면 돼요</h2></div>
+  <table><thead><tr><th style="width:8%">순서</th><th style="width:32%">할 일</th><th style="width:34%">명령·도구</th><th style="width:26%">결과</th></tr></thead><tbody><tr><td>1</td><td>Node.js 설치</td><td>nodejs.org</td><td>npx 명령을 쓸 수 있어요</td></tr><tr><td>2</td><td>작업 폴더에서 터미널 열기</td><td>PowerShell·터미널</td><td>설치할 곳이 정해져요</td></tr><tr><td>3</td><td>스킬 설치</td><td>npx skills add coreyhaines31/marketingskills → Claude Code 고르기</td><td>스킬이 .claude/skills/에 들어가요</td></tr><tr><td>4</td><td>제품 소개 문서 만들기</td><td>Claude Code에서 product-marketing 스킬</td><td>다른 스킬이 이 문서를 먼저 읽어요</td></tr><tr><td>5</td><td>질문 붙여 넣기</td><td>바로 쓰는 질문 10개</td><td>결과는 초안, 확인하고 고쳐요</td></tr></tbody></table>
+  <div class="note">Claude Code 안에서 설치를 시키면 끝에 -a claude-code를 붙이세요. 광고 집행·게시·메일 발송은 내가 확인한 뒤 내 손으로 해요.</div>
+  <div class="kicker">출처</div>
+  <ul class="plain"><li>marketingskills README — https://github.com/coreyhaines31/marketingskills · 2026년 11월 7일 확인 · 스킬 53개 목록, 지원 에이전트, npx skills 설치, -a claude-code 안내, /plugin 제한, product-marketing 기본 스킬, MIT 무료</li></ul>
+  <div class="footer-note">2026년 11월 7일에 marketingskills 공식 README를 보고 쓴 안내예요. 매출이나 광고 성과를 보장하지 않아요. 설치 방법은 바뀔 수 있으니 공식 README를 다시 확인하세요. 영상 속 화면은 설명을 위해 만든 예시예요. 실제 Claude Code 화면 녹화가 아니에요.</div>
+  <div class="end">
+    <div><div class="end-brand">@ai.onepage</div><div class="end-desc">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요. 새 가이드는 인스타와 허브에 올라와요.</div></div>
+    <div class="end-meta">#11 · 광고 대행 전에: Claude Code 마케팅 스킬 53개 설치·사용법<br>11월 8일<br>lalapert.github.io/ai-onepage</div>
+  </div>
+</section>
+</body>
+</html>

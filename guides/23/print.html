@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>AI 티 나는 디자인 빼기: impeccable 설치와 쓰는 법 · ai.onepage #23</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:block}
+
+  :root{
+    --ink:#211E1A;
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+    --code-bg:#F5F1E9;
+    --paper:#FAF7F1;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#fff}
+  body{
+    font-family:"NotoKR",sans-serif;color:var(--ink);
+    font-size:9.35pt;line-height:1.56;word-break:keep-all;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  @page{size:A4;margin:14mm 15mm 16mm}
+
+  /* ── 머리글 ── */
+  .head{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:6.2mm 6.5mm 5.6mm;margin-bottom:4.2mm;
+  }
+  .head-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4mm}
+  .head-brand{font-size:8.4pt;font-weight:900;letter-spacing:.04em;color:var(--teal-dark)}
+  .head-num{
+    font-size:8pt;font-weight:700;color:var(--teal-dark);background:var(--teal-soft);
+    border-radius:20px;padding:1.2mm 3mm;
+  }
+  .head h1{margin:0;font-size:21pt;font-weight:900;letter-spacing:-.03em;line-height:1.24}
+  .head .sub{margin:2mm 0 0;font-size:11pt;font-weight:700;color:var(--teal-dark);letter-spacing:-.02em}
+  .head .lede{margin:3mm 0 0;font-size:9.4pt;line-height:1.66;color:#4E483E}
+  .head .pills{display:flex;gap:1.6mm;margin-top:3.4mm;flex-wrap:wrap}
+  .head .pill{
+    background:#fff;border:1px solid var(--line);border-radius:20px;
+    padding:1.1mm 2.6mm;font-size:8.4pt;font-weight:700;color:#3A342C;
+  }
+  .head .meta{margin-top:3mm;font-size:7.9pt;color:var(--muted)}
+  .head .meta b{color:#5F594F;font-weight:700}
+
+  /* ── 비교 (선택) ── */
+  .cmp{border:1px solid var(--line);border-radius:4mm;padding:4.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid}
+  .cmp h2{margin:0 0 3mm;font-size:10.5pt;font-weight:900;letter-spacing:-.02em}
+  .cmp h2 em{font-style:normal;font-weight:700;font-size:7.8pt;color:var(--muted);margin-left:2mm}
+  .cmp-row{display:flex;gap:6mm}
+  .cmp-col{flex:1 1 0;min-width:0}
+  .cmp-col + .cmp-col{border-left:1px solid var(--line);padding-left:6mm}
+  .cmp-label{font-size:7.9pt;font-weight:700;color:var(--muted);margin-bottom:2.4mm}
+  .bar-row{display:flex;align-items:center;gap:2mm;margin-bottom:1.8mm}
+  .bar-name{flex:0 0 27mm;font-size:7.9pt;color:#5F594F;line-height:1.3}
+  .bar-track{flex:1 1 auto;height:2.4mm;border-radius:20px;background:#F2EDE3;overflow:hidden}
+  .bar-fill{height:100%;border-radius:20px;background:var(--red)}
+  .bar-fill.mild{background:#E8B7AC}
+  .bar-fill.teal{background:var(--teal)}
+  .bar-val{flex:0 0 auto;font-size:8.2pt;font-weight:900;min-width:17mm;text-align:right}
+  .cmp-foot{margin-top:2mm;font-size:7.8pt;line-height:1.5;color:#5F594F}
+  .cmp-foot b{font-weight:700;color:var(--ink)}
+
+  /* ── 목차 ── */
+  .toc{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:3.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid;
+  }
+  .toc h2{margin:0 0 1.6mm;font-size:8pt;font-weight:900;color:var(--muted);letter-spacing:.06em}
+  .toc ol{list-style:none;margin:0;padding:0;columns:2;column-gap:7mm}
+  .toc li{font-size:8.4pt;color:#3A342C;padding:.7mm 0;break-inside:avoid}
+  .toc li b{color:var(--teal);font-weight:900;margin-right:1.4mm}
+  .toc li span{color:#A8A093;font-size:7.4pt}
+
+  /* ── 섹션 ── */
+  .sec{margin-bottom:3.4mm}
+  .sec-h{break-after:avoid}
+  .sec>.kicker{break-after:avoid}
+  p{orphans:3;widows:3}
+  li{orphans:2;widows:2}
+  .sec>.kicker:first-child{margin-top:0}
+  .sec-h{display:flex;align-items:baseline;gap:2mm;margin:0 0 1.6mm}
+  .sec-h .n{
+    flex:0 0 auto;font-size:8pt;font-weight:900;color:var(--teal-dark);
+    background:var(--teal-soft);border-radius:1.4mm;padding:.3mm 1.6mm;
+  }
+  .sec-h h2{margin:0;font-size:11.4pt;font-weight:900;letter-spacing:-.03em}
+  .sec p{margin:0 0 1.8mm;font-size:9.4pt;line-height:1.64;color:#2C2822}
+  .sec p:last-child{margin-bottom:0}
+  .sec b,.sec strong{font-weight:700;color:var(--ink)}
+  code.brk{white-space:normal;overflow-wrap:anywhere}
+  code{
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;font-size:8.3pt;
+    background:var(--code-bg);border:.4pt solid #E3DCCE;border-radius:1mm;padding:0 .8mm;
+    white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  }
+
+  ol.steps{margin:0 0 1.8mm;padding-left:5.2mm}
+  ol.steps li{font-size:9.1pt;line-height:1.55;margin-bottom:1mm;padding-left:.6mm}
+  ol.steps li::marker{color:var(--teal);font-weight:700}
+  ul.plain{margin:0 0 1.8mm;padding-left:4.4mm}
+  ul.plain li{font-size:9.1pt;line-height:1.56;margin-bottom:1.2mm}
+  ul.plain li::marker{color:#C0B7A8}
+
+  .ok{
+    background:var(--teal-soft);border-radius:2mm;padding:2.2mm 3mm;margin:1.6mm 0;
+    font-size:8.6pt;line-height:1.55;color:#0A4F42;break-inside:avoid;
+  }
+  .ok b{color:#0A4F42}
+  .ok .tag{
+    display:inline-block;background:var(--teal);color:#fff;font-size:7.2pt;font-weight:900;
+    border-radius:1mm;padding:0 1.4mm;margin-right:1.4mm;
+  }
+  .note{
+    background:var(--paper);border-left:.9mm solid #E3DCCE;border-radius:0 2mm 2mm 0;
+    padding:2mm 3mm;margin:1.6mm 0;font-size:8.5pt;line-height:1.58;color:#5F594F;break-inside:avoid;
+  }
+
+  /* ── 표 ── */
+  table{width:100%;border-collapse:collapse;margin:1mm 0 1.8mm;font-size:8.6pt;break-inside:avoid}
+  thead th{
+    background:var(--paper);text-align:left;font-weight:900;font-size:8pt;color:#5F594F;
+    padding:1.8mm 2.4mm;border-bottom:.5pt solid #DDD6C8;
+  }
+  tbody td{padding:1.8mm 2.4mm;border-bottom:.4pt solid var(--line);vertical-align:top;line-height:1.55}
+  tbody tr{break-inside:avoid}
+  tbody tr:last-child td{border-bottom:0}
+  tbody td:first-child{font-weight:700;color:var(--ink)}
+  td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  td.cut{
+    font-weight:900;color:var(--teal-dark);white-space:nowrap;text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  td.cut.low{color:#8A5A12}
+  a{color:var(--teal-dark);text-decoration:none;border-bottom:.3pt solid #C9DCD5}
+
+  /* ── 프롬프트 ── */
+  .prompt{border:.5pt solid #E0D8C8;border-radius:2.4mm;overflow:hidden;margin:1.6mm 0 2mm;break-inside:avoid}
+  .prompt-h{
+    background:#EDE7DA;padding:1.6mm 3mm;font-size:7.9pt;font-weight:700;color:#6F685D;
+    display:flex;justify-content:space-between;
+  }
+  .prompt-h span{font-weight:700}
+  .prompt-h em{font-style:normal;font-size:7.2pt;color:#8E877A}
+  .prompt pre{
+    margin:0;padding:2.6mm 3mm;background:var(--code-bg);
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;
+    font-size:8.2pt;line-height:1.6;color:#2A2620;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ── 푸터(마지막 페이지) ── */
+  .end{
+    margin-top:4mm;border-top:1px solid var(--line);padding-top:3mm;
+    display:flex;justify-content:space-between;gap:5mm;break-inside:avoid;
+  }
+  .end-brand{font-size:9pt;font-weight:900;color:var(--teal-dark);letter-spacing:.02em}
+  .end-desc{font-size:7.8pt;color:var(--muted);line-height:1.55;margin-top:.8mm;max-width:95mm}
+  .end-meta{font-size:7.4pt;color:#A8A093;text-align:right;line-height:1.6}
+
+  .kicker{font-size:7.6pt;font-weight:900;color:#A8A093;letter-spacing:.1em;margin:4mm 0 1.4mm}
+  .kicker:first-child{margin-top:0}
+  .measure-cap{font-size:7.9pt;color:var(--muted);margin:0 0 1.2mm}
+  .measure-cap b{color:var(--ink);font-weight:700}
+  .footer-note{
+    margin-top:3mm;background:var(--paper);border:1px solid var(--line);border-radius:2mm;
+    padding:2.4mm 3mm;font-size:7.9pt;line-height:1.58;color:#5F594F;
+  }
+</style>
+</head>
+<body>
+<div class="head">
+  <div class="head-top"><div class="head-brand">@ai.onepage · AI 툴 가이드</div><div class="head-num">#23 · 11월 14일</div></div>
+  <h1>AI 티 나는 디자인 빼기: impeccable 설치와 쓰는 법</h1>
+  <p class="sub">클로드가 만드는 화면에서 AI 티를 빼 주는 디자인 스킬</p>
+  <p class="lede">AI에게 아무 말 없이 홈페이지를 시키면 크림색 배경, 얇은 글씨, 알약 버튼 같은 비슷한 디자인이 계속 나와요. impeccable은 이런 버릇을 짚어 주고 고쳐요. 말로 디자인을 고치는 명령 24개와 AI 티를 잡는 검사 규칙 62개가 들어 있어요.</p>
+  <div class="pills"><span class="pill">무료 Apache 2.0</span><span class="pill">명령 말로 고치기 24개</span><span class="pill">검사 AI 티 규칙 62개</span></div>
+  <div class="meta"><b>2026년 11월 13일 확인</b> · Claude Code(Pro 이상) · 무료(Apache 2.0)</div>
+</div>
+
+<div class="toc"><h2>목차</h2><ol><li><b>0</b>이게 뭐예요?</li><li><b>1</b>준비물</li><li><b>2</b>Claude Code 열기</li><li><b>3</b>impeccable 깔기</li><li><b>4</b>내 프로젝트 알려 주기</li><li><b>5</b>써 보기</li><li><b>6</b>AI 티 검사</li><li><b>7</b>꼭 알아 둘 점</li><li><b>8</b>그래도 안 되면</li></ol></div>
+<section class="sec"><div class="kicker">STEP 00 · 먼저 이것만</div><div class="sec-h"><span class="n">0</span><h2>이게 뭐예요?</h2></div><ul class="plain"><li>클로드가 만드는 화면에서 <b>AI 티를 빼 주는 디자인 스킬</b>이에요. 스킬은 "이 일은 이렇게 해" 하고 클로드에게 미리 써 준 설명서 파일이에요.</li><li>AI에게 아무 말 없이 홈페이지를 시키면 비슷한 디자인이 계속 나와요. 크림색 배경, 얇은 글씨, 동그란 알약 버튼, 보라→파랑 그라데이션 같은 것들이에요. impeccable은 이런 버릇을 짚어 주고 고쳐요.</li><li>"더 과감하게(bolder)", "더 조용하게(quieter)"처럼 <b>말로 디자인을 고치는 명령 24개</b>와, <b>AI 티를 잡는 검사 규칙 62개</b>가 들어 있어요.</li><li><b>무료</b>예요(Apache 2.0). 다만 Claude Code는 유료 플랜이 필요해요.</li></ul></section><section class="sec"><div class="kicker">STEP 01 · 시작 전에</div><div class="sec-h"><span class="n">1</span><h2>준비물</h2></div><table><thead><tr><th style="width:30%">준비물</th><th style="width:42%">왜 필요해요?</th><th style="width:28%">어디서 받아요?</th></tr></thead><tbody><tr><td>Claude 유료 플랜(Pro 이상)</td><td>impeccable은 Claude Code에서 써요. Claude Code는 유료 플랜에서만 돼요.</td><td><a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a>에 로그인 → 설정에서 내 플랜 확인</td></tr><tr><td>Claude 데스크톱 앱</td><td>Claude Code를 여는 가장 쉬운 방법이에요.</td><td><a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a></td></tr><tr><td>고칠 화면이 있는 프로젝트 폴더</td><td>impeccable은 이미 있는 화면을 다듬을 때 가장 잘해요. 없으면 새로 만들어도 돼요.</td><td>내 컴퓨터</td></tr></tbody></table></section><section class="sec"><div class="kicker">STEP 02 · 처음 한 번</div><div class="sec-h"><span class="n">2</span><h2>Claude Code 열기</h2></div><ol class="steps"><li><a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a>에서 내 컴퓨터(Windows 또는 Mac)에 맞는 앱을 받아요.</li><li>받은 파일을 열어 설치하고, 앱을 켜서 로그인해요.</li><li>앱 왼쪽 위에 있는 <b>Code</b> 탭을 눌러요.</li><li>폴더를 고르라는 창이 뜨면, 고칠 홈페이지가 들어 있는 폴더를 골라요. 처음이면 바탕화면에 새 폴더를 하나 만들어서 골라요.</li><li><b>이렇게 보이면 성공:</b> 화면 아래에 글을 쓰는 칸이 생겨요.</li></ol></section><section class="sec"><div class="kicker">STEP 03 · 설치</div><div class="sec-h"><span class="n">3</span><h2>impeccable 깔기</h2></div><ol class="steps"><li>Claude Code 글 쓰는 칸에 아래 줄을 붙여 넣고 Enter를 눌러요.</li><li>이어서 글 칸에 <code>/plugin</code>만 치고 Enter를 눌러요. 목록이 열려요.</li><li>목록에서 <b>Impeccable</b>을 골라 설치해요.</li><li>앱을 완전히 껐다가 다시 켜요.</li><li><b>이렇게 보이면 성공:</b> 글 칸에 <code>/impeccable</code>을 쳤을 때 명령 목록이 보여요.</li></ol><div class="prompt"><div class="prompt-h"><span>1번에서 붙여 넣을 줄</span><em>복사해서 붙여 넣기</em></div><pre>/plugin marketplace add pbakaus/impeccable</pre></div><p><b>이 방법이 어려우면</b> 아래 글을 통째로 붙여 넣고 클로드에게 맡겨요.</p><div class="prompt"><div class="prompt-h"><span>클로드에게 설치 맡기기</span><em>복사해서 붙여 넣기</em></div><pre>https://github.com/pbakaus/impeccable
+이 디자인 스킬을 Claude Code에 설치해 줘. 설치하면서 뭘 하는지 쉬운 말로 알려 주고, 내 컴퓨터에 새로 깔아야 하는 게 있으면 먼저 물어봐.
+다 되면 /impeccable 명령이 되는지 확인해 줘.</pre></div></section><section class="sec"><div class="kicker">STEP 04 · 처음 한 번</div><div class="sec-h"><span class="n">4</span><h2>내 프로젝트 알려 주기</h2></div><ol class="steps"><li>글 칸에 <code>/impeccable init</code>을 치고 Enter를 눌러요.</li><li>클로드가 내 코드를 읽고, 알아서 알 수 없는 것만 물어봐요. 누구를 위한 서비스인지, 무엇을 해야 하는지 같은 것이에요. 쉬운 말로 답하면 돼요.</li><li><b>이렇게 보이면 성공:</b> 폴더에 <code>PRODUCT.md</code>라는 파일이 생겨요. 이후 모든 명령이 이 파일을 읽어요.</li><li>이미 정해 둔 색·글꼴이 있으면 <code class="brk">/impeccable document</code>도 한 번 쳐요. <code>DESIGN.md</code>가 생겨서 앞으로 바꿀 때도 내 스타일을 지켜요.</li></ol></section><section class="sec"><div class="kicker">STEP 05 · 한 곳씩</div><div class="sec-h"><span class="n">5</span><h2>써 보기</h2></div><p><b>한 곳씩 고치는 게 가장 잘 돼요.</b> 페이지 전체보다 "맨 위 큰 영역", "가격 카드"처럼 한 곳을 골라요.</p><ol class="steps"><li>먼저 점수부터 받아 봐요: <code class="brk">/impeccable critique the hero</code> (hero는 맨 위 큰 영역이라는 뜻이에요)</li><li>클로드가 디자인 점수와, 먼저 고칠 것 순서를 알려 줘요.</li><li>고쳐 달라고 해요:<br>· 너무 밋밋하면 <code class="brk">/impeccable bolder the hero</code><br>· 너무 시끄러우면 <code class="brk">/impeccable quieter the hero</code><br>· 마지막 다듬기는 <code class="brk">/impeccable polish the hero</code></li><li>영어 명령이 어려우면 그냥 우리말로 써도 돼요: <code class="brk">/impeccable 맨 위 영역을 다시 만들어 줘</code></li><li><b>이렇게 보이면 성공:</b> 화면을 새로고침하면 바뀐 디자인이 보여요.</li></ol><p><b>자주 쓰는 명령</b></p><ul class="plain"><li><code>critique</code>: 디자인 점수와 고칠 순서</li><li><code>audit</code>: 접근성·속도·화면 크기 대응 검사(급한 것부터 P0~P3)</li><li><code>bolder</code> / <code>quieter</code>: 더 과감하게 / 더 조용하게</li><li><code>distill</code>: 필요 없는 것 빼기</li><li><code>typeset</code>: 글꼴·크기 정리</li><li><code>polish</code>: 내보내기 전 마지막 다듬기</li><li>전체 목록은 글 칸에 <code>/impeccable</code>만 치면 보여요.</li></ul></section><section class="sec"><div class="kicker">STEP 06 · 선택</div><div class="sec-h"><span class="n">6</span><h2>AI 티 검사만 따로 해 보기</h2></div><ul class="plain"><li>클로드에게 "impeccable 검사기로 이 폴더 AI 티 검사해 줘"라고 하면 돼요.</li><li>직접 하려면 터미널에서 <code class="brk">npx impeccable detect src/</code>처럼 폴더를 넣어요. Node가 필요해요.</li><li>이 검사는 AI를 부르지 않고 정해진 규칙 62개로만 봐요. API 키(다른 서비스 비밀번호 같은 것)가 필요 없어요.</li></ul></section><section class="sec"><div class="kicker">STEP 07 · 주의</div><div class="sec-h"><span class="n">7</span><h2>꼭 알아 둘 점</h2></div><ul class="plain"><li><b>이미 있는 화면을 다듬을 때 가장 잘해요.</b> 빈 폴더에서 새 페이지를 만드는 건 더 어려운 일이라고 설명서에 적혀 있어요.</li><li><b>'live 모드'의 적용 기능은 처음엔 쓰지 마세요.</b> 브라우저에서 고른 수정을 적용할 때, 대화 중인 클로드가 없으면 다른 AI 프로그램을 승인 확인 없이 실행할 수 있다고 설명서에 적혀 있어요. 익숙해진 뒤 내 프로젝트에서만 써요.</li><li><b>영상 속 비교 그림은 설명서에 실린 예시예요.</b> 같은 결과가 꼭 나오지는 않아요. 요청과 프로젝트에 따라 달라요.</li><li>Claude Code 말고도 Cursor, Codex 같은 다른 코딩 도구에서도 돼요.</li></ul></section><section class="sec"><div class="kicker">STEP 08 · 막히면</div><div class="sec-h"><span class="n">8</span><h2>그래도 안 되면</h2></div><p>아래 글을 복사해서 [ ]를 채운 뒤 Claude Code에 붙여 넣어요.</p><div class="prompt"><div class="prompt-h"><span>Claude Code에 붙여 넣기 ([ ] 채우기)</span><em>복사해서 붙여 넣기</em></div><pre>impeccable의 [명령 이름]을 쓰다가 이런 오류가 나왔어: [오류 문구 그대로]
+내 컴퓨터는 [Windows / Mac]이야.
+왜 그런지, 어떻게 고치는지 쉬운 말로 한 단계씩 알려 줘.</pre></div></section>
+<section class="sec" style="break-before:page">
+  <div class="kicker">한 장 요약 · 인쇄해서 책상에</div>
+  <div class="sec-h"><span class="n">✓</span><h2>이 순서대로만 하면 돼요</h2></div>
+  <table><thead><tr><th style="width:8%">순서</th><th style="width:32%">할 일</th><th style="width:34%">명령·도구</th><th style="width:26%">결과</th></tr></thead><tbody><tr><td>1</td><td>Claude Code 열기</td><td>claude.ai/download → Code 탭 → 고칠 폴더</td><td>글 쓰는 칸이 생겨요</td></tr><tr><td>2</td><td>impeccable 깔기</td><td>/plugin marketplace add pbakaus/impeccable → /plugin</td><td>/impeccable 명령 목록이 보여요</td></tr><tr><td>3</td><td>내 프로젝트 알려 주기</td><td>/impeccable init</td><td>PRODUCT.md가 생겨요</td></tr><tr><td>4</td><td>점수 받기</td><td>/impeccable critique the hero</td><td>점수와 고칠 순서</td></tr><tr><td>5</td><td>한 곳씩 고치기</td><td>bolder · quieter · polish</td><td>새로고침하면 바뀐 디자인</td></tr></tbody></table>
+  <div class="note">한 곳씩 고치는 게 가장 잘 돼요. 'live 모드'의 적용 기능은 처음엔 쓰지 마세요.</div>
+  <div class="kicker">출처</div>
+  <ul class="plain"><li>impeccable GitHub (README) — https://github.com/pbakaus/impeccable · 2026년 11월 13일 확인(별 10.9만, Apache 2.0)</li><li>impeccable 문서 — https://impeccable.style/docs · 2026년 11월 13일 확인</li></ul>
+  <div class="footer-note">2026년 11월 13일에 impeccable 설명서(README)를 보고 쓴 안내예요. 영상 속 '스킬 없이 / 켜고' 비교 그림은 impeccable 설명서에 실린 그림이에요(Apache 2.0). 터미널 화면은 이해를 돕는 그림이에요.</div>
+  <div class="end">
+    <div><div class="end-brand">@ai.onepage</div><div class="end-desc">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요. 새 가이드는 인스타와 허브에 올라와요.</div></div>
+    <div class="end-meta">#23 · AI 티 나는 디자인 빼기: impeccable 설치와 쓰는 법<br>11월 14일<br>lalapert.github.io/ai-onepage</div>
+  </div>
+</section>
+</body>
+</html>

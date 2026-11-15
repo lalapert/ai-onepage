@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>PDF 합치기·나누기·가리기 무료로: Stirling PDF 가이드 · ai.onepage #5</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:block}
+
+  :root{
+    --ink:#211E1A;
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+    --code-bg:#F5F1E9;
+    --paper:#FAF7F1;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#fff}
+  body{
+    font-family:"NotoKR",sans-serif;color:var(--ink);
+    font-size:9.35pt;line-height:1.56;word-break:keep-all;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  @page{size:A4;margin:14mm 15mm 16mm}
+
+  /* ── 머리글 ── */
+  .head{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:6.2mm 6.5mm 5.6mm;margin-bottom:4.2mm;
+  }
+  .head-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4mm}
+  .head-brand{font-size:8.4pt;font-weight:900;letter-spacing:.04em;color:var(--teal-dark)}
+  .head-num{
+    font-size:8pt;font-weight:700;color:var(--teal-dark);background:var(--teal-soft);
+    border-radius:20px;padding:1.2mm 3mm;
+  }
+  .head h1{margin:0;font-size:21pt;font-weight:900;letter-spacing:-.03em;line-height:1.24}
+  .head .sub{margin:2mm 0 0;font-size:11pt;font-weight:700;color:var(--teal-dark);letter-spacing:-.02em}
+  .head .lede{margin:3mm 0 0;font-size:9.4pt;line-height:1.66;color:#4E483E}
+  .head .pills{display:flex;gap:1.6mm;margin-top:3.4mm;flex-wrap:wrap}
+  .head .pill{
+    background:#fff;border:1px solid var(--line);border-radius:20px;
+    padding:1.1mm 2.6mm;font-size:8.4pt;font-weight:700;color:#3A342C;
+  }
+  .head .meta{margin-top:3mm;font-size:7.9pt;color:var(--muted)}
+  .head .meta b{color:#5F594F;font-weight:700}
+
+  /* ── 비교 (선택) ── */
+  .cmp{border:1px solid var(--line);border-radius:4mm;padding:4.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid}
+  .cmp h2{margin:0 0 3mm;font-size:10.5pt;font-weight:900;letter-spacing:-.02em}
+  .cmp h2 em{font-style:normal;font-weight:700;font-size:7.8pt;color:var(--muted);margin-left:2mm}
+  .cmp-row{display:flex;gap:6mm}
+  .cmp-col{flex:1 1 0;min-width:0}
+  .cmp-col + .cmp-col{border-left:1px solid var(--line);padding-left:6mm}
+  .cmp-label{font-size:7.9pt;font-weight:700;color:var(--muted);margin-bottom:2.4mm}
+  .bar-row{display:flex;align-items:center;gap:2mm;margin-bottom:1.8mm}
+  .bar-name{flex:0 0 27mm;font-size:7.9pt;color:#5F594F;line-height:1.3}
+  .bar-track{flex:1 1 auto;height:2.4mm;border-radius:20px;background:#F2EDE3;overflow:hidden}
+  .bar-fill{height:100%;border-radius:20px;background:var(--red)}
+  .bar-fill.mild{background:#E8B7AC}
+  .bar-fill.teal{background:var(--teal)}
+  .bar-val{flex:0 0 auto;font-size:8.2pt;font-weight:900;min-width:17mm;text-align:right}
+  .cmp-foot{margin-top:2mm;font-size:7.8pt;line-height:1.5;color:#5F594F}
+  .cmp-foot b{font-weight:700;color:var(--ink)}
+
+  /* ── 목차 ── */
+  .toc{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:3.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid;
+  }
+  .toc h2{margin:0 0 1.6mm;font-size:8pt;font-weight:900;color:var(--muted);letter-spacing:.06em}
+  .toc ol{list-style:none;margin:0;padding:0;columns:2;column-gap:7mm}
+  .toc li{font-size:8.4pt;color:#3A342C;padding:.7mm 0;break-inside:avoid}
+  .toc li b{color:var(--teal);font-weight:900;margin-right:1.4mm}
+  .toc li span{color:#A8A093;font-size:7.4pt}
+
+  /* ── 섹션 ── */
+  .sec{margin-bottom:3.4mm}
+  .sec-h{break-after:avoid}
+  .sec>.kicker{break-after:avoid}
+  p{orphans:3;widows:3}
+  li{orphans:2;widows:2}
+  .sec>.kicker:first-child{margin-top:0}
+  .sec-h{display:flex;align-items:baseline;gap:2mm;margin:0 0 1.6mm}
+  .sec-h .n{
+    flex:0 0 auto;font-size:8pt;font-weight:900;color:var(--teal-dark);
+    background:var(--teal-soft);border-radius:1.4mm;padding:.3mm 1.6mm;
+  }
+  .sec-h h2{margin:0;font-size:11.4pt;font-weight:900;letter-spacing:-.03em}
+  .sec p{margin:0 0 1.8mm;font-size:9.4pt;line-height:1.64;color:#2C2822}
+  .sec p:last-child{margin-bottom:0}
+  .sec b,.sec strong{font-weight:700;color:var(--ink)}
+  code.brk{white-space:normal;overflow-wrap:anywhere}
+  code{
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;font-size:8.3pt;
+    background:var(--code-bg);border:.4pt solid #E3DCCE;border-radius:1mm;padding:0 .8mm;
+    white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  }
+
+  ol.steps{margin:0 0 1.8mm;padding-left:5.2mm}
+  ol.steps li{font-size:9.1pt;line-height:1.55;margin-bottom:1mm;padding-left:.6mm}
+  ol.steps li::marker{color:var(--teal);font-weight:700}
+  ul.plain{margin:0 0 1.8mm;padding-left:4.4mm}
+  ul.plain li{font-size:9.1pt;line-height:1.56;margin-bottom:1.2mm}
+  ul.plain li::marker{color:#C0B7A8}
+
+  .ok{
+    background:var(--teal-soft);border-radius:2mm;padding:2.2mm 3mm;margin:1.6mm 0;
+    font-size:8.6pt;line-height:1.55;color:#0A4F42;break-inside:avoid;
+  }
+  .ok b{color:#0A4F42}
+  .ok .tag{
+    display:inline-block;background:var(--teal);color:#fff;font-size:7.2pt;font-weight:900;
+    border-radius:1mm;padding:0 1.4mm;margin-right:1.4mm;
+  }
+  .note{
+    background:var(--paper);border-left:.9mm solid #E3DCCE;border-radius:0 2mm 2mm 0;
+    padding:2mm 3mm;margin:1.6mm 0;font-size:8.5pt;line-height:1.58;color:#5F594F;break-inside:avoid;
+  }
+
+  /* ── 표 ── */
+  table{width:100%;border-collapse:collapse;margin:1mm 0 1.8mm;font-size:8.6pt;break-inside:avoid}
+  thead th{
+    background:var(--paper);text-align:left;font-weight:900;font-size:8pt;color:#5F594F;
+    padding:1.8mm 2.4mm;border-bottom:.5pt solid #DDD6C8;
+  }
+  tbody td{padding:1.8mm 2.4mm;border-bottom:.4pt solid var(--line);vertical-align:top;line-height:1.55}
+  tbody tr{break-inside:avoid}
+  tbody tr:last-child td{border-bottom:0}
+  tbody td:first-child{font-weight:700;color:var(--ink)}
+  td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  td.cut{
+    font-weight:900;color:var(--teal-dark);white-space:nowrap;text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  td.cut.low{color:#8A5A12}
+  a{color:var(--teal-dark);text-decoration:none;border-bottom:.3pt solid #C9DCD5}
+
+  /* ── 프롬프트 ── */
+  .prompt{border:.5pt solid #E0D8C8;border-radius:2.4mm;overflow:hidden;margin:1.6mm 0 2mm;break-inside:avoid}
+  .prompt-h{
+    background:#EDE7DA;padding:1.6mm 3mm;font-size:7.9pt;font-weight:700;color:#6F685D;
+    display:flex;justify-content:space-between;
+  }
+  .prompt-h span{font-weight:700}
+  .prompt-h em{font-style:normal;font-size:7.2pt;color:#8E877A}
+  .prompt pre{
+    margin:0;padding:2.6mm 3mm;background:var(--code-bg);
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;
+    font-size:8.2pt;line-height:1.6;color:#2A2620;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ── 푸터(마지막 페이지) ── */
+  .end{
+    margin-top:4mm;border-top:1px solid var(--line);padding-top:3mm;
+    display:flex;justify-content:space-between;gap:5mm;break-inside:avoid;
+  }
+  .end-brand{font-size:9pt;font-weight:900;color:var(--teal-dark);letter-spacing:.02em}
+  .end-desc{font-size:7.8pt;color:var(--muted);line-height:1.55;margin-top:.8mm;max-width:95mm}
+  .end-meta{font-size:7.4pt;color:#A8A093;text-align:right;line-height:1.6}
+
+  .kicker{font-size:7.6pt;font-weight:900;color:#A8A093;letter-spacing:.1em;margin:4mm 0 1.4mm}
+  .kicker:first-child{margin-top:0}
+  .measure-cap{font-size:7.9pt;color:var(--muted);margin:0 0 1.2mm}
+  .measure-cap b{color:var(--ink);font-weight:700}
+  .footer-note{
+    margin-top:3mm;background:var(--paper);border:1px solid var(--line);border-radius:2mm;
+    padding:2.4mm 3mm;font-size:7.9pt;line-height:1.58;color:#5F594F;
+  }
+</style>
+</head>
+<body>
+<div class="head">
+  <div class="head-top"><div class="head-brand">@ai.onepage · AI 툴 가이드</div><div class="head-num">#5 · 11월 6일</div></div>
+  <h1>PDF 합치기·나누기·가리기 무료로: Stirling PDF 가이드</h1>
+  <p class="sub">50가지 넘는 PDF 도구를 내 컴퓨터에서</p>
+  <p class="lede">Stirling PDF는 합치기, 나누기, 압축, 서명, 가리기, 페이지 정리 같은 PDF 도구를 담은 편집기예요. 처음 켤 때 ‘Continue without signing in’을 고르면 도구가 내 컴퓨터에서 돌아가고 파일이 업로드되지 않아요.</p>
+  <div class="pills"><span class="pill">개인 무료 편집기</span><span class="pill">50개+ PDF 도구</span><span class="pill">Local Only 파일 업로드 없음</span></div>
+  <div class="meta"><b>2026년 11월 6일 확인</b> · Windows 10/11 · macOS 10.15+ · 64비트 Linux · 개인 무료 · Processor 500회 후 1회 1센트</div>
+</div>
+
+<div class="toc"><h2>목차</h2><ol><li><b>0</b>Claude Code</li><li><b>1</b>가리기 패턴</li><li><b>2</b>한눈에 보기</li><li><b>3</b>꼭 알아 둘 점</li><li><b>4</b>준비물·링크</li><li><b>5</b>설치·첫 실행</li><li><b>6</b>도구 6개</li><li><b>7</b>가리기</li><li><b>8</b>안 될 때</li><li><b>9</b>그 밖에</li></ol></div>
+<section class="sec"><div class="kicker">STEP 00 · 제일 빠른 방법</div><div class="sec-h"><span class="n">0</span><h2>Claude Code에 바로 붙여 넣기</h2></div><div class="note">Claude Code는 <b>Pro 이상 유료 플랜</b>에서 쓸 수 있어요(무료 플랜 미포함, 공식 문서 2026년 11월 6일 확인). 무료 플랜이면 이 단계는 건너뛰고 아래 순서대로 따라 하세요.</div><ul class="plain"><li><b>여는 법:</b> Claude 데스크톱 앱 왼쪽 위 <b>Code</b> 탭 → 작업할 폴더 선택. 또는 PowerShell·터미널에서 <code>claude</code> 입력.</li><li><b>Claude Code 설치:</b> Windows PowerShell <code class="brk">irm https://claude.ai/install.ps1 | iex</code> · Mac <code class="brk">curl -fsSL https://claude.ai/install.sh | bash</code></li><li><b>데스크톱 앱:</b> <a href="https://claude.ai/api/desktop/win32/x64/setup/latest/redirect" target="_blank" rel="noopener">Windows</a> / <a href="https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect" target="_blank" rel="noopener">Mac</a></li></ul><div class="prompt"><div class="prompt-h"><span>Claude Code에 붙여 넣기</span><em>복사해서 붙여 넣기</em></div><pre>Stirling PDF 데스크톱 앱 설치를 도와줘. 한 단계씩 하고, 각 단계 결과를 보여 줘.
+1. 내 운영체제를 확인해 줘.
+2. 공식 다운로드 파일을 내 다운로드 폴더에 받아 줘.
+   - Windows: https://files.stirlingpdf.com/win-installer.exe
+   - macOS: https://files.stirlingpdf.com/mac-installer.dmg
+   - Linux는 공식 안내 https://docs.stirlingpdf.com/Installation/Unix%20Installation 을 읽고 단계를 알려 줘.
+3. 설치 파일을 실행하는 방법을 알려 주고, 설치 화면에서 내가 누를 버튼을 순서대로 알려 줘(설치 실행은 내가 직접 할게).
+4. 처음 켤 때 'Continue without signing in'(로그인 없이 계속하기)을 고르라고 알려 줘.</pre></div></section><section class="sec"><div class="kicker">STEP 01 · AI에게 맡기기</div><div class="sec-h"><span class="n">1</span><h2>AI에게 바로 맡기기</h2></div><p><b>가리기(Redact)용 패턴 만들기:</b> ChatGPT · Claude · Grok에 붙여 넣으세요.</p><div class="prompt"><div class="prompt-h"><span>ChatGPT · Claude · Grok에 붙여 넣기 ([ ] 채우기)</span><em>복사해서 붙여 넣기</em></div><pre>Stirling PDF의 자동 가리기(Automatic Redaction)에서 'Use Regex'로 쓸 정규식을 만들어 줘.
+지울 정보: [주민등록번호 / 휴대폰 번호 / 계좌번호 / 이메일]
+문서에 실제로 적힌 모양 예시(가짜 값으로): [000000-0000000]
+조건:
+1. 정보마다 정규식 1개와, 무엇을 잡고 무엇을 못 잡는지 한 줄 설명.
+2. 너무 넓게 잡아서 다른 숫자까지 지우지 않게 해 줘.
+3. 테스트용 가짜 예시 3개와, 잡히면 안 되는 예시 2개도 같이 줘.</pre></div><p><b>참고용 시작 패턴</b> (실제 문서로 꼭 테스트하세요)</p><ul class="plain"><li>주민등록번호: <code>\d{6}-?[1-4]\d{6}</code></li><li>휴대폰 번호: <code>01[016789]-?\d{3,4}-?\d{4}</code></li><li>이메일 (공식 문서 예시): <code>[\w.-]+@[\w.-]+\.\w+</code></li></ul></section><section class="sec"><div class="kicker">STEP 02 · 먼저 이것만</div><div class="sec-h"><span class="n">2</span><h2>한눈에 보기</h2></div><ul class="plain"><li><b>무엇:</b> Stirling PDF는 합치기, 나누기, 압축, 서명, 가리기, 페이지 정리 등 50가지 넘는 PDF 도구를 담은 편집기예요(GitHub 별 95,774개, 2026년 11월 5일 기준. 오픈코어).</li><li><b>비용:</b> 공식 안내 기준 편집기는 개인 사용 무료예요. 대량 자동 처리(Processor)는 500회까지 무료, 이후 1회당 1센트예요.</li><li><b>내 컴퓨터에서:</b> 처음 켤 때 ‘Continue without signing in’을 고르면 Local Only 모드가 돼요. 이 모드에서는 도구가 내 컴퓨터에서 돌아가고 파일이 업로드되지 않아요.</li><li><b>안 되는 것 (Local Only):</b> OCR(글자 인식), 워드·파워포인트 변환 등 구름 표시가 붙은 도구는 Stirling Cloud나 서버가 필요해요. 이때 파일이 서버로 전송돼요.</li></ul><div class="ok"><span class="tag">핵심</span>로그인 없이 쓰면(Local Only) 파일이 업로드되지 않아요. 구름 표시가 붙은 도구만 서버를 거쳐요.</div></section><section class="sec"><div class="kicker">STEP 03 · 주의</div><div class="sec-h"><span class="n">3</span><h2>꼭 알아 둘 점</h2></div><ul class="plain"><li><b>구름 표시가 붙은 도구는 서버를 거쳐요.</b> OCR(글자 인식), 워드·파워포인트 변환 같은 도구는 Stirling Cloud나 서버가 필요하고, 이때 파일이 서버로 전송돼요. 주민번호·계약서 같은 민감한 파일에는 쓰지 마세요.</li><li><b>가리기(Redact)는 되돌릴 수 없어요.</b> 덮는 게 아니라 글자 자체를 지워요. 가리기 전에 원본 파일을 꼭 하나 복사해 두세요.</li><li><b>로그인 없이 쓰기(Local Only)에서는 구름 표시 도구를 못 써요.</b> 대신 파일이 업로드되지 않아요.</li><li><b>대량 자동 처리(Processor)는 무료 횟수가 있어요.</b> 공식 안내 기준 500회까지 무료이고, 그 뒤로는 1회당 1센트예요.</li><li>예전 버전 Windows 앱에서는 첫 화면에 '로그인 없이 계속하기'가 안 보였다는 보고가 있어요. 최신 버전을 받으세요.</li></ul></section><section class="sec"><div class="kicker">STEP 04 · 시작 전에</div><div class="sec-h"><span class="n">4</span><h2>준비물과 공식 링크</h2></div><p><b>바로 받기</b> (2026년 11월 6일 확인, 누르면 바로 내려받아요)</p><ul class="plain"><li>Windows: <a href="https://files.stirlingpdf.com/win-installer.exe" target="_blank" rel="noopener">win-installer.exe</a></li><li>macOS: <a href="https://files.stirlingpdf.com/mac-installer.dmg" target="_blank" rel="noopener">mac-installer.dmg</a></li><li>Linux: <a href="https://docs.stirlingpdf.com/Installation/Unix%20Installation" target="_blank" rel="noopener">공식 설치 안내</a> (Java .jar 실행)</li><li>공식 다운로드 페이지: <a href="https://www.stirling.com/download" target="_blank" rel="noopener">stirling.com/download</a></li></ul><table><thead><tr><th style="width:30%">준비물</th><th style="width:42%">왜 필요해요?</th><th style="width:28%">어디서 받아요?</th></tr></thead><tbody><tr><td>Stirling PDF 데스크톱 앱</td><td>PDF 편집</td><td><a href="https://www.stirling.com/download" target="_blank" rel="noopener">stirling.com/download</a> · 2026년 11월 6일 확인</td></tr><tr><td>Windows 10/11, macOS 10.15 이상, 또는 64비트 Linux</td><td>설치 조건</td><td><a href="https://docs.stirlingpdf.com/Desktop/Install/" target="_blank" rel="noopener">공식 설치 문서</a> · 2026년 11월 5일 확인</td></tr></tbody></table></section><section class="sec"><div class="kicker">STEP 05 · 처음 하는 사람용</div><div class="sec-h"><span class="n">5</span><h2>설치하고 처음 켜기</h2></div><p><b>설치</b></p><ul class="plain"><li><b>Windows:</b> 위 '바로 받기'의 설치 파일(<code>win-installer.exe</code>)을 받아 실행 → 관리자 권한 허용 → 시작 메뉴에서 Stirling PDF 열기. 창이 안 뜨면 Microsoft Edge WebView2 Runtime을 설치하고 다시 열어요.</li><li><b>Mac:</b> DMG를 받아 열고 Stirling PDF를 ‘응용 프로그램’으로 끌어다 놓기 → 열기. 막히면 시스템 설정 → 개인정보 보호 및 보안 → ‘그래도 열기’.</li><li><b>Linux:</b> 공식 문서의 .deb / .rpm / AppImage 명령을 그대로 써요.</li></ul><p><b>첫 실행: 로그인 없이 쓰기</b></p><ol class="steps"><li>‘Sign in to Stirling’ 화면이 나와요.</li><li><b>Continue without signing in</b>을 눌러요 → Local Only 모드.</li><li>나중에 바꾸려면 Settings → Connection Mode.</li><li>도구에서 ‘Backend starting up...’이 보이면 몇 초 기다려요.</li></ol></section><section class="sec"><div class="kicker">STEP 06 · 자주 쓰는 도구</div><div class="sec-h"><span class="n">6</span><h2>자주 쓰는 도구 6개</h2></div><ul class="plain"><li><b>합치기 (Merge):</b> 여러 파일 하나로. 순서를 먼저 정리하고 합쳐요.</li><li><b>나누기 (Split):</b> 일부 페이지만 따로. 페이지 번호로 나눠요.</li><li><b>압축 (Compress):</b> 메일 첨부 용량 줄이기. ‘line art’ 변환 옵션은 서버가 필요해요.</li><li><b>서명 (Sign):</b> 서명 넣기. 원본을 남겨 두고 사본에 서명해요.</li><li><b>가리기 (Redact):</b> 개인정보 지우기. 다음 STEP 07 참고.</li><li><b>페이지 정리 (Page operations):</b> 순서 바꾸기·회전·삭제. 저장 전 미리보기로 확인해요.</li></ul><div class="note">도구 이름은 앱 언어 설정에 따라 다르게 보일 수 있어요.</div></section><section class="sec"><div class="kicker">STEP 07 · 개인정보 지우기</div><div class="sec-h"><span class="n">7</span><h2>가리기 (Redact)</h2></div><div class="note">가리기는 글자를 덮는 게 아니라 <b>지워요</b>. 시작 전에 원본을 복사해 두세요.</div><ul class="plain"><li><b>자동:</b> Redaction Method → Automatic → Words to Redact에 지울 단어 입력 → Add → Redact. 패턴은 Advanced → Use Regex.</li><li><b>글자가 하나도 안 남게:</b> Advanced → Convert PDF to PDF-Image (대신 글자 선택·검색이 안 돼요).</li><li><b>직접 표시:</b> Manual → 지울 부분 선택 → Apply Redactions → Save Changes.</li></ul><div class="ok"><span class="tag">핵심</span>저장한 파일을 다시 열어 지운 글자가 복사·검색되지 않는지 확인해요.</div></section><section class="sec"><div class="kicker">STEP 08 · 막히면</div><div class="sec-h"><span class="n">8</span><h2>안 될 때</h2></div><ul class="plain"><li><b>도구에 구름 표시, 로그인 요구:</b> Local Only에서 안 되는 도구인지 확인해요. 다른 방법을 쓰거나, 서버로 보내도 되는 파일인지 먼저 판단해요.</li><li><b>Windows에서 창이 안 뜸:</b> WebView2 설치 여부를 확인해요. Microsoft Edge WebView2 Runtime 설치 후 다시 실행해요.</li><li><b>Mac에서 열리지 않음:</b> 보안 차단 메시지를 확인해요. 시스템 설정 → 개인정보 보호 및 보안 → 그래도 열기.</li><li><b>가린 글자가 복사됨:</b> 자동 패턴이 안 맞았는지 확인해요. 패턴을 고치거나 PDF-Image 변환 옵션을 써요.</li></ul></section><section class="sec"><div class="kicker">STEP 09 · 주의</div><div class="sec-h"><span class="n">9</span><h2>그 밖에 알아 둘 점</h2></div><ul class="plain"><li>영상 속 파일과 서류는 설명을 위해 만든 예시예요. 실제 앱 화면 녹화가 아니에요.</li><li>2025년 11월 GitHub 토론(#5054)에는 Windows 앱 첫 화면에서 클라우드·서버 연결만 고를 수 있었다는 보고가 있어요. 현재 공식 문서에는 ‘Continue without signing in’ 선택지가 있으니, 최신 버전을 받으세요.</li></ul></section>
+<section class="sec">
+  <div class="kicker">한 장 요약 · 인쇄해서 책상에</div>
+  <div class="sec-h"><span class="n">✓</span><h2>이 순서대로만 하면 돼요</h2></div>
+  <table><thead><tr><th style="width:8%">순서</th><th style="width:32%">할 일</th><th style="width:34%">명령·도구</th><th style="width:26%">결과</th></tr></thead><tbody><tr><td>1</td><td>설치</td><td>win-installer.exe / mac-installer.dmg / Linux 공식 안내</td><td>Stirling PDF가 열려요</td></tr><tr><td>2</td><td>로그인 없이 쓰기</td><td>Continue without signing in</td><td>Local Only 모드, 업로드 없음</td></tr><tr><td>3</td><td>도구 고르기</td><td>합치기·나누기·압축·서명·페이지 정리</td><td>저장 전 미리보기로 확인</td></tr><tr><td>4</td><td>가리기</td><td>원본 복사 → Redact → Automatic 또는 Manual</td><td>글자 자체가 지워져요</td></tr><tr><td>5</td><td>가린 결과 확인</td><td>저장한 파일 다시 열기</td><td>지운 글자가 복사·검색 안 돼요</td></tr></tbody></table>
+  <div class="note">구름 표시가 붙은 도구는 파일이 서버로 전송돼요. 민감한 파일에는 쓰지 마세요.</div>
+  <div class="kicker">출처</div>
+  <ul class="plain"><li>Stirling PDF GitHub — https://github.com/Stirling-Tools/Stirling-PDF · 2026년 11월 5일 확인(별 95,774개)</li><li>Stirling PDF 요금 안내 — https://www.stirling.com/pricing · 2026년 11월 5일 확인</li><li>Stirling PDF 다운로드 — https://www.stirling.com/download · 2026년 11월 5일 확인</li><li>데스크톱 앱 설치 문서 — https://docs.stirlingpdf.com/Desktop/Install/ · 2026년 11월 5일 확인</li><li>도구가 어디서 실행되는지(Where Tools Run) — https://docs.stirlingpdf.com/Desktop/Where-Tools-Run/ · 2026년 11월 5일 확인</li><li>가리기(Redact) 안내 — https://docs.stirlingpdf.com/Tools/Guides/Redact/ · 2026년 11월 5일 확인</li></ul>
+  <div class="footer-note">2026년 11월 5일에 Stirling PDF 공식 문서와 요금 안내, GitHub를 보고 쓰고, 다운로드 링크는 11월 6일에 다시 확인했어요. 영상 속 파일과 서류는 설명을 위해 만든 예시예요.</div>
+  <div class="end">
+    <div><div class="end-brand">@ai.onepage</div><div class="end-desc">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요. 새 가이드는 인스타와 허브에 올라와요.</div></div>
+    <div class="end-meta">#5 · PDF 합치기·나누기·가리기 무료로: Stirling PDF 가이드<br>11월 6일<br>lalapert.github.io/ai-onepage</div>
+  </div>
+</section>
+</body>
+</html>

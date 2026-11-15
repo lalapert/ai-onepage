@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FAF7F1">
+<meta name="description" content="마케터가 만든 무료 마케팅 스킬 53개를 Claude Code에 깔면 광고 문구·가격·랜딩 페이지·검색 노출을 마케팅 틀에 맞춰 도와줘요. 매출을 보장하지는 않아요">
+<title>광고 대행 전에: Claude Code 마케팅 스킬 53개 설치·사용법 · ai.onepage #11</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:swap}
+
+  :root{
+    --bg:#FAF7F1;
+    --card:#FFFFFF;
+    --ink:#211E1A;
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+    --code-bg:#F4F0E8;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:"NotoKR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.62;word-break:keep-all;
+    font-size:15px;
+  }
+  .page{max-width:480px;margin:0 auto;padding:0 18px 40px;overflow-x:hidden}
+  a{color:var(--teal-dark);text-decoration:underline;text-decoration-color:#BFDCD3;
+    text-decoration-thickness:1px;text-underline-offset:2px}
+  code.brk{white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+  code{
+    font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,"NotoKR",monospace;
+    font-size:.9em;background:var(--code-bg);border:1px solid #E6DFD2;
+    border-radius:5px;padding:1px 5px;white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  }
+
+  /* ── 상단 네비 ── */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:14px 0 0;
+  }
+  .back{
+    display:inline-flex;align-items:center;gap:5px;
+    text-decoration:none;color:#5A544A;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:6px 12px 6px 10px;font-size:12.5px;font-weight:700;letter-spacing:-.3px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04);
+  }
+  .back:active{transform:scale(.97)}
+  .back svg{width:12px;height:12px}
+  .num-badge{
+    font-size:11.5px;font-weight:700;letter-spacing:-.2px;
+    color:var(--teal-dark);background:var(--teal-soft);
+    border-radius:999px;padding:5px 11px;white-space:nowrap;
+  }
+
+  /* ── 히어로 ── */
+  .hero{padding:22px 2px 0}
+  .eyebrow{
+    font-size:11.5px;font-weight:700;color:var(--teal-dark);letter-spacing:-.1px;
+    display:flex;align-items:center;gap:6px;margin-bottom:9px;
+  }
+  .eyebrow i{width:5px;height:5px;border-radius:50%;background:var(--teal);display:inline-block}
+  h1{
+    margin:0;font-size:29px;font-weight:900;line-height:1.26;letter-spacing:-1.1px;
+  }
+  .sub{
+    margin:9px 0 0;font-size:16.5px;font-weight:700;color:var(--teal-dark);
+    line-height:1.45;letter-spacing:-.5px;
+  }
+  .lede{
+    margin:12px 0 0;font-size:14px;line-height:1.68;color:#5F594F;letter-spacing:-.2px;
+  }
+  .pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .pill{
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:6px 11px;font-size:12.3px;font-weight:700;color:#3A342C;letter-spacing:-.3px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04);
+  }
+  .pill b{color:var(--teal);font-weight:900}
+  .hero-meta{
+    margin-top:12px;font-size:11.5px;color:#8A8277;letter-spacing:-.2px;
+    display:flex;flex-wrap:wrap;align-items:center;gap:5px;
+  }
+  .hero-meta .dot{color:#C9C2B6}
+
+  /* ── 공통 카드 ── */
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:16px 16px 15px;margin-top:12px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04),0 6px 16px rgba(35,30,20,.035);
+  }
+  .card-h{display:flex;align-items:center;gap:8px;margin:0 0 8px}
+  .card-h .n{
+    flex:0 0 auto;width:22px;height:22px;border-radius:7px;
+    background:var(--teal-soft);color:var(--teal-dark);
+    font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;
+    letter-spacing:-.2px;
+  }
+  .card-h h2{margin:0;font-size:16.5px;font-weight:900;letter-spacing:-.55px;line-height:1.35}
+  .card p{margin:0 0 9px;font-size:14px;line-height:1.68;color:#3A342C;letter-spacing:-.2px}
+  .card p:last-child{margin-bottom:0}
+  .card b,.card strong{font-weight:700;color:var(--ink)}
+  .card ul{margin:0 0 2px;padding-left:17px}
+  .card ul li{font-size:14px;line-height:1.68;color:#3A342C;margin-bottom:7px;letter-spacing:-.2px}
+  .card ul li:last-child{margin-bottom:0}
+  .card ul li::marker{color:#C9C2B6}
+
+  /* ── 섹션 타이틀(카드 밖) ── */
+  .block-title{
+    display:flex;align-items:baseline;gap:7px;margin:26px 2px 0;
+    font-size:12px;font-weight:700;color:#8A8277;letter-spacing:.02em;
+  }
+  .block-title span{color:var(--teal-dark)}
+
+  /* ── 한눈에 비교 (필요 없으면 이 블록 통째로 삭제) ── */
+  .cmp{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:16px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04),0 8px 20px rgba(35,30,20,.04)}
+  .cmp h2{margin:0 0 12px;font-size:14px;font-weight:900;letter-spacing:-.4px;display:flex;align-items:center;gap:6px}
+  .cmp h2 em{font-style:normal;font-size:11px;font-weight:700;color:#8A8277;letter-spacing:-.1px}
+  .cmp-item{padding:12px 0;border-top:1px dashed #E6DFD2}
+  .cmp-item:first-of-type{border-top:0;padding-top:0}
+  .cmp-label{font-size:11.5px;font-weight:700;color:#8A8277;letter-spacing:-.2px;margin-bottom:8px}
+  .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+  .bar-row:last-of-type{margin-bottom:0}
+  .bar-name{flex:0 0 96px;font-size:11.6px;color:#5F594F;letter-spacing:-.3px;line-height:1.35}
+  .bar-track{flex:1 1 auto;height:9px;border-radius:999px;background:#F2EDE3;overflow:hidden}
+  .bar-fill{height:100%;border-radius:999px;background:var(--red)}
+  .bar-fill.mild{background:#E8B7AC}
+  .bar-fill.teal{background:var(--teal)}
+  .bar-val{flex:0 0 auto;font-size:12px;font-weight:900;color:var(--ink);letter-spacing:-.3px;min-width:66px;text-align:right}
+  .bar-val small{font-size:10.5px;font-weight:700;color:#8A8277}
+  .cmp-foot{
+    margin-top:10px;font-size:11.5px;line-height:1.55;color:#6F685D;letter-spacing:-.2px;
+    background:#FBF8F2;border-radius:9px;padding:8px 10px;
+  }
+  .x-tag{
+    display:inline-block;background:var(--red-soft);color:#B33320;font-weight:900;
+    font-size:11px;border-radius:6px;padding:1.5px 6px;margin-left:4px;letter-spacing:-.1px;
+  }
+
+  /* ── 목차 ── */
+  .toc{
+    background:#FBF8F2;border:1px solid var(--line);border-radius:16px;
+    padding:14px 16px 12px;margin-top:14px;
+  }
+  .toc h2{margin:0 0 8px;font-size:12px;font-weight:900;color:#8A8277;letter-spacing:.03em}
+  .toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+  .toc li{margin:0}
+  .toc a{
+    display:flex;align-items:baseline;gap:8px;
+    text-decoration:none;color:#3A342C;font-size:13.3px;letter-spacing:-.25px;
+    padding:5.5px 0;border-top:1px solid #EFE9DE;
+  }
+  .toc li:first-child a{border-top:0}
+  .toc a .i{flex:0 0 14px;font-size:11.5px;font-weight:900;color:var(--teal)}
+  .toc a .t{flex:1 1 auto}
+  .toc a .c{flex:0 0 auto;font-size:10.5px;font-weight:700;color:#A8A093}
+
+  /* ── 코드/프롬프트 박스 ── */
+  .prompt{
+    margin:10px 0 4px;border:1px solid #E2DACB;border-radius:12px;overflow:hidden;
+    background:var(--code-bg);
+  }
+  .prompt-h{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    background:#EDE7DA;padding:7px 9px 7px 11px;
+  }
+  .prompt-h .lbl{
+    font-size:11px;font-weight:700;color:#6F685D;letter-spacing:-.2px;
+    display:flex;align-items:center;gap:5px;min-width:0;
+  }
+  .prompt-h .lbl svg{width:12px;height:12px;flex:0 0 auto;color:#8A8277}
+  .copy-btn{
+    -webkit-appearance:none;appearance:none;font-family:inherit;cursor:pointer;
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--card);border:1px solid #DCD3C4;border-radius:7px;
+    padding:4px 9px;font-size:11.5px;font-weight:700;color:#3A342C;letter-spacing:-.2px;
+    line-height:1;white-space:nowrap;transition:background .15s,color .15s,border-color .15s;
+  }
+  .copy-btn svg{width:11px;height:11px}
+  .copy-btn:active{transform:scale(.96)}
+  .copy-btn.done{background:var(--teal);border-color:var(--teal);color:#fff}
+  .prompt pre{
+    margin:0;padding:11px 12px 12px;font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,"NotoKR",monospace;
+    font-size:12px;line-height:1.62;color:#2A2620;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ── 단계 목록 ── */
+  .steps{list-style:none;margin:2px 0 0;padding:0;counter-reset:s}
+  .steps li{
+    position:relative;padding-left:26px;margin-bottom:10px;
+    font-size:14px;line-height:1.66;color:#3A342C;letter-spacing:-.2px;
+  }
+  .steps li:last-child{margin-bottom:0}
+  .steps li::before{
+    counter-increment:s;content:counter(s);
+    position:absolute;left:0;top:1px;
+    width:18px;height:18px;border-radius:50%;
+    background:#F4F0E8;border:1px solid #E6DFD2;color:#6F685D;
+    font-size:10.5px;font-weight:900;display:flex;align-items:center;justify-content:center;
+    line-height:1;
+  }
+
+  .steps li .os{display:block;margin-top:3px}
+  .sources li{margin-bottom:9px}
+  .src-meta{display:block;margin-top:1px;font-size:11.5px;line-height:1.5;color:#A8A093;letter-spacing:-.1px}
+  .ok{
+    margin:11px 0 2px;background:var(--teal-soft);border-radius:10px;padding:9px 11px;
+    font-size:13px;line-height:1.6;color:#0A4F42;letter-spacing:-.2px;
+  }
+  .ok b{color:#0A4F42}
+  .ok .tag{
+    display:inline-block;font-size:10.5px;font-weight:900;background:var(--teal);color:#fff;
+    border-radius:5px;padding:1.5px 6px;margin-right:5px;letter-spacing:-.1px;vertical-align:1px;
+  }
+  .note{
+    margin:10px 0 2px;background:#FBF8F2;border-left:3px solid #E6DFD2;border-radius:0 9px 9px 0;
+    padding:9px 11px;font-size:12.8px;line-height:1.62;color:#5F594F;letter-spacing:-.2px;
+  }
+
+  /* ── 준비물 표: 모바일에서는 행마다 3칸을 세로로 쌓아 390px 가로 넘침을 막는다 ── */
+  .tbl{width:100%;border-collapse:collapse;margin:2px 0 0;font-size:13px;table-layout:fixed}
+  .tbl thead{display:none}
+  .tbl tr{display:block;border-top:1px solid var(--line);padding:10px 0}
+  .tbl tr:first-child{border-top:0;padding-top:2px}
+  .tbl td{display:block;padding:0;font-size:13px;line-height:1.6;color:#3A342C;letter-spacing:-.2px}
+  .tbl td[data-l="준비물"]{font-weight:700;color:var(--ink);font-size:13.6px;margin-bottom:3px}
+  .tbl td[data-l="왜 필요해요?"]{margin-bottom:4px}
+  .tbl td[data-l="왜 필요해요?"]::before{
+    content:"왜 ";font-weight:700;color:#A8A093;font-size:11.5px;
+  }
+  .tbl td[data-l="어디서 받아요?"]::before{
+    content:"받는 곳 ";font-weight:700;color:var(--teal-dark);font-size:11.5px;
+  }
+  .tbl td[data-l="어디서 받아요?"]{color:#4E483E;font-size:12.6px}
+
+  /* ── 측정 결과 막대 (숫자 비교 시각화) ── */
+  .measure{margin:14px 0 0 !important;line-height:1.45}
+  .measure b{display:block;font-size:14px;margin-bottom:2px}
+  .measure span{display:block;font-weight:400;color:#8A8277;font-size:11.8px;letter-spacing:-.2px}
+  .gain{list-style:none;margin:10px 0 0;padding:0}
+  .gain li{border-top:1px solid var(--line);padding:9px 0}
+  .gain li:first-child{border-top:0;padding-top:2px}
+  .gain .g-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .gain .g-cmd{font-size:13px;font-weight:700;color:var(--ink);letter-spacing:-.25px;line-height:1.4}
+  .gain .g-cut{
+    flex:0 0 auto;font-size:11.5px;font-weight:900;color:var(--teal-dark);
+    background:var(--teal-soft);border-radius:6px;padding:2px 6px;letter-spacing:-.2px;
+  }
+  .gain .g-cut.low{color:#8A5A12;background:#FBEFD8}
+  .gain .g-num{margin-top:3px;font-size:11.8px;color:#6F685D;letter-spacing:-.2px}
+  .gain .g-num b{color:var(--ink);font-weight:900}
+  .gain .g-bar{margin-top:6px;height:6px;border-radius:999px;background:#F2EDE3;overflow:hidden}
+  .gain .g-bar i{display:block;height:100%;border-radius:999px;background:var(--teal)}
+
+  /* ── 꼭 알아 둘 점 체크리스트 ── */
+  .checks{list-style:none;margin:0;padding:0}
+  .checks li{
+    position:relative;padding-left:22px;margin-bottom:11px;
+    font-size:13.6px;line-height:1.66;color:#3A342C;letter-spacing:-.2px;
+  }
+  .checks li:last-child{margin-bottom:0}
+  .checks li::before{
+    content:"";position:absolute;left:2px;top:7px;width:9px;height:9px;border-radius:3px;
+    background:var(--red-soft);border:1px solid #F0C9C1;
+  }
+
+  /* ── PDF 다운로드 카드 ── */
+  .pdf-card{
+    margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:16px;box-shadow:0 1px 2px rgba(35,30,20,.05),0 10px 24px rgba(35,30,20,.05);
+  }
+  .pdf-top{display:flex;align-items:center;gap:10px}
+  .pdf-badge{
+    flex:0 0 auto;width:40px;height:46px;border-radius:7px;background:var(--red);
+    color:#fff;font-size:10.5px;font-weight:900;letter-spacing:.04em;
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:7px;
+    position:relative;box-shadow:0 3px 8px rgba(224,69,46,.28);
+  }
+  .pdf-badge::before{
+    content:"";position:absolute;top:0;right:0;
+    border-width:0 11px 11px 0;border-style:solid;
+    border-color:transparent #FAF7F1 transparent transparent;
+  }
+  .pdf-tt{flex:1 1 auto;min-width:0}
+  .pdf-tt strong{display:block;font-size:14.8px;font-weight:900;letter-spacing:-.45px;line-height:1.35}
+  .pdf-tt span{display:block;margin-top:2px;font-size:11.8px;color:#8A8277;letter-spacing:-.2px}
+  .pdf-cta{
+    display:flex;align-items:center;justify-content:center;gap:7px;
+    margin-top:13px;text-decoration:none;
+    background:var(--ink);color:#fff;border-radius:11px;
+    padding:12px 14px;font-size:14px;font-weight:900;letter-spacing:-.4px;
+    box-shadow:0 3px 10px rgba(33,30,26,.16);
+  }
+  .pdf-cta:active{transform:scale(.99)}
+  .pdf-cta svg{width:15px;height:15px}
+  .pdf-fine{margin:9px 2px 0;font-size:11.3px;line-height:1.55;color:#A8A093;letter-spacing:-.1px;text-align:center}
+
+  /* ── 푸터 ── */
+  footer{
+    margin-top:26px;padding-top:18px;border-top:1px solid var(--line);text-align:center;
+  }
+  .foot-name{font-size:14px;font-weight:900;letter-spacing:-.4px}
+  .foot-name b{color:var(--teal-dark)}
+  .foot-desc{margin:5px auto 0;max-width:300px;font-size:11.5px;line-height:1.65;color:#8A8277;letter-spacing:-.2px}
+  .foot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:11px}
+  .foot-links a{
+    text-decoration:none;font-size:11.5px;font-weight:700;color:#5A544A;letter-spacing:-.2px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 11px;
+  }
+  .foot-copy{margin-top:14px;font-size:10.5px;color:#B3ABA0;line-height:1.7;letter-spacing:-.1px}
+
+  /* ── 토스트 ── */
+  #toast{
+    position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);
+    background:#211E1A;color:#fff;font-size:12.5px;font-weight:700;letter-spacing:-.2px;
+    padding:9px 15px;border-radius:999px;box-shadow:0 8px 22px rgba(33,30,26,.28);
+    opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:50;
+    white-space:nowrap;
+  }
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media (min-width:520px){
+    body{font-size:15.5px}
+    .page{padding:0 22px 56px}
+    h1{font-size:33px}
+  }
+  /* 인쇄로 뽑아도 깨지지 않게 */
+  @media print{
+    body{background:#fff}
+    .topbar .back,.pdf-card,#toast{display:none}
+    .card,.cmp,.toc{box-shadow:none;break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="topbar">
+    <a class="back" href="../../"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>전체 가이드</a>
+    <span class="num-badge">#11 · 11월 8일</span>
+  </nav>
+  <header class="hero">
+    <div class="eyebrow"><i></i>수익·마케팅</div>
+    <h1>광고 대행 전에:<br>마케팅 스킬 53개</h1>
+    <p class="sub">Claude Code에 무료 마케팅 스킬 모음 깔고 쓰기</p>
+    <p class="lede">마케터가 만든 무료 마케팅 스킬 53개를 Claude Code에 깔면 광고 문구·가격·랜딩 페이지·검색 노출을 마케팅 틀에 맞춰 도와줘요. 결과는 초안이에요. 매출을 보장하지는 않아요.</p>
+    <div class="pills"><span class="pill"><b>53개</b> 마케팅 스킬</span><span class="pill"><b>무료</b> MIT 라이선스</span><span class="pill"><b>설치</b> npx 명령 한 줄</span></div>
+    <div class="hero-meta"><span>2026년 11월 7일 확인</span><span class="dot">·</span><span>Claude Code(Pro 이상) · Node.js</span><span class="dot">·</span><span>스킬 모음 무료(MIT)</span></div>
+  </header>
+  
+  <nav class="toc" aria-label="목차"><h2>목차</h2><ol><li><a href="#s0"><span class="i">0</span><span class="t">Claude Code에 맡기기</span><span class="c">Pro 이상</span></a></li><li><a href="#s1"><span class="i">1</span><span class="t">질문 10개</span><span class="c">복사</span></a></li><li><a href="#s2"><span class="i">2</span><span class="t">이게 뭐예요?</span><span class="c">개요</span></a></li><li><a href="#s3"><span class="i">3</span><span class="t">꼭 알아 둘 점</span><span class="c">주의</span></a></li><li><a href="#s4"><span class="i">4</span><span class="t">준비물</span><span class="c">3개</span></a></li><li><a href="#s5"><span class="i">5</span><span class="t">따라 하기</span><span class="c">6단계</span></a></li><li><a href="#s6"><span class="i">6</span><span class="t">안 될 때</span><span class="c">4가지</span></a></li><li><a href="#s7"><span class="i">7</span><span class="t">다음에 해 볼 것</span><span class="c">2개</span></a></li></ol></nav>
+  <div class="block-title"><span>STEP 00</span> 설치를 대신 맡기기</div><article class="card" id="s0"><div class="card-h"><span class="n">0</span><h2>Claude Code에 바로 붙여 넣기</h2></div><div class="note">Claude Code는 <b>Pro 이상 유료 플랜</b>에서 쓸 수 있어요(무료 플랜 미포함, 공식 문서 2026-11-06 확인).</div><ul><li><b>여는 법:</b> Claude 데스크톱 앱 왼쪽 위 <b>Code</b> 탭 → 내 가게·서비스 작업 폴더 선택. 또는 PowerShell·터미널에서 <code>claude</code> 입력.</li><li><b>Claude Code 설치:</b> Windows PowerShell <code class="brk">irm https://claude.ai/install.ps1 | iex</code> · Mac <code class="brk">curl -fsSL https://claude.ai/install.sh | bash</code></li><li><b>데스크톱 앱:</b> <a href="https://claude.ai/api/desktop/win32/x64/setup/latest/redirect" target="_blank" rel="noopener">Windows</a> / <a href="https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect" target="_blank" rel="noopener">Mac</a></li></ul><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>Claude Code에 붙여 넣기</span><button class="copy-btn" type="button" data-copy="p-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-1">마케팅 스킬 모음 marketingskills(github.com/coreyhaines31/marketingskills)를 이 폴더에 설치하고 첫 세팅까지 해 줘. 한 단계씩 하고, 명령을 실행하기 전에 무엇을 하는지 먼저 말해 줘.
+1. node와 npx가 있는지 확인해 줘. 없으면 Node.js 설치 방법만 알려 주고 멈춰.
+2. 아래 명령으로 설치해 줘. 끝의 -a claude-code를 빼면 Claude Code가 못 읽는 폴더에 깔릴 수 있어.
+   npx skills add coreyhaines31/marketingskills -a claude-code
+3. .claude/skills/ 폴더에 스킬이 들어갔는지 목록으로 보여 줘.
+4. product-marketing 스킬로 내 제품 소개 문서를 같이 만들자. 질문을 하나씩 해 줘. 다른 스킬들이 이 문서를 먼저 읽어.
+5. 광고 계정이나 분석 도구 연결은 지금 하지 마.
+6. 실제 돈이 나가거나 공개로 올라가는 일(광고 집행, 게시, 메일 발송)은 하기 전에 나한테 먼저 물어봐.</pre></div></article><div class="block-title"><span>STEP 01</span> 설치 후 붙여 넣기</div><article class="card" id="s1"><div class="card-h"><span class="n">1</span><h2>바로 쓰는 질문 10개</h2></div><p>괄호 안은 그 질문에 쓰이는 스킬 이름이에요. 질문에 스킬 이름을 같이 적으면 더 잘 골라 써요.</p><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>설치 후 Claude Code에 붙여 넣기 ([ ] 채우기)</span><button class="copy-btn" type="button" data-copy="p-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-2">1. (copywriting) 우리 [가게/서비스] 첫 화면 문구를 다시 써 줘. 지금 문구는 [ ]야. 3가지 버전으로.
+2. (cro) 이 상세페이지를 점검해 줘: [링크 또는 파일]. 고칠 곳을 중요한 순서로 5개만.
+3. (ad-creative) 인스타 광고 문구 5개 써 줘. 타깃은 [ ], 혜택은 [ ].
+4. (pricing) 지금 가격은 [ ]이고 경쟁 상품은 [ ]야. 가격 구성(기본·추천·프리미엄)을 제안해 줘.
+5. (seo-audit) 내 블로그 [주소]의 검색 노출 문제를 점검하고 고칠 순서를 알려 줘.
+6. (ai-seo) ChatGPT나 Claude 같은 AI 검색에 우리 서비스가 소개되려면 뭘 고쳐야 할까?
+7. (emails) 처음 가입한 고객에게 보낼 안내 메일 3통을 순서대로 써 줘.
+8. (social) 이번 주 인스타 게시물 5개 주제와 첫 문장을 짜 줘.
+9. (launch) 새 메뉴/상품 [ ] 출시 계획을 2주 일정으로 짜 줘.
+10. (marketing-ideas) 돈 안 드는 홍보 아이디어 10개를 우리 업종 [ ]에 맞게 골라 줘.</pre></div><div class="note">결과는 초안이에요. 숫자·후기·효과 같은 내용은 실제로 확인된 것만 남기고 고치세요.</div></article><div class="block-title"><span>STEP 02</span> 먼저 이것만</div><article class="card" id="s2"><div class="card-h"><span class="n">2</span><h2>이게 뭐예요?</h2></div><ul><li><b>무엇:</b> 마케팅 대행사를 운영하는 마케터가 만든 AI 에이전트용 마케팅 스킬 모음이에요. 스킬은 AI에게 '이 일은 이런 순서로 하라'는 마케팅 틀을 알려 주는 문서예요. GitHub 별 5만 8천 개가 넘어요(2026-11-07 기준).</li><li><b>몇 개:</b> 53개예요(README 표 기준). 광고 문구(copywriting), 전환율 점검(cro), 가격(pricing), 검색 노출(seo-audit, ai-seo), 광고 소재(ad-creative), 영업 메일(cold-email) 등.</li><li><b>얼마:</b> 스킬 모음은 무료(MIT 라이선스)예요. 쓰는 에이전트 요금은 따로예요(Claude Code는 Pro 이상).</li><li><b>어디서:</b> Claude Code, OpenAI Codex, Cursor, Windsurf처럼 Agent Skills를 읽는 코딩 에이전트에서 써요. 일반 ChatGPT·Claude 채팅창에 바로 설치하는 방식은 아니에요.</li><li><b>시작점:</b> product-marketing 스킬이 기본이에요. 다른 스킬이 이 스킬이 만든 제품 소개 문서를 먼저 읽고 일해요.</li></ul></article><div class="block-title"><span>STEP 03</span> 주의</div><article class="card" id="s3"><div class="card-h"><span class="n">3</span><h2>꼭 알아 둘 점</h2></div><ul class="checks"><li><b>Claude Code 안에서 설치를 시키면 끝에 -a claude-code를 붙이세요.</b> 안 붙이면 .agents/skills/ 폴더에만 깔릴 수 있는데, Claude Code는 그 폴더를 읽지 않아요(README 안내).</li><li><b>/plugin 명령은 내 컴퓨터의 대화형 Claude Code에서만 돼요.</b> 웹판 Claude Code나 GitHub Actions에서는 'isn't available in this environment'가 떠요. 그때는 npx 방식으로 설치하세요.</li><li><b>매출을 보장하지 않아요.</b> 스킬은 마케팅 순서를 잡아 주는 틀이에요. 결과 문구는 내가 확인하고 고쳐야 해요.</li><li><b>README의 Partners(파트너) 도구는 선택이에요.</b> 유료 연동 서비스라 설치에 필요 없어요.</li><li><b>광고 계정 연결은 나중에, 읽기 전용부터 하세요.</b> README에 계정 연결 안내(<code>tools/SETUP.md</code>)가 있지만, 처음에는 연결하지 않아도 스킬을 다 쓸 수 있어요.</li><li><b>스킬이 만든 광고는 내가 확인한 뒤 내 손으로 올리세요.</b> 광고 계정을 연결하더라도 광고 집행·예산 변경·게시 권한은 주지 마세요. 테스트할 때는 예산 칸에 실제 금액을 넣지 마세요.</li><li><b>영업 메일(cold-email)은 초안만 받으세요.</b> 자동 발송을 연결하면 한 번에 여러 사람에게 나갈 수 있어요. 한국에서는 받는 사람의 명시적인 사전 동의 없이 영리 목적 광고 메일을 보내면 안 돼요(정보통신망법 제50조, 2026-11-07 확인). 오후 9시~오전 8시 발송은 동의를 따로 받아야 해요.</li><li><b>광고 문구는 사실만 넣으세요.</b> 확인 안 된 효과, 가짜 후기, 근거 없는 '1위' 같은 말은 빼세요.</li></ul></article><div class="block-title"><span>STEP 04</span> 시작 전에</div><article class="card" id="s4"><div class="card-h"><span class="n">4</span><h2>준비물과 공식 링크</h2></div><p><b>바로 가기</b> (2026-11-07 확인)</p><ul><li><a href="https://github.com/coreyhaines31/marketingskills" target="_blank" rel="noopener">marketingskills GitHub</a>: 스킬 목록과 설치 안내</li></ul><table class="tbl"><thead><tr><th>준비물</th><th>왜 필요해요?</th><th>어디서 받아요?</th></tr></thead><tbody><tr><td data-l="준비물">Claude Code</td><td data-l="왜 필요해요?">스킬을 읽고 일하는 에이전트</td><td data-l="어디서 받아요?"><a href="https://claude.com/claude-code" target="_blank" rel="noopener">claude.com/claude-code</a> · Pro 이상 유료 플랜</td></tr><tr><td data-l="준비물">Node.js</td><td data-l="왜 필요해요?">npx 명령을 쓰려고</td><td data-l="어디서 받아요?"><a href="https://nodejs.org/" target="_blank" rel="noopener">nodejs.org</a> · 무료</td></tr><tr><td data-l="준비물">marketingskills</td><td data-l="왜 필요해요?">마케팅 스킬 53개</td><td data-l="어디서 받아요?"><a href="https://github.com/coreyhaines31/marketingskills" target="_blank" rel="noopener">GitHub</a> · 무료, MIT</td></tr></tbody></table></article><div class="block-title"><span>STEP 05</span> 처음 하는 사람용</div><article class="card" id="s5"><div class="card-h"><span class="n">5</span><h2>따라 하기</h2></div><ol class="steps"><li>Node.js를 설치해요(이미 있으면 건너뛰기).</li><li>내 가게·서비스 작업 폴더를 만들고, 그 폴더에서 PowerShell·터미널을 열어요.</li><li>설치 명령을 입력해요: <code class="brk">npx skills add coreyhaines31/marketingskills</code></li><li>어디에 깔지 물어보면 <b>Claude Code</b>를 골라요. 스킬이 <code>.claude/skills/</code>에 들어가요.</li><li>같은 폴더에서 Claude Code를 열고, product-marketing 스킬로 제품 소개 문서부터 만들어요.</li><li>위 '바로 쓰는 질문 10개'를 하나씩 붙여 넣어 써 봐요.</li></ol><p>몇 개만 깔고 싶으면 <code class="brk">npx skills add coreyhaines31/marketingskills --skill cro copywriting</code>, 목록만 보려면 <code>--list</code>를 붙여요.</p><div class="note">버튼 이름과 질문 순서는 바뀔 수 있어요. 화면에 보이는 대로 따라가세요.</div></article><div class="block-title"><span>STEP 06</span> 막히면</div><article class="card" id="s6"><div class="card-h"><span class="n">6</span><h2>안 될 때</h2></div><ul><li><b>깔았는데 스킬을 안 써요</b> · 먼저 확인: 스킬이 .agents/skills/에 깔렸는지 → <code class="brk">npx skills add coreyhaines31/marketingskills -a claude-code</code>로 다시 설치해요</li><li><b>'npx' 명령을 못 찾아요</b> · 먼저 확인: Node.js 설치 → Node.js를 설치하고 터미널을 새로 열어요</li><li><b>/plugin isn't available in this environment</b> · 먼저 확인: 웹판·원격 환경인지 → npx 방식으로 설치해요</li><li><b>답이 우리 가게와 안 맞아요</b> · 먼저 확인: 제품 소개 문서 → product-marketing 스킬로 소개 문서를 먼저 만들어요</li></ul><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>오류 상담용 문장 ([ ] 채우기)</span><button class="copy-btn" type="button" data-copy="p-3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-3">Claude Code에 marketingskills를 설치하다가 아래 문제가 생겼어. 운영체제는 [ ], 입력한 명령은 [ ], 오류 문구는 [ ]야. 원인과 고치는 순서를 쉬운 말로 알려 줘.</pre></div></article><div class="block-title"><span>STEP 07</span> 다음에</div><article class="card" id="s7"><div class="card-h"><span class="n">7</span><h2>다음에 해 볼 것</h2></div><ul><li>광고 소재 이미지가 필요하면 image 스킬, 영상이 필요하면 video 스킬을 같이 써 보세요.</li><li>쇼츠를 많이 만들고 싶으면 같은 날 올린 10번 가이드 「주제 한 줄로 쇼츠 만들기: MoneyPrinterTurbo 사용법」을 보세요.</li></ul></article>
+  <article class="card" id="src"><div class="card-h"><span class="n">↗</span><h2>출처</h2></div>
+    <ul class="sources"><li><a href="https://github.com/coreyhaines31/marketingskills" target="_blank" rel="noopener">marketingskills README</a><span class="src-meta">2026년 11월 7일 확인 · 스킬 53개 목록, 지원 에이전트, npx skills 설치, -a claude-code 안내, /plugin 제한, product-marketing 기본 스킬, MIT 무료</span></li></ul>
+    <div class="note">2026년 11월 7일에 marketingskills 공식 README를 보고 쓴 안내예요. 매출이나 광고 성과를 보장하지 않아요. 설치 방법은 바뀔 수 있으니 공식 README를 다시 확인하세요. 영상 속 화면은 설명을 위해 만든 예시예요. 실제 Claude Code 화면 녹화가 아니에요.</div>
+  </article>
+  <section class="pdf-card">
+    <div class="pdf-top"><div class="pdf-badge">PDF</div><div class="pdf-tt"><strong>이 가이드 PDF로 다운받기</strong><span>A4 4쪽 · 저장해 두고 따라 하세요</span></div></div>
+    <a class="pdf-cta" href="guide.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.8v10.4"/><path d="M7.6 10.2 12 14.6l4.4-4.4"/><path d="M4.6 19.4h14.8"/></svg>다운받기</a>
+    <p class="pdf-fine">인쇄해서 책상에 두고 봐도 되게 만들었어요. 폰에서 열어도 글씨가 깨지지 않아요.</p>
+  </section>
+  <footer>
+    <div class="foot-name"><b>@ai.onepage</b></div>
+    <p class="foot-desc">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요. 새 가이드는 인스타와 허브에 올라와요.</p>
+    <div class="foot-links"><a href="../../">전체 가이드 허브</a><a href="https://instagram.com/ai.onepage" target="_blank" rel="noopener">인스타 @ai.onepage</a></div>
+    <p class="foot-copy">#11 · 광고 대행 전에: Claude Code 마케팅 스킬 53개 설치·사용법 · 11월 8일<br>marketingskills 공식 README(2026년 11월 7일 확인)를 보고 썼어요. 설치 방법은 바뀔 수 있어요.</p>
+  </footer>
+</div>
+<div id="toast" role="status" aria-live="polite">복사됐어요 ✓</div>
+
+<script>
+/* 복사 버튼: navigator.clipboard → 실패하면 textarea + execCommand (인스타 인앱 웹뷰 대응).
+   이 스크립트는 손대지 않는다. 버튼은 .copy-btn, 대상은 data-copy="pre의 id". */
+(function(){
+  var timers = new WeakMap();
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1800);
+  }
+
+  function legacyCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly','');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '-9999px';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    var ok = false;
+    try {
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      ok = document.execCommand('copy');
+    } catch(e){ ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function copyText(text, done){
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function(){ done(true); },
+        function(){ done(legacyCopy(text)); });
+    } else {
+      done(legacyCopy(text));
+    }
+  }
+
+  document.querySelectorAll('.copy-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var box = document.getElementById(btn.getAttribute('data-copy'));
+      if (!box) return;
+      var text = box.innerText.replace(/\u00a0/g, ' ').trim();
+      var label = btn.querySelector('.copy-label');
+      copyText(text, function(ok){
+        if (ok) {
+          btn.classList.add('done');
+          if (label) label.textContent = '복사됨 ✓';
+        }
+        showToast(ok ? '복사됐어요 ✓' : '복사하지 못했어요');
+        clearTimeout(timers.get(btn));
+        timers.set(btn, setTimeout(function(){
+          btn.classList.remove('done');
+          if (label) label.textContent = '복사';
+        }, 2200));
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

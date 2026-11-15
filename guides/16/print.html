@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>맞장구만 치던 클로드가 아이디어 심사: roast 스킬 설치와 사용법 · ai.onepage #16</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:block}
+
+  :root{
+    --ink:#211E1A;
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+    --code-bg:#F5F1E9;
+    --paper:#FAF7F1;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#fff}
+  body{
+    font-family:"NotoKR",sans-serif;color:var(--ink);
+    font-size:9.35pt;line-height:1.56;word-break:keep-all;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  @page{size:A4;margin:14mm 15mm 16mm}
+
+  /* ── 머리글 ── */
+  .head{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:6.2mm 6.5mm 5.6mm;margin-bottom:4.2mm;
+  }
+  .head-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4mm}
+  .head-brand{font-size:8.4pt;font-weight:900;letter-spacing:.04em;color:var(--teal-dark)}
+  .head-num{
+    font-size:8pt;font-weight:700;color:var(--teal-dark);background:var(--teal-soft);
+    border-radius:20px;padding:1.2mm 3mm;
+  }
+  .head h1{margin:0;font-size:21pt;font-weight:900;letter-spacing:-.03em;line-height:1.24}
+  .head .sub{margin:2mm 0 0;font-size:11pt;font-weight:700;color:var(--teal-dark);letter-spacing:-.02em}
+  .head .lede{margin:3mm 0 0;font-size:9.4pt;line-height:1.66;color:#4E483E}
+  .head .pills{display:flex;gap:1.6mm;margin-top:3.4mm;flex-wrap:wrap}
+  .head .pill{
+    background:#fff;border:1px solid var(--line);border-radius:20px;
+    padding:1.1mm 2.6mm;font-size:8.4pt;font-weight:700;color:#3A342C;
+  }
+  .head .meta{margin-top:3mm;font-size:7.9pt;color:var(--muted)}
+  .head .meta b{color:#5F594F;font-weight:700}
+
+  /* ── 비교 (선택) ── */
+  .cmp{border:1px solid var(--line);border-radius:4mm;padding:4.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid}
+  .cmp h2{margin:0 0 3mm;font-size:10.5pt;font-weight:900;letter-spacing:-.02em}
+  .cmp h2 em{font-style:normal;font-weight:700;font-size:7.8pt;color:var(--muted);margin-left:2mm}
+  .cmp-row{display:flex;gap:6mm}
+  .cmp-col{flex:1 1 0;min-width:0}
+  .cmp-col + .cmp-col{border-left:1px solid var(--line);padding-left:6mm}
+  .cmp-label{font-size:7.9pt;font-weight:700;color:var(--muted);margin-bottom:2.4mm}
+  .bar-row{display:flex;align-items:center;gap:2mm;margin-bottom:1.8mm}
+  .bar-name{flex:0 0 27mm;font-size:7.9pt;color:#5F594F;line-height:1.3}
+  .bar-track{flex:1 1 auto;height:2.4mm;border-radius:20px;background:#F2EDE3;overflow:hidden}
+  .bar-fill{height:100%;border-radius:20px;background:var(--red)}
+  .bar-fill.mild{background:#E8B7AC}
+  .bar-fill.teal{background:var(--teal)}
+  .bar-val{flex:0 0 auto;font-size:8.2pt;font-weight:900;min-width:17mm;text-align:right}
+  .cmp-foot{margin-top:2mm;font-size:7.8pt;line-height:1.5;color:#5F594F}
+  .cmp-foot b{font-weight:700;color:var(--ink)}
+
+  /* ── 목차 ── */
+  .toc{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:3.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid;
+  }
+  .toc h2{margin:0 0 1.6mm;font-size:8pt;font-weight:900;color:var(--muted);letter-spacing:.06em}
+  .toc ol{list-style:none;margin:0;padding:0;columns:2;column-gap:7mm}
+  .toc li{font-size:8.4pt;color:#3A342C;padding:.7mm 0;break-inside:avoid}
+  .toc li b{color:var(--teal);font-weight:900;margin-right:1.4mm}
+  .toc li span{color:#A8A093;font-size:7.4pt}
+
+  /* ── 섹션 ── */
+  .sec{margin-bottom:3.4mm}
+  .sec-h{break-after:avoid}
+  .sec>.kicker{break-after:avoid}
+  p{orphans:3;widows:3}
+  li{orphans:2;widows:2}
+  .sec>.kicker:first-child{margin-top:0}
+  .sec-h{display:flex;align-items:baseline;gap:2mm;margin:0 0 1.6mm}
+  .sec-h .n{
+    flex:0 0 auto;font-size:8pt;font-weight:900;color:var(--teal-dark);
+    background:var(--teal-soft);border-radius:1.4mm;padding:.3mm 1.6mm;
+  }
+  .sec-h h2{margin:0;font-size:11.4pt;font-weight:900;letter-spacing:-.03em}
+  .sec p{margin:0 0 1.8mm;font-size:9.4pt;line-height:1.64;color:#2C2822}
+  .sec p:last-child{margin-bottom:0}
+  .sec b,.sec strong{font-weight:700;color:var(--ink)}
+  code.brk{white-space:normal;overflow-wrap:anywhere}
+  code{
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;font-size:8.3pt;
+    background:var(--code-bg);border:.4pt solid #E3DCCE;border-radius:1mm;padding:0 .8mm;
+    white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  }
+
+  ol.steps{margin:0 0 1.8mm;padding-left:5.2mm}
+  ol.steps li{font-size:9.1pt;line-height:1.55;margin-bottom:1mm;padding-left:.6mm}
+  ol.steps li::marker{color:var(--teal);font-weight:700}
+  ul.plain{margin:0 0 1.8mm;padding-left:4.4mm}
+  ul.plain li{font-size:9.1pt;line-height:1.56;margin-bottom:1.2mm}
+  ul.plain li::marker{color:#C0B7A8}
+
+  .ok{
+    background:var(--teal-soft);border-radius:2mm;padding:2.2mm 3mm;margin:1.6mm 0;
+    font-size:8.6pt;line-height:1.55;color:#0A4F42;break-inside:avoid;
+  }
+  .ok b{color:#0A4F42}
+  .ok .tag{
+    display:inline-block;background:var(--teal);color:#fff;font-size:7.2pt;font-weight:900;
+    border-radius:1mm;padding:0 1.4mm;margin-right:1.4mm;
+  }
+  .note{
+    background:var(--paper);border-left:.9mm solid #E3DCCE;border-radius:0 2mm 2mm 0;
+    padding:2mm 3mm;margin:1.6mm 0;font-size:8.5pt;line-height:1.58;color:#5F594F;break-inside:avoid;
+  }
+
+  /* ── 표 ── */
+  table{width:100%;border-collapse:collapse;margin:1mm 0 1.8mm;font-size:8.6pt;break-inside:avoid}
+  thead th{
+    background:var(--paper);text-align:left;font-weight:900;font-size:8pt;color:#5F594F;
+    padding:1.8mm 2.4mm;border-bottom:.5pt solid #DDD6C8;
+  }
+  tbody td{padding:1.8mm 2.4mm;border-bottom:.4pt solid var(--line);vertical-align:top;line-height:1.55}
+  tbody tr{break-inside:avoid}
+  tbody tr:last-child td{border-bottom:0}
+  tbody td:first-child{font-weight:700;color:var(--ink)}
+  td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  td.cut{
+    font-weight:900;color:var(--teal-dark);white-space:nowrap;text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  td.cut.low{color:#8A5A12}
+  a{color:var(--teal-dark);text-decoration:none;border-bottom:.3pt solid #C9DCD5}
+
+  /* ── 프롬프트 ── */
+  .prompt{border:.5pt solid #E0D8C8;border-radius:2.4mm;overflow:hidden;margin:1.6mm 0 2mm;break-inside:avoid}
+  .prompt-h{
+    background:#EDE7DA;padding:1.6mm 3mm;font-size:7.9pt;font-weight:700;color:#6F685D;
+    display:flex;justify-content:space-between;
+  }
+  .prompt-h span{font-weight:700}
+  .prompt-h em{font-style:normal;font-size:7.2pt;color:#8E877A}
+  .prompt pre{
+    margin:0;padding:2.6mm 3mm;background:var(--code-bg);
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;
+    font-size:8.2pt;line-height:1.6;color:#2A2620;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ── 푸터(마지막 페이지) ── */
+  .end{
+    margin-top:4mm;border-top:1px solid var(--line);padding-top:3mm;
+    display:flex;justify-content:space-between;gap:5mm;break-inside:avoid;
+  }
+  .end-brand{font-size:9pt;font-weight:900;color:var(--teal-dark);letter-spacing:.02em}
+  .end-desc{font-size:7.8pt;color:var(--muted);line-height:1.55;margin-top:.8mm;max-width:95mm}
+  .end-meta{font-size:7.4pt;color:#A8A093;text-align:right;line-height:1.6}
+
+  .kicker{font-size:7.6pt;font-weight:900;color:#A8A093;letter-spacing:.1em;margin:4mm 0 1.4mm}
+  .kicker:first-child{margin-top:0}
+  .measure-cap{font-size:7.9pt;color:var(--muted);margin:0 0 1.2mm}
+  .measure-cap b{color:var(--ink);font-weight:700}
+  .footer-note{
+    margin-top:3mm;background:var(--paper);border:1px solid var(--line);border-radius:2mm;
+    padding:2.4mm 3mm;font-size:7.9pt;line-height:1.58;color:#5F594F;
+  }
+</style>
+</head>
+<body>
+<div class="head">
+  <div class="head-top"><div class="head-brand">@ai.onepage · AI 툴 가이드</div><div class="head-num">#16 · 11월 10일</div></div>
+  <h1>맞장구만 치던 클로드가 아이디어 심사: roast 스킬 설치와 사용법</h1>
+  <p class="sub">다섯 자리로 나눠 공격하고, 판사가 판정해요</p>
+  <p class="lede">roast는 클로드를 다섯 자리로 나눠 같은 아이디어를 따로 공격하게 하고, 마지막에 판사가 GO·RESHAPE·KILL로 판정하는 무료 스킬이에요. 판정 뒤에는 48시간 안에 해 볼 가장 싼 시험까지 짜 줘요.</p>
+  <div class="pills"><span class="pill">무료 스킬 MIT</span><span class="pill">5명 따로 공격</span><span class="pill">판정 GO·RESHAPE·KILL</span></div>
+  <div class="meta"><b>2026년 11월 9일 확인</b> · Claude Code(Pro 이상) 또는 claude.ai(무료 가능) · 스킬 무료(MIT) · 공식 기능 아님</div>
+</div>
+
+<div class="toc"><h2>목차</h2><ol><li><b>0</b>이게 뭐예요?</li><li><b>1</b>Claude Code에 넣기</li><li><b>2</b>심사 맡기는 문장</li><li><b>3</b>꼭 알아 둘 점</li><li><b>4</b>준비물</li><li><b>5</b>Claude Code에서</li><li><b>6</b>claude.ai 웹에서</li><li><b>7</b>결과 읽는 법</li><li><b>8</b>안 될 때</li><li><b>9</b>다음에 해 볼 것</li></ol></div>
+<section class="sec"><div class="kicker">STEP 00 · 먼저 이것만</div><div class="sec-h"><span class="n">0</span><h2>이게 뭐예요?</h2></div><ul class="plain"><li><b>무엇:</b> 클로드를 다섯 자리로 나눠 같은 아이디어를 따로 공격하게 하고, 마지막에 판사가 하나로 판정해요.</li><li><b>판정:</b> GO(진행) · RESHAPE(고쳐서 다시) · KILL(접기). 판정 뒤에 48시간 안에 해 볼 가장 싼 시험까지 짜 줘요.</li><li><b>누구에게:</b> 사업 아이디어, 부업, 새 상품을 만들기 전에 냉정한 의견이 필요한 사람.</li><li><b>가격:</b> 스킬은 무료(MIT)예요. claude-skills(GitHub 별 2.9만+, 스킬 400개 넘는 모음)에 들어 있어요.</li></ul><p><b>다섯 자리</b> (묻는 질문 · 웹 검색)</p><ul class="plain"><li><b>비평가 (Critic)</b> · 무엇이 이걸 죽이나 · 안 함</li><li><b>지지자 (Champion)</b> · 잘되면 얼마나 커지나 · 안 함</li><li><b>분석가 (Analyst)</b> · 논리가 정말 맞나 · 쓰지 않게 막아 둠</li><li><b>조사관 (Investigator)</b> · 실제 시장은 뭐라고 하나(근거, 경쟁자) · 꼭 함</li><li><b>고객 (Customer)</b> · 내가 진짜 돈을 낼까 · 안 함</li></ul><div class="ok"><span class="tag">핵심</span>판사는 점수를 평균 내지 않아요. 고객과 비평가에 가장 무게를 두고, 지지자는 가장 가볍게 봐요. 살 사람이 없거나, 치명적인 약점이 드러나거나, 논리가 깨지면 GO를 주지 않아요(README).</div><div class="note">Anthropic 공식 기능이 아니라 개발자가 공개한 무료 스킬이에요. 판정은 참고용이고, 결정은 내가 해요.</div></section><section class="sec"><div class="kicker">STEP 01 · Pro 이상이면</div><div class="sec-h"><span class="n">1</span><h2>Claude Code에 바로 넣기</h2></div><div class="note">Claude Code는 <b>Pro 이상 유료 플랜</b>에서 쓸 수 있어요. 무료 플랜이면 아래 'claude.ai 웹에서 쓰기'로 가세요.</div><p>여는 법: Claude 데스크톱 앱 왼쪽 위 <b>Code</b> 탭 → 작업할 폴더 선택. 또는 PowerShell·터미널에서 <code>claude</code> 입력.</p><p>Claude Code 입력창에 한 줄씩 넣어요.</p><div class="prompt"><div class="prompt-h"><span>Claude Code 입력창에 넣기</span><em>복사해서 붙여 넣기</em></div><pre>/plugin marketplace add alirezarezvani/claude-skills
+/plugin install roast@claude-code-skills</pre></div></section><section class="sec"><div class="kicker">STEP 02 · 심사 받기</div><div class="sec-h"><span class="n">2</span><h2>심사 맡기는 문장</h2></div><div class="prompt"><div class="prompt-h"><span>클로드에 붙여 넣기 ([ ] 채우기)</span><em>복사해서 붙여 넣기</em></div><pre>roast this idea: [내 아이디어 한두 문장]
+- 대상 고객: [누가 돈을 내나]
+- 가격: [얼마]
+- 지금까지 확인한 것: [있으면]
+결과는 한국어로 정리해 줘. 다섯 명의 의견을 한 줄씩, 판정(GO/RESHAPE/KILL)과 이유, 48시간 안에 해 볼 가장 싼 시험을 표로 보여 줘.</pre></div><p>Claude Code에서는 <code>/cs-roast</code>로도 시작할 수 있어요.</p></section><section class="sec"><div class="kicker">STEP 03 · 주의</div><div class="sec-h"><span class="n">3</span><h2>꼭 알아 둘 점</h2></div><ul class="plain"><li><b>공식 기능이 아니에요.</b> 개발자가 GitHub에 공개한 스킬이에요.</li><li><b>판정은 참고용이에요.</b> 시장 크기 같은 숫자는 조사관이 찾은 출처를 직접 열어 확인하세요.</li><li><b>보안 검사에서 경고가 1개 있어요.</b> skills.sh 보안 검사에서 Snyk가 '중간' 경고(W011)를 냈어요. 다른 두 검사(Gen Agent Trust Hub, Socket)는 통과했어요. 경고 내용: 조사관이 웹에서 가져온 글에 AI를 속이는 문장이 섞여 있으면, 클로드가 그걸 지시로 받아들일 위험이 있어요(간접 프롬프트 주입).</li><li><b>그래서</b> 아이디어 설명에 회사 비밀, 고객 개인정보, 비밀번호를 넣지 마세요. 결과에 '이 링크를 열어', '이 명령을 실행해' 같은 말이 나오면 따르지 마세요.</li><li><b>claude.ai 웹에서는 다섯 명이 동시에 돌지 않고 차례로 돌 수 있어요(추정).</b> Claude Code에서는 다섯 명을 하위 에이전트로 동시에 돌려요(README).</li><li><b>웹 검색이 꺼져 있으면 조사관이 시장 근거를 못 찾아요.</b></li><li><b>한 번 심사에 답을 여러 번 만드는 셈이라 사용량을 빨리 써요(추정).</b></li></ul></section><section class="sec"><div class="kicker">STEP 04 · 시작 전에</div><div class="sec-h"><span class="n">4</span><h2>준비물과 공식 링크</h2></div><table><thead><tr><th style="width:30%">준비물</th><th style="width:42%">왜 필요해요?</th><th style="width:28%">어디서 받아요?</th></tr></thead><tbody><tr><td>Claude Code (Pro 이상) 또는 claude.ai 계정 (무료 가능)</td><td>스킬을 돌릴 곳</td><td><a href='https://claude.ai/download' target='_blank' rel='noopener'>claude.ai/download</a></td></tr><tr><td>claude-skills 저장소</td><td>roast 스킬이 들어 있는 곳</td><td><a href='https://github.com/alirezarezvani/claude-skills' target='_blank' rel='noopener'>GitHub claude-skills</a></td></tr><tr><td>roast 폴더</td><td>설명서(README)와 스킬 파일</td><td><a href='https://github.com/alirezarezvani/claude-skills/tree/main/productivity/roast' target='_blank' rel='noopener'>GitHub roast 폴더</a></td></tr><tr><td>Claude 도움말: 스킬</td><td>무료 플랜 업로드 조건</td><td><a href='https://support.claude.com/en/articles/12512180' target='_blank' rel='noopener'>support.claude.com</a></td></tr></tbody></table><p>네 곳 모두 2026년 11월 9일에 확인했어요.</p></section><section class="sec"><div class="kicker">STEP 05 · Pro 이상</div><div class="sec-h"><span class="n">5</span><h2>Claude Code에서 쓰기</h2></div><ol class="steps"><li>Claude Code를 열어요(위 'Claude Code에 바로 넣기'의 여는 법).</li><li>그 두 줄을 한 줄씩 넣어요. 첫 줄은 스킬 모음을 등록하고, 둘째 줄은 roast만 설치해요.</li><li>'심사 맡기는 문장'을 보내요. 목록에 roast가 안 보이면 Claude Code를 껐다 켜 보세요.</li></ol></section><section class="sec"><div class="kicker">STEP 06 · 무료 플랜도 됨</div><div class="sec-h"><span class="n">6</span><h2>claude.ai 웹에서 쓰기</h2></div><ol class="steps"><li>claude.ai 설정에서 <b>코드 실행</b> 기능을 켜요. 스킬은 코드 실행이 켜져 있어야 돌아가요(도움말).</li><li>claude-skills GitHub 페이지에서 초록색 <b>Code</b> → <b>Download ZIP</b>으로 전체를 받고 압축을 풀어요.</li><li>풀린 폴더에서 <code class='brk'>productivity/roast/skills/roast</code> 폴더를 찾아요. 안에 <code>SKILL.md</code>가 있어요.</li><li>그 <code>roast</code> 폴더 하나만 다시 ZIP으로 압축해요. Windows는 폴더 오른쪽 클릭 → 압축(ZIP), Mac은 오른쪽 클릭 → 압축.</li><li>claude.ai 왼쪽 메뉴 <b>Customize → Skills</b>에서 ZIP을 올리고 켜요.</li><li>새 채팅에서 웹 검색을 켜고 '심사 맡기는 문장'을 보내요.</li></ol></section><section class="sec"><div class="kicker">STEP 07 · 판정 뒤에</div><div class="sec-h"><span class="n">7</span><h2>결과 읽는 법</h2></div><ul class="plain"><li>판정만 보지 말고 <b>고객</b>과 <b>비평가</b> 자리를 먼저 읽어요. 판사도 이 둘에 가장 무게를 둬요.</li><li>48시간 시험을 실제로 해 본 뒤, 결과를 같은 채팅에 붙여 넣고 다시 심사받아요.</li></ul></section><section class="sec"><div class="kicker">STEP 08 · 막히면</div><div class="sec-h"><span class="n">8</span><h2>안 될 때</h2></div><ul class="plain"><li><b><code>/plugin</code> 명령이 안 됨</b> · Claude Code인지(웹 채팅이 아닌지) → Claude Code에서 다시. 웹이면 'claude.ai 웹에서 쓰기'</li><li><b>install에서 roast를 못 찾음</b> · 첫 줄(marketplace add)을 먼저 했는지 → 첫 줄부터 다시</li><li><b>웹에서 ZIP 업로드 실패</b> · ZIP 맨 위에 roast 폴더와 SKILL.md가 있는지 → roast 폴더 하나만 다시 압축</li><li><b>스킬이 안 불림</b> · 코드 실행, 스킬 켜짐 → 설정 확인 → 'roast this idea:'로 시작</li><li><b>조사관이 근거를 못 찾음</b> · 웹 검색이 켜졌는지 → 켜고 다시</li></ul><div class="prompt"><div class="prompt-h"><span>오류 상담용 문장 ([ ] 채우기)</span><em>복사해서 붙여 넣기</em></div><pre>roast 스킬을 쓰는데 [증상/오류 문구 그대로]가 나와. 쓰는 곳은 [Claude Code/claude.ai 웹], 플랜은 [무료/Pro]야. 원인과 고치는 순서를 쉬운 말로 알려 줘.</pre></div></section><section class="sec"><div class="kicker">STEP 09 · 다음</div><div class="sec-h"><span class="n">9</span><h2>다음에 해 볼 것</h2></div><ul class="plain"><li>RESHAPE가 나오면 의견대로 고친 아이디어를 다시 심사받기</li><li>48시간 시험 결과를 넣고 판정이 바뀌는지 보기</li></ul></section>
+<section class="sec" style="break-before:page">
+  <div class="kicker">한 장 요약 · 인쇄해서 책상에</div>
+  <div class="sec-h"><span class="n">✓</span><h2>이 순서대로만 하면 돼요</h2></div>
+  <table><thead><tr><th style="width:8%">순서</th><th style="width:32%">할 일</th><th style="width:34%">명령·도구</th><th style="width:26%">결과</th></tr></thead><tbody><tr><td>1</td><td>스킬 모음 등록</td><td>/plugin marketplace add alirezarezvani/claude-skills</td><td>claude-skills 모음 등록</td></tr><tr><td>2</td><td>roast 설치</td><td>/plugin install roast@claude-code-skills</td><td>roast 스킬 설치</td></tr><tr><td>3</td><td>심사 맡기기</td><td>roast this idea: … (또는 /cs-roast)</td><td>다섯 명 의견 + GO·RESHAPE·KILL</td></tr><tr><td>4</td><td>결과 읽기</td><td>고객·비평가 자리부터</td><td>판사도 이 둘에 가장 무게</td></tr><tr><td>5</td><td>48시간 시험</td><td>시험 결과를 같은 채팅에 붙여 넣기</td><td>다시 심사</td></tr><tr><td>웹</td><td>무료 플랜이면</td><td>코드 실행 켜기 → roast 폴더 ZIP → Customize → Skills</td><td>claude.ai에서 쓰기</td></tr></tbody></table>
+  <div class="note">판정은 참고용이에요. 아이디어 설명에 회사 비밀, 고객 개인정보, 비밀번호를 넣지 마세요.</div>
+  <div class="kicker">출처</div>
+  <ul class="plain"><li>claude-skills (GitHub) — https://github.com/alirezarezvani/claude-skills · 2026년 11월 9일 확인</li><li>roast README — https://github.com/alirezarezvani/claude-skills/tree/main/productivity/roast · 2026년 11월 9일 확인</li><li>skills.sh roast 보안 검사 — https://www.skills.sh/alirezarezvani/claude-skills/roast · 2026년 11월 9일 확인</li><li>Claude 도움말: 스킬 — https://support.claude.com/en/articles/12512180 · 2026년 11월 9일 확인</li></ul>
+  <div class="footer-note">이 가이드는 roast README와 Claude 공식 도움말을 기준으로 썼고(2026년 11월 9일 확인), 실제 아이디어를 심사해 보지는 않았어요. Anthropic 공식 기능이 아니라 개발자가 공개한 무료 스킬이에요. 영상 속 화면은 설명을 위해 만든 예시예요. 실제 화면 녹화가 아니에요.</div>
+  <div class="end">
+    <div><div class="end-brand">@ai.onepage</div><div class="end-desc">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요. 새 가이드는 인스타와 허브에 올라와요.</div></div>
+    <div class="end-meta">#16 · 맞장구만 치던 클로드가 아이디어 심사: roast 스킬 설치와 사용법<br>11월 10일<br>lalapert.github.io/ai-onepage</div>
+  </div>
+</section>
+</body>
+</html>
