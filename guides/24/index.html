@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FAF7F1">
+<meta name="description" content="챗GPT 무료 계정에서 먼저 바꿔 둘 설정 5개: 맞춤형 지침, 검색, 프로젝트, 메모리, 데이터 제어(학습 끄기). 메뉴 위치와 붙여 넣을 지침 문장">
+<title>챗GPT 처음이라면 바꿔 둘 설정 5개: 무료 계정 기준 · ai.onepage #24</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:swap}
+
+  :root{
+    --bg:#FAF7F1;
+    --card:#FFFFFF;
+    --ink:#211E1A;
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+    --code-bg:#F4F0E8;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:"NotoKR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.62;word-break:keep-all;
+    font-size:15px;
+  }
+  .page{max-width:480px;margin:0 auto;padding:0 18px 40px;overflow-x:hidden}
+  a{color:var(--teal-dark);text-decoration:underline;text-decoration-color:#BFDCD3;
+    text-decoration-thickness:1px;text-underline-offset:2px}
+  code.brk{white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+  code{
+    font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,"NotoKR",monospace;
+    font-size:.9em;background:var(--code-bg);border:1px solid #E6DFD2;
+    border-radius:5px;padding:1px 5px;white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  }
+
+  /* ── 상단 네비 ── */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:14px 0 0;
+  }
+  .back{
+    display:inline-flex;align-items:center;gap:5px;
+    text-decoration:none;color:#5A544A;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:6px 12px 6px 10px;font-size:12.5px;font-weight:700;letter-spacing:-.3px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04);
+  }
+  .back:active{transform:scale(.97)}
+  .back svg{width:12px;height:12px}
+  .num-badge{
+    font-size:11.5px;font-weight:700;letter-spacing:-.2px;
+    color:var(--teal-dark);background:var(--teal-soft);
+    border-radius:999px;padding:5px 11px;white-space:nowrap;
+  }
+
+  /* ── 히어로 ── */
+  .hero{padding:22px 2px 0}
+  .eyebrow{
+    font-size:11.5px;font-weight:700;color:var(--teal-dark);letter-spacing:-.1px;
+    display:flex;align-items:center;gap:6px;margin-bottom:9px;
+  }
+  .eyebrow i{width:5px;height:5px;border-radius:50%;background:var(--teal);display:inline-block}
+  h1{
+    margin:0;font-size:29px;font-weight:900;line-height:1.26;letter-spacing:-1.1px;
+  }
+  .sub{
+    margin:9px 0 0;font-size:16.5px;font-weight:700;color:var(--teal-dark);
+    line-height:1.45;letter-spacing:-.5px;
+  }
+  .lede{
+    margin:12px 0 0;font-size:14px;line-height:1.68;color:#5F594F;letter-spacing:-.2px;
+  }
+  .pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .pill{
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:6px 11px;font-size:12.3px;font-weight:700;color:#3A342C;letter-spacing:-.3px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04);
+  }
+  .pill b{color:var(--teal);font-weight:900}
+  .hero-meta{
+    margin-top:12px;font-size:11.5px;color:#8A8277;letter-spacing:-.2px;
+    display:flex;flex-wrap:wrap;align-items:center;gap:5px;
+  }
+  .hero-meta .dot{color:#C9C2B6}
+
+  /* ── 공통 카드 ── */
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:16px 16px 15px;margin-top:12px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04),0 6px 16px rgba(35,30,20,.035);
+  }
+  .card-h{display:flex;align-items:center;gap:8px;margin:0 0 8px}
+  .card-h .n{
+    flex:0 0 auto;width:22px;height:22px;border-radius:7px;
+    background:var(--teal-soft);color:var(--teal-dark);
+    font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;
+    letter-spacing:-.2px;
+  }
+  .card-h h2{margin:0;font-size:16.5px;font-weight:900;letter-spacing:-.55px;line-height:1.35}
+  .card p{margin:0 0 9px;font-size:14px;line-height:1.68;color:#3A342C;letter-spacing:-.2px}
+  .card p:last-child{margin-bottom:0}
+  .card b,.card strong{font-weight:700;color:var(--ink)}
+  .card ul{margin:0 0 2px;padding-left:17px}
+  .card ul li{font-size:14px;line-height:1.68;color:#3A342C;margin-bottom:7px;letter-spacing:-.2px}
+  .card ul li:last-child{margin-bottom:0}
+  .card ul li::marker{color:#C9C2B6}
+
+  /* ── 섹션 타이틀(카드 밖) ── */
+  .block-title{
+    display:flex;align-items:baseline;gap:7px;margin:26px 2px 0;
+    font-size:12px;font-weight:700;color:#8A8277;letter-spacing:.02em;
+  }
+  .block-title span{color:var(--teal-dark)}
+
+  /* ── 한눈에 비교 (필요 없으면 이 블록 통째로 삭제) ── */
+  .cmp{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:16px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04),0 8px 20px rgba(35,30,20,.04)}
+  .cmp h2{margin:0 0 12px;font-size:14px;font-weight:900;letter-spacing:-.4px;display:flex;align-items:center;gap:6px}
+  .cmp h2 em{font-style:normal;font-size:11px;font-weight:700;color:#8A8277;letter-spacing:-.1px}
+  .cmp-item{padding:12px 0;border-top:1px dashed #E6DFD2}
+  .cmp-item:first-of-type{border-top:0;padding-top:0}
+  .cmp-label{font-size:11.5px;font-weight:700;color:#8A8277;letter-spacing:-.2px;margin-bottom:8px}
+  .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+  .bar-row:last-of-type{margin-bottom:0}
+  .bar-name{flex:0 0 96px;font-size:11.6px;color:#5F594F;letter-spacing:-.3px;line-height:1.35}
+  .bar-track{flex:1 1 auto;height:9px;border-radius:999px;background:#F2EDE3;overflow:hidden}
+  .bar-fill{height:100%;border-radius:999px;background:var(--red)}
+  .bar-fill.mild{background:#E8B7AC}
+  .bar-fill.teal{background:var(--teal)}
+  .bar-val{flex:0 0 auto;font-size:12px;font-weight:900;color:var(--ink);letter-spacing:-.3px;min-width:66px;text-align:right}
+  .bar-val small{font-size:10.5px;font-weight:700;color:#8A8277}
+  .cmp-foot{
+    margin-top:10px;font-size:11.5px;line-height:1.55;color:#6F685D;letter-spacing:-.2px;
+    background:#FBF8F2;border-radius:9px;padding:8px 10px;
+  }
+  .x-tag{
+    display:inline-block;background:var(--red-soft);color:#B33320;font-weight:900;
+    font-size:11px;border-radius:6px;padding:1.5px 6px;margin-left:4px;letter-spacing:-.1px;
+  }
+
+  /* ── 목차 ── */
+  .toc{
+    background:#FBF8F2;border:1px solid var(--line);border-radius:16px;
+    padding:14px 16px 12px;margin-top:14px;
+  }
+  .toc h2{margin:0 0 8px;font-size:12px;font-weight:900;color:#8A8277;letter-spacing:.03em}
+  .toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+  .toc li{margin:0}
+  .toc a{
+    display:flex;align-items:baseline;gap:8px;
+    text-decoration:none;color:#3A342C;font-size:13.3px;letter-spacing:-.25px;
+    padding:5.5px 0;border-top:1px solid #EFE9DE;
+  }
+  .toc li:first-child a{border-top:0}
+  .toc a .i{flex:0 0 14px;font-size:11.5px;font-weight:900;color:var(--teal)}
+  .toc a .t{flex:1 1 auto}
+  .toc a .c{flex:0 0 auto;font-size:10.5px;font-weight:700;color:#A8A093}
+
+  /* ── 코드/프롬프트 박스 ── */
+  .prompt{
+    margin:10px 0 4px;border:1px solid #E2DACB;border-radius:12px;overflow:hidden;
+    background:var(--code-bg);
+  }
+  .prompt-h{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    background:#EDE7DA;padding:7px 9px 7px 11px;
+  }
+  .prompt-h .lbl{
+    font-size:11px;font-weight:700;color:#6F685D;letter-spacing:-.2px;
+    display:flex;align-items:center;gap:5px;min-width:0;
+  }
+  .prompt-h .lbl svg{width:12px;height:12px;flex:0 0 auto;color:#8A8277}
+  .copy-btn{
+    -webkit-appearance:none;appearance:none;font-family:inherit;cursor:pointer;
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--card);border:1px solid #DCD3C4;border-radius:7px;
+    padding:4px 9px;font-size:11.5px;font-weight:700;color:#3A342C;letter-spacing:-.2px;
+    line-height:1;white-space:nowrap;transition:background .15s,color .15s,border-color .15s;
+  }
+  .copy-btn svg{width:11px;height:11px}
+  .copy-btn:active{transform:scale(.96)}
+  .copy-btn.done{background:var(--teal);border-color:var(--teal);color:#fff}
+  .prompt pre{
+    margin:0;padding:11px 12px 12px;font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,"NotoKR",monospace;
+    font-size:12px;line-height:1.62;color:#2A2620;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ── 단계 목록 ── */
+  .steps{list-style:none;margin:2px 0 0;padding:0;counter-reset:s}
+  .steps li{
+    position:relative;padding-left:26px;margin-bottom:10px;
+    font-size:14px;line-height:1.66;color:#3A342C;letter-spacing:-.2px;
+  }
+  .steps li:last-child{margin-bottom:0}
+  .steps li::before{
+    counter-increment:s;content:counter(s);
+    position:absolute;left:0;top:1px;
+    width:18px;height:18px;border-radius:50%;
+    background:#F4F0E8;border:1px solid #E6DFD2;color:#6F685D;
+    font-size:10.5px;font-weight:900;display:flex;align-items:center;justify-content:center;
+    line-height:1;
+  }
+
+  .steps li .os{display:block;margin-top:3px}
+  .sources li{margin-bottom:9px}
+  .src-meta{display:block;margin-top:1px;font-size:11.5px;line-height:1.5;color:#A8A093;letter-spacing:-.1px}
+  .ok{
+    margin:11px 0 2px;background:var(--teal-soft);border-radius:10px;padding:9px 11px;
+    font-size:13px;line-height:1.6;color:#0A4F42;letter-spacing:-.2px;
+  }
+  .ok b{color:#0A4F42}
+  .ok .tag{
+    display:inline-block;font-size:10.5px;font-weight:900;background:var(--teal);color:#fff;
+    border-radius:5px;padding:1.5px 6px;margin-right:5px;letter-spacing:-.1px;vertical-align:1px;
+  }
+  .note{
+    margin:10px 0 2px;background:#FBF8F2;border-left:3px solid #E6DFD2;border-radius:0 9px 9px 0;
+    padding:9px 11px;font-size:12.8px;line-height:1.62;color:#5F594F;letter-spacing:-.2px;
+  }
+
+  /* ── 준비물 표: 모바일에서는 행마다 3칸을 세로로 쌓아 390px 가로 넘침을 막는다 ── */
+  .tbl{width:100%;border-collapse:collapse;margin:2px 0 0;font-size:13px;table-layout:fixed}
+  .tbl thead{display:none}
+  .tbl tr{display:block;border-top:1px solid var(--line);padding:10px 0}
+  .tbl tr:first-child{border-top:0;padding-top:2px}
+  .tbl td{display:block;padding:0;font-size:13px;line-height:1.6;color:#3A342C;letter-spacing:-.2px}
+  .tbl td[data-l="준비물"]{font-weight:700;color:var(--ink);font-size:13.6px;margin-bottom:3px}
+  .tbl td[data-l="왜 필요해요?"]{margin-bottom:4px}
+  .tbl td[data-l="왜 필요해요?"]::before{
+    content:"왜 ";font-weight:700;color:#A8A093;font-size:11.5px;
+  }
+  .tbl td[data-l="어디서 받아요?"]::before{
+    content:"받는 곳 ";font-weight:700;color:var(--teal-dark);font-size:11.5px;
+  }
+  .tbl td[data-l="어디서 받아요?"]{color:#4E483E;font-size:12.6px}
+
+  /* ── 측정 결과 막대 (숫자 비교 시각화) ── */
+  .measure{margin:14px 0 0 !important;line-height:1.45}
+  .measure b{display:block;font-size:14px;margin-bottom:2px}
+  .measure span{display:block;font-weight:400;color:#8A8277;font-size:11.8px;letter-spacing:-.2px}
+  .gain{list-style:none;margin:10px 0 0;padding:0}
+  .gain li{border-top:1px solid var(--line);padding:9px 0}
+  .gain li:first-child{border-top:0;padding-top:2px}
+  .gain .g-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .gain .g-cmd{font-size:13px;font-weight:700;color:var(--ink);letter-spacing:-.25px;line-height:1.4}
+  .gain .g-cut{
+    flex:0 0 auto;font-size:11.5px;font-weight:900;color:var(--teal-dark);
+    background:var(--teal-soft);border-radius:6px;padding:2px 6px;letter-spacing:-.2px;
+  }
+  .gain .g-cut.low{color:#8A5A12;background:#FBEFD8}
+  .gain .g-num{margin-top:3px;font-size:11.8px;color:#6F685D;letter-spacing:-.2px}
+  .gain .g-num b{color:var(--ink);font-weight:900}
+  .gain .g-bar{margin-top:6px;height:6px;border-radius:999px;background:#F2EDE3;overflow:hidden}
+  .gain .g-bar i{display:block;height:100%;border-radius:999px;background:var(--teal)}
+
+  /* ── 꼭 알아 둘 점 체크리스트 ── */
+  .checks{list-style:none;margin:0;padding:0}
+  .checks li{
+    position:relative;padding-left:22px;margin-bottom:11px;
+    font-size:13.6px;line-height:1.66;color:#3A342C;letter-spacing:-.2px;
+  }
+  .checks li:last-child{margin-bottom:0}
+  .checks li::before{
+    content:"";position:absolute;left:2px;top:7px;width:9px;height:9px;border-radius:3px;
+    background:var(--red-soft);border:1px solid #F0C9C1;
+  }
+
+  /* ── PDF 다운로드 카드 ── */
+  .pdf-card{
+    margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:16px;box-shadow:0 1px 2px rgba(35,30,20,.05),0 10px 24px rgba(35,30,20,.05);
+  }
+  .pdf-top{display:flex;align-items:center;gap:10px}
+  .pdf-badge{
+    flex:0 0 auto;width:40px;height:46px;border-radius:7px;background:var(--red);
+    color:#fff;font-size:10.5px;font-weight:900;letter-spacing:.04em;
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:7px;
+    position:relative;box-shadow:0 3px 8px rgba(224,69,46,.28);
+  }
+  .pdf-badge::before{
+    content:"";position:absolute;top:0;right:0;
+    border-width:0 11px 11px 0;border-style:solid;
+    border-color:transparent #FAF7F1 transparent transparent;
+  }
+  .pdf-tt{flex:1 1 auto;min-width:0}
+  .pdf-tt strong{display:block;font-size:14.8px;font-weight:900;letter-spacing:-.45px;line-height:1.35}
+  .pdf-tt span{display:block;margin-top:2px;font-size:11.8px;color:#8A8277;letter-spacing:-.2px}
+  .pdf-cta{
+    display:flex;align-items:center;justify-content:center;gap:7px;
+    margin-top:13px;text-decoration:none;
+    background:var(--ink);color:#fff;border-radius:11px;
+    padding:12px 14px;font-size:14px;font-weight:900;letter-spacing:-.4px;
+    box-shadow:0 3px 10px rgba(33,30,26,.16);
+  }
+  .pdf-cta:active{transform:scale(.99)}
+  .pdf-cta svg{width:15px;height:15px}
+  .pdf-fine{margin:9px 2px 0;font-size:11.3px;line-height:1.55;color:#A8A093;letter-spacing:-.1px;text-align:center}
+
+  /* ── 푸터 ── */
+  footer{
+    margin-top:26px;padding-top:18px;border-top:1px solid var(--line);text-align:center;
+  }
+  .foot-name{font-size:14px;font-weight:900;letter-spacing:-.4px}
+  .foot-name b{color:var(--teal-dark)}
+  .foot-desc{margin:5px auto 0;max-width:300px;font-size:11.5px;line-height:1.65;color:#8A8277;letter-spacing:-.2px}
+  .foot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:11px}
+  .foot-links a{
+    text-decoration:none;font-size:11.5px;font-weight:700;color:#5A544A;letter-spacing:-.2px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 11px;
+  }
+  .foot-copy{margin-top:14px;font-size:10.5px;color:#B3ABA0;line-height:1.7;letter-spacing:-.1px}
+
+  /* ── 토스트 ── */
+  #toast{
+    position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);
+    background:#211E1A;color:#fff;font-size:12.5px;font-weight:700;letter-spacing:-.2px;
+    padding:9px 15px;border-radius:999px;box-shadow:0 8px 22px rgba(33,30,26,.28);
+    opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:50;
+    white-space:nowrap;
+  }
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media (min-width:520px){
+    body{font-size:15.5px}
+    .page{padding:0 22px 56px}
+    h1{font-size:33px}
+  }
+  /* 인쇄로 뽑아도 깨지지 않게 */
+  @media print{
+    body{background:#fff}
+    .topbar .back,.pdf-card,#toast{display:none}
+    .card,.cmp,.toc{box-shadow:none;break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="topbar">
+    <a class="back" href="../../"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>전체 가이드</a>
+    <span class="num-badge">#24 · 11월 15일</span>
+  </nav>
+  <header class="hero">
+    <div class="eyebrow"><i></i>로컬·무료 AI</div>
+    <h1>챗GPT 처음이라면<br>바꿔 둘 설정 5개</h1>
+    <p class="sub">지어낸 답, 옛날 정보, 반복 설명, 학습 사용을 설정으로 막기</p>
+    <p class="lede">맞춤형 지침, 검색, 프로젝트, 메모리, 데이터 제어. 다섯 곳만 바꿔 두면 처음 쓰는 사람이 흔히 당하는 일을 줄일 수 있어요. 따로 깔 것은 없어요.</p>
+    <div class="pills"><span class="pill"><b>무료</b> 계정에서 다 돼요</span><span class="pill"><b>설정</b> 5곳만 바꾸기</span><span class="pill"><b>복사</b> 지침 문장 그대로</span></div>
+    <div class="hero-meta"><span>2026년 11월 14일 확인</span><span class="dot">·</span><span>챗GPT 무료 계정</span><span class="dot">·</span><span>설치 없음 · 웹·앱 설정만</span></div>
+  </header>
+  
+  <nav class="toc" aria-label="목차"><h2>목차</h2><ol><li><a href="#s0"><span class="i">0</span><span class="t">이게 뭐예요?</span><span class="c">개요</span></a></li><li><a href="#s1"><span class="i">1</span><span class="t">맞춤형 지침</span><span class="c">복사</span></a></li><li><a href="#s2"><span class="i">2</span><span class="t">검색</span><span class="c">출처</span></a></li><li><a href="#s3"><span class="i">3</span><span class="t">프로젝트</span><span class="c">파일 5개</span></a></li><li><a href="#s4"><span class="i">4</span><span class="t">메모리</span><span class="c">무료는 일부</span></a></li><li><a href="#s5"><span class="i">5</span><span class="t">데이터 제어</span><span class="c">학습 끄기</span></a></li><li><a href="#s6"><span class="i">6</span><span class="t">못 찾을 때</span><span class="c">복사</span></a></li></ol></nav>
+  <div class="block-title"><span>STEP 00</span> 먼저 이것만</div><article class="card" id="s0"><div class="card-h"><span class="n">0</span><h2>이게 뭐예요?</h2></div><p>챗GPT를 처음 쓸 때 <b>먼저 바꿔 두면 좋은 설정 5개</b>예요.</p><p>다섯 개 모두 <b>무료 계정에서 돼요.</b> 메모리는 무료에서 일부만 되고, 프로젝트는 무료에서 프로젝트 하나에 파일 5개까지예요. 따로 깔 것은 없어요. 챗GPT 웹(chatgpt.com)이나 앱에서 설정만 바꿔요.</p><div class="ok"><span class="tag">핵심</span>지어낸 답은 맞춤형 지침, 옛날 정보는 검색, 반복 설명은 프로젝트, 내 취향은 메모리, 학습 사용은 데이터 제어로 막아요.</div></article><div class="block-title"><span>STEP 01</span> 가장 먼저</div><article class="card" id="s1"><div class="card-h"><span class="n">1</span><h2>맞춤형 지침: "모르면 모른다고 말해" 적어 두기</h2></div><p>맞춤형 지침은 모든 대화에 늘 적용되는 "나만의 규칙"이에요. 무료 계정은 1,500자까지 쓸 수 있어요.</p><ol class="steps"><li>챗GPT 웹에서 왼쪽 아래 내 이름(계정 메뉴)을 눌러요.</li><li><b>설정</b>을 눌러요.</li><li><b>개인화</b>를 눌러요. '맞춤 설정 사용' 같은 스위치가 꺼져 있으면 켜요.</li><li><b>맞춤형 지침</b> 칸에 아래 상자 안 글을 통째로 붙여 넣고 저장해요.</li><li><b>이렇게 보이면 성공:</b> 새 대화에서 "너는 나한테 어떤 규칙으로 답해?"라고 물으면 아래 내용을 말해요.</li></ol><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>맞춤형 지침에 붙여 넣기</span><button class="copy-btn" type="button" data-copy="p-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-1">모르는 건 지어내지 말고 모른다고 말해 줘.
+사실을 말할 때는 확실한 것과 추측을 나눠서 말해 줘.
+최신 정보가 필요하면 검색해서 출처를 붙여 줘.
+답은 결론부터, 짧고 쉬운 말로 해 줘.</pre></div><div class="note">지침은 '이렇게 해 달라'는 부탁이에요. 지어낸 답이 완전히 사라진다는 뜻은 아니에요. 휴대폰 앱은 메뉴 이름이 조금 달라요(예: 'ChatGPT 맞춤 설정'). 못 찾겠으면 마지막 단계를 봐요.</div></article><div class="block-title"><span>STEP 02</span> 출처 붙이기</div><article class="card" id="s2"><div class="card-h"><span class="n">2</span><h2>검색: 출처가 붙는 답 받기</h2></div><ol class="steps"><li>글 쓰는 칸 왼쪽의 <b>+</b> 버튼을 눌러요.</li><li><b>검색</b>(웹 검색)을 골라요. 또는 질문 끝에 "검색해서 출처 붙여 줘"라고 써요.</li><li><b>이렇게 보이면 성공:</b> 답 밑이나 문장 옆에 출처(사이트 이름, 링크)가 붙어요.</li></ol><div class="note">출처가 붙어도 그 내용이 맞는지는 링크를 눌러 직접 확인하는 게 안전해요.</div></article><div class="block-title"><span>STEP 03</span> 반복 설명 끝</div><article class="card" id="s3"><div class="card-h"><span class="n">3</span><h2>프로젝트: 매번 처음부터 설명하지 않기</h2></div><p>프로젝트는 채팅, 파일, 지침을 한곳에 모아 두는 폴더예요. 그 안에서 하는 대화는 같은 자료와 지침을 계속 써요.</p><ol class="steps"><li>왼쪽 사이드바에서 <b>새 프로젝트</b>를 눌러요.</li><li>이름을 정하고(예: "블로그 글쓰기"), 아이콘과 색을 골라요.</li><li>자료 파일을 올려요. 무료 계정은 프로젝트 하나에 <b>파일 5개</b>까지예요.</li><li>프로젝트 오른쪽 위 <b>•••</b> 메뉴 → <b>프로젝트 설정</b> → 지침 칸에 이 프로젝트에서만 쓸 규칙을 적어요. 예: "내 블로그 말투는 해요체, 문단은 짧게."</li><li><b>이렇게 보이면 성공:</b> 그 프로젝트 안에서 새 채팅을 열고 "이 프로젝트 자료로 글 하나 써 줘"라고 하면 올린 파일을 보고 써요.</li></ol><div class="note">프로젝트 지침은 그 프로젝트 안에서만 적용되고, 맞춤형 지침보다 먼저 적용돼요.</div></article><div class="block-title"><span>STEP 04</span> 취향 기억</div><article class="card" id="s4"><div class="card-h"><span class="n">4</span><h2>메모리: 내 일과 취향 기억시키기</h2></div><ol class="steps"><li><b>설정 → 개인화 → 메모리</b>로 가요.</li><li>메모리를 켜요.</li><li>대화에서 "앞으로 내가 블로그 글을 쓴다는 걸 기억해 줘"처럼 말하면 기억해요.</li><li><b>이렇게 보이면 성공:</b> "나에 대해 뭘 기억하고 있어?"라고 물으면 기억한 내용을 말해요.</li></ol><div class="note">무료 계정의 메모리는 <b>일부만</b> 돼요(요금 페이지에 'Limited'로 표시). 기억한 내용은 같은 메뉴에서 보고 지울 수 있어요. 민감한 정보는 말하지 않는 게 좋아요.</div></article><div class="block-title"><span>STEP 05</span> 가장 중요</div><article class="card" id="s5"><div class="card-h"><span class="n">5</span><h2>데이터 제어: 내 대화를 학습에 안 쓰게 하기</h2></div><ol class="steps"><li><b>설정 → 데이터 제어</b>로 가요. 휴대폰 앱은 사이드바 → 내 프로필 → 설정 → 데이터 제어예요.</li><li><b>모두를 위한 모델 개선</b>을 꺼요.</li><li><b>이렇게 보이면 성공:</b> 스위치가 꺼져 있어요. 이후 새 대화는 모델 학습에 쓰이지 않아요.</li></ol><ul class="checks"><li>꺼 놔도 답에 <b>좋아요·싫어요(엄지)를 누르면</b> 그 대화 전체가 학습에 쓰일 수 있어요.</li><li><b>음성 모드</b>는 학습 설정이 따로 있어요. <b>Codex</b>도 설정이 따로 있어요.</li><li>꺼도 이미 있는 채팅은 지워지지 않아요. 지우고 싶으면 채팅을 따로 지워요.</li><li>아예 기록을 안 남기고 싶은 대화는 <b>임시 채팅</b>으로 해요. 기록에 안 남고, 메모리도 안 만들고, 학습에도 안 쓰여요. 다만 안전 목적으로 최대 30일은 보관돼요.</li></ul></article><div class="block-title"><span>STEP 06</span> 막히면</div><article class="card" id="s6"><div class="card-h"><span class="n">6</span><h2>그래도 메뉴를 못 찾겠으면</h2></div><p>챗GPT에 아래 글을 그대로 붙여 넣어요. 챗GPT가 설정을 대신 바꿔 주지는 못하지만, 내 화면에서 어디를 누르면 되는지 알려 줘요.</p><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>챗GPT에 붙여 넣기 ([ ] 채우기)</span><button class="copy-btn" type="button" data-copy="p-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-2">나는 [웹 / 아이폰 앱 / 안드로이드 앱]에서 챗GPT 무료 계정을 쓰고 있어.
+[맞춤형 지침 / 메모리 / 데이터 제어의 모델 개선 스위치] 메뉴를 못 찾겠어.
+지금 내 화면에서 어디를 눌러야 하는지 한 단계씩 알려 줘.
+모르면 지어내지 말고 OpenAI 도움말 문서 링크를 알려 줘.</pre></div></article>
+  <article class="card" id="src"><div class="card-h"><span class="n">↗</span><h2>출처</h2></div>
+    <ul class="sources"><li><a href="https://chatgpt.com/pricing" target="_blank" rel="noopener">ChatGPT 요금제 비교(무료 플랜 기능)</a><span class="src-meta">2026년 11월 14일 확인</span></li><li><a href="https://help.openai.com/ko-kr/articles/8590148-memory-in-chatgpt" target="_blank" rel="noopener">ChatGPT의 메모리</a><span class="src-meta">2026년 11월 14일 확인</span></li><li><a href="https://help.openai.com/ko-kr/articles/10169521-projects-in-chatgpt" target="_blank" rel="noopener">ChatGPT의 프로젝트</a><span class="src-meta">2026년 11월 14일 확인</span></li><li><a href="https://help.openai.com/en/articles/8096356-chatgpt-custom-instructions" target="_blank" rel="noopener">ChatGPT 맞춤형 지침</a><span class="src-meta">2026년 11월 14일 확인(무료 1,500자)</span></li><li><a href="https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt" target="_blank" rel="noopener">Data controls in ChatGPT</a><span class="src-meta">2026년 11월 14일 확인</span></li><li><a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance" target="_blank" rel="noopener">How your data is used to improve model performance</a><span class="src-meta">2026년 11월 14일 확인</span></li></ul>
+    <div class="note">2026년 11월 14일에 OpenAI 공식 요금 페이지와 도움말을 보고 쓴 안내예요. 메뉴 이름은 앱 버전과 기기에 따라 조금 다를 수 있어요. 영상 속 화면은 이해를 돕는 그림이에요.</div>
+  </article>
+  <section class="pdf-card">
+    <div class="pdf-top"><div class="pdf-badge">PDF</div><div class="pdf-tt"><strong>이 가이드 PDF로 다운받기</strong><span>A4 3쪽 · 저장해 두고 따라 하세요</span></div></div>
+    <a class="pdf-cta" href="guide.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.8v10.4"/><path d="M7.6 10.2 12 14.6l4.4-4.4"/><path d="M4.6 19.4h14.8"/></svg>다운받기</a>
+    <p class="pdf-fine">인쇄해서 책상에 두고 봐도 되게 만들었어요. 폰에서 열어도 글씨가 깨지지 않아요.</p>
+  </section>
+  <footer>
+    <div class="foot-name"><b>@ai.onepage</b></div>
+    <p class="foot-desc">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요. 새 가이드는 인스타와 허브에 올라와요.</p>
+    <div class="foot-links"><a href="../../">전체 가이드 허브</a><a href="https://instagram.com/ai.onepage" target="_blank" rel="noopener">인스타 @ai.onepage</a></div>
+    <p class="foot-copy">#24 · 챗GPT 처음이라면 바꿔 둘 설정 5개: 무료 계정 기준 · 11월 15일<br>OpenAI 공식 요금 페이지와 도움말(2026년 11월 14일 확인)을 보고 썼어요. 메뉴 이름은 앱 버전마다 조금 다를 수 있어요.</p>
+  </footer>
+</div>
+<div id="toast" role="status" aria-live="polite">복사됐어요 ✓</div>
+
+<script>
+/* 복사 버튼: navigator.clipboard → 실패하면 textarea + execCommand (인스타 인앱 웹뷰 대응).
+   이 스크립트는 손대지 않는다. 버튼은 .copy-btn, 대상은 data-copy="pre의 id". */
+(function(){
+  var timers = new WeakMap();
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1800);
+  }
+
+  function legacyCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly','');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '-9999px';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    var ok = false;
+    try {
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      ok = document.execCommand('copy');
+    } catch(e){ ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function copyText(text, done){
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function(){ done(true); },
+        function(){ done(legacyCopy(text)); });
+    } else {
+      done(legacyCopy(text));
+    }
+  }
+
+  document.querySelectorAll('.copy-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var box = document.getElementById(btn.getAttribute('data-copy'));
+      if (!box) return;
+      var text = box.innerText.replace(/\u00a0/g, ' ').trim();
+      var label = btn.querySelector('.copy-label');
+      copyText(text, function(ok){
+        if (ok) {
+          btn.classList.add('done');
+          if (label) label.textContent = '복사됨 ✓';
+        }
+        showToast(ok ? '복사됐어요 ✓' : '복사하지 못했어요');
+        clearTimeout(timers.get(btn));
+        timers.set(btn, setTimeout(function(){
+          btn.classList.remove('done');
+          if (label) label.textContent = '복사';
+        }, 2200));
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,5 +1,16 @@
 [
   {
+    "num": 24,
+    "title": "챗GPT 처음이라면 바꿔 둘 설정 5개: 무료 계정 기준",
+    "summary": "맞춤형 지침, 검색, 프로젝트, 메모리, 데이터 제어(학습 끄기). 무료 계정에서 다 되는 설정 5개의 메뉴 위치와 붙여 넣을 지침 문장",
+    "category": "로컬·무료 AI",
+    "date": "2026-11-15",
+    "url": "./guides/24/",
+    "thumb": "thumbs/24_chatgpt_first5.jpg",
+    "badge": "NEW",
+    "tags": "챗GPT ChatGPT GPT 오픈AI 설정 맞춤형지침 지침 메모리 프로젝트 검색 학습 데이터제어 개인정보 무료 처음 입문"
+  },
+  {
     "num": 23,
     "title": "AI 티 나는 디자인 빼기: impeccable 설치와 쓰는 법",
     "summary": "클로드가 만든 화면에서 AI 티를 빼는 디자인 스킬. 말로 고치는 명령 24개와 AI 티 검사 규칙 62개",
@@ -7,7 +18,7 @@
     "date": "2026-11-14",
     "url": "./guides/23/",
     "thumb": "thumbs/23_impeccable.jpg",
-    "badge": "NEW",
+    "badge": null,
     "tags": "클로드 코드 디자인 UI impeccable 홈페이지 랜딩"
   },
   {
@@ -18,7 +29,7 @@
     "date": "2026-11-14",
     "url": "./guides/22/",
     "thumb": "thumbs/22_skills_100k.jpg",
-    "badge": "NEW",
+    "badge": null,
     "tags": "클로드 코드 스킬 깃허브 깃허브별 superpowers claude-mem taste"
   },
   {

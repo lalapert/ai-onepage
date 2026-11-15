@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>챗GPT 처음이라면 바꿔 둘 설정 5개: 무료 계정 기준 · ai.onepage #24</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:block}
+
+  :root{
+    --ink:#211E1A;
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+    --code-bg:#F5F1E9;
+    --paper:#FAF7F1;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#fff}
+  body{
+    font-family:"NotoKR",sans-serif;color:var(--ink);
+    font-size:9.35pt;line-height:1.56;word-break:keep-all;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  @page{size:A4;margin:14mm 15mm 16mm}
+
+  /* ── 머리글 ── */
+  .head{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:6.2mm 6.5mm 5.6mm;margin-bottom:4.2mm;
+  }
+  .head-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4mm}
+  .head-brand{font-size:8.4pt;font-weight:900;letter-spacing:.04em;color:var(--teal-dark)}
+  .head-num{
+    font-size:8pt;font-weight:700;color:var(--teal-dark);background:var(--teal-soft);
+    border-radius:20px;padding:1.2mm 3mm;
+  }
+  .head h1{margin:0;font-size:21pt;font-weight:900;letter-spacing:-.03em;line-height:1.24}
+  .head .sub{margin:2mm 0 0;font-size:11pt;font-weight:700;color:var(--teal-dark);letter-spacing:-.02em}
+  .head .lede{margin:3mm 0 0;font-size:9.4pt;line-height:1.66;color:#4E483E}
+  .head .pills{display:flex;gap:1.6mm;margin-top:3.4mm;flex-wrap:wrap}
+  .head .pill{
+    background:#fff;border:1px solid var(--line);border-radius:20px;
+    padding:1.1mm 2.6mm;font-size:8.4pt;font-weight:700;color:#3A342C;
+  }
+  .head .meta{margin-top:3mm;font-size:7.9pt;color:var(--muted)}
+  .head .meta b{color:#5F594F;font-weight:700}
+
+  /* ── 비교 (선택) ── */
+  .cmp{border:1px solid var(--line);border-radius:4mm;padding:4.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid}
+  .cmp h2{margin:0 0 3mm;font-size:10.5pt;font-weight:900;letter-spacing:-.02em}
+  .cmp h2 em{font-style:normal;font-weight:700;font-size:7.8pt;color:var(--muted);margin-left:2mm}
+  .cmp-row{display:flex;gap:6mm}
+  .cmp-col{flex:1 1 0;min-width:0}
+  .cmp-col + .cmp-col{border-left:1px solid var(--line);padding-left:6mm}
+  .cmp-label{font-size:7.9pt;font-weight:700;color:var(--muted);margin-bottom:2.4mm}
+  .bar-row{display:flex;align-items:center;gap:2mm;margin-bottom:1.8mm}
+  .bar-name{flex:0 0 27mm;font-size:7.9pt;color:#5F594F;line-height:1.3}
+  .bar-track{flex:1 1 auto;height:2.4mm;border-radius:20px;background:#F2EDE3;overflow:hidden}
+  .bar-fill{height:100%;border-radius:20px;background:var(--red)}
+  .bar-fill.mild{background:#E8B7AC}
+  .bar-fill.teal{background:var(--teal)}
+  .bar-val{flex:0 0 auto;font-size:8.2pt;font-weight:900;min-width:17mm;text-align:right}
+  .cmp-foot{margin-top:2mm;font-size:7.8pt;line-height:1.5;color:#5F594F}
+  .cmp-foot b{font-weight:700;color:var(--ink)}
+
+  /* ── 목차 ── */
+  .toc{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:3.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid;
+  }
+  .toc h2{margin:0 0 1.6mm;font-size:8pt;font-weight:900;color:var(--muted);letter-spacing:.06em}
+  .toc ol{list-style:none;margin:0;padding:0;columns:2;column-gap:7mm}
+  .toc li{font-size:8.4pt;color:#3A342C;padding:.7mm 0;break-inside:avoid}
+  .toc li b{color:var(--teal);font-weight:900;margin-right:1.4mm}
+  .toc li span{color:#A8A093;font-size:7.4pt}
+
+  /* ── 섹션 ── */
+  .sec{margin-bottom:3.4mm}
+  .sec-h{break-after:avoid}
+  .sec>.kicker{break-after:avoid}
+  p{orphans:3;widows:3}
+  li{orphans:2;widows:2}
+  .sec>.kicker:first-child{margin-top:0}
+  .sec-h{display:flex;align-items:baseline;gap:2mm;margin:0 0 1.6mm}
+  .sec-h .n{
+    flex:0 0 auto;font-size:8pt;font-weight:900;color:var(--teal-dark);
+    background:var(--teal-soft);border-radius:1.4mm;padding:.3mm 1.6mm;
+  }
+  .sec-h h2{margin:0;font-size:11.4pt;font-weight:900;letter-spacing:-.03em}
+  .sec p{margin:0 0 1.8mm;font-size:9.4pt;line-height:1.64;color:#2C2822}
+  .sec p:last-child{margin-bottom:0}
+  .sec b,.sec strong{font-weight:700;color:var(--ink)}
+  code.brk{white-space:normal;overflow-wrap:anywhere}
+  code{
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;font-size:8.3pt;
+    background:var(--code-bg);border:.4pt solid #E3DCCE;border-radius:1mm;padding:0 .8mm;
+    white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  }
+
+  ol.steps{margin:0 0 1.8mm;padding-left:5.2mm}
+  ol.steps li{font-size:9.1pt;line-height:1.55;margin-bottom:1mm;padding-left:.6mm}
+  ol.steps li::marker{color:var(--teal);font-weight:700}
+  ul.plain{margin:0 0 1.8mm;padding-left:4.4mm}
+  ul.plain li{font-size:9.1pt;line-height:1.56;margin-bottom:1.2mm}
+  ul.plain li::marker{color:#C0B7A8}
+
+  .ok{
+    background:var(--teal-soft);border-radius:2mm;padding:2.2mm 3mm;margin:1.6mm 0;
+    font-size:8.6pt;line-height:1.55;color:#0A4F42;break-inside:avoid;
+  }
+  .ok b{color:#0A4F42}
+  .ok .tag{
+    display:inline-block;background:var(--teal);color:#fff;font-size:7.2pt;font-weight:900;
+    border-radius:1mm;padding:0 1.4mm;margin-right:1.4mm;
+  }
+  .note{
+    background:var(--paper);border-left:.9mm solid #E3DCCE;border-radius:0 2mm 2mm 0;
+    padding:2mm 3mm;margin:1.6mm 0;font-size:8.5pt;line-height:1.58;color:#5F594F;break-inside:avoid;
+  }
+
+  /* ── 표 ── */
+  table{width:100%;border-collapse:collapse;margin:1mm 0 1.8mm;font-size:8.6pt;break-inside:avoid}
+  thead th{
+    background:var(--paper);text-align:left;font-weight:900;font-size:8pt;color:#5F594F;
+    padding:1.8mm 2.4mm;border-bottom:.5pt solid #DDD6C8;
+  }
+  tbody td{padding:1.8mm 2.4mm;border-bottom:.4pt solid var(--line);vertical-align:top;line-height:1.55}
+  tbody tr{break-inside:avoid}
+  tbody tr:last-child td{border-bottom:0}
+  tbody td:first-child{font-weight:700;color:var(--ink)}
+  td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  td.cut{
+    font-weight:900;color:var(--teal-dark);white-space:nowrap;text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  td.cut.low{color:#8A5A12}
+  a{color:var(--teal-dark);text-decoration:none;border-bottom:.3pt solid #C9DCD5}
+
+  /* ── 프롬프트 ── */
+  .prompt{border:.5pt solid #E0D8C8;border-radius:2.4mm;overflow:hidden;margin:1.6mm 0 2mm;break-inside:avoid}
+  .prompt-h{
+    background:#EDE7DA;padding:1.6mm 3mm;font-size:7.9pt;font-weight:700;color:#6F685D;
+    display:flex;justify-content:space-between;
+  }
+  .prompt-h span{font-weight:700}
+  .prompt-h em{font-style:normal;font-size:7.2pt;color:#8E877A}
+  .prompt pre{
+    margin:0;padding:2.6mm 3mm;background:var(--code-bg);
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;
+    font-size:8.2pt;line-height:1.6;color:#2A2620;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ── 푸터(마지막 페이지) ── */
+  .end{
+    margin-top:4mm;border-top:1px solid var(--line);padding-top:3mm;
+    display:flex;justify-content:space-between;gap:5mm;break-inside:avoid;
+  }
+  .end-brand{font-size:9pt;font-weight:900;color:var(--teal-dark);letter-spacing:.02em}
+  .end-desc{font-size:7.8pt;color:var(--muted);line-height:1.55;margin-top:.8mm;max-width:95mm}
+  .end-meta{font-size:7.4pt;color:#A8A093;text-align:right;line-height:1.6}
+
+  .kicker{font-size:7.6pt;font-weight:900;color:#A8A093;letter-spacing:.1em;margin:4mm 0 1.4mm}
+  .kicker:first-child{margin-top:0}
+  .measure-cap{font-size:7.9pt;color:var(--muted);margin:0 0 1.2mm}
+  .measure-cap b{color:var(--ink);font-weight:700}
+  .footer-note{
+    margin-top:3mm;background:var(--paper);border:1px solid var(--line);border-radius:2mm;
+    padding:2.4mm 3mm;font-size:7.9pt;line-height:1.58;color:#5F594F;
+  }
+</style>
+</head>
+<body>
+<div class="head">
+  <div class="head-top"><div class="head-brand">@ai.onepage · AI 툴 가이드</div><div class="head-num">#24 · 11월 15일</div></div>
+  <h1>챗GPT 처음이라면 바꿔 둘 설정 5개: 무료 계정 기준</h1>
+  <p class="sub">지어낸 답, 옛날 정보, 반복 설명, 학습 사용을 설정으로 막기</p>
+  <p class="lede">맞춤형 지침, 검색, 프로젝트, 메모리, 데이터 제어. 다섯 곳만 바꿔 두면 처음 쓰는 사람이 흔히 당하는 일을 줄일 수 있어요. 따로 깔 것은 없어요.</p>
+  <div class="pills"><span class="pill">무료 계정에서 다 돼요</span><span class="pill">설정 5곳만 바꾸기</span><span class="pill">복사 지침 문장 그대로</span></div>
+  <div class="meta"><b>2026년 11월 14일 확인</b> · 챗GPT 무료 계정 · 설치 없음 · 웹·앱 설정만</div>
+</div>
+
+<div class="toc"><h2>목차</h2><ol><li><b>0</b>이게 뭐예요?</li><li><b>1</b>맞춤형 지침</li><li><b>2</b>검색</li><li><b>3</b>프로젝트</li><li><b>4</b>메모리</li><li><b>5</b>데이터 제어</li><li><b>6</b>못 찾을 때</li></ol></div>
+<section class="sec"><div class="kicker">STEP 00 · 먼저 이것만</div><div class="sec-h"><span class="n">0</span><h2>이게 뭐예요?</h2></div><p>챗GPT를 처음 쓸 때 <b>먼저 바꿔 두면 좋은 설정 5개</b>예요.</p><p>다섯 개 모두 <b>무료 계정에서 돼요.</b> 메모리는 무료에서 일부만 되고, 프로젝트는 무료에서 프로젝트 하나에 파일 5개까지예요. 따로 깔 것은 없어요. 챗GPT 웹(chatgpt.com)이나 앱에서 설정만 바꿔요.</p><div class="ok"><span class="tag">핵심</span>지어낸 답은 맞춤형 지침, 옛날 정보는 검색, 반복 설명은 프로젝트, 내 취향은 메모리, 학습 사용은 데이터 제어로 막아요.</div></section><section class="sec"><div class="kicker">STEP 01 · 가장 먼저</div><div class="sec-h"><span class="n">1</span><h2>맞춤형 지침: "모르면 모른다고 말해" 적어 두기</h2></div><p>맞춤형 지침은 모든 대화에 늘 적용되는 "나만의 규칙"이에요. 무료 계정은 1,500자까지 쓸 수 있어요.</p><ol class="steps"><li>챗GPT 웹에서 왼쪽 아래 내 이름(계정 메뉴)을 눌러요.</li><li><b>설정</b>을 눌러요.</li><li><b>개인화</b>를 눌러요. '맞춤 설정 사용' 같은 스위치가 꺼져 있으면 켜요.</li><li><b>맞춤형 지침</b> 칸에 아래 상자 안 글을 통째로 붙여 넣고 저장해요.</li><li><b>이렇게 보이면 성공:</b> 새 대화에서 "너는 나한테 어떤 규칙으로 답해?"라고 물으면 아래 내용을 말해요.</li></ol><div class="prompt"><div class="prompt-h"><span>맞춤형 지침에 붙여 넣기</span><em>복사해서 붙여 넣기</em></div><pre>모르는 건 지어내지 말고 모른다고 말해 줘.
+사실을 말할 때는 확실한 것과 추측을 나눠서 말해 줘.
+최신 정보가 필요하면 검색해서 출처를 붙여 줘.
+답은 결론부터, 짧고 쉬운 말로 해 줘.</pre></div><div class="note">지침은 '이렇게 해 달라'는 부탁이에요. 지어낸 답이 완전히 사라진다는 뜻은 아니에요. 휴대폰 앱은 메뉴 이름이 조금 달라요(예: 'ChatGPT 맞춤 설정'). 못 찾겠으면 마지막 단계를 봐요.</div></section><section class="sec"><div class="kicker">STEP 02 · 출처 붙이기</div><div class="sec-h"><span class="n">2</span><h2>검색: 출처가 붙는 답 받기</h2></div><ol class="steps"><li>글 쓰는 칸 왼쪽의 <b>+</b> 버튼을 눌러요.</li><li><b>검색</b>(웹 검색)을 골라요. 또는 질문 끝에 "검색해서 출처 붙여 줘"라고 써요.</li><li><b>이렇게 보이면 성공:</b> 답 밑이나 문장 옆에 출처(사이트 이름, 링크)가 붙어요.</li></ol><div class="note">출처가 붙어도 그 내용이 맞는지는 링크를 눌러 직접 확인하는 게 안전해요.</div></section><section class="sec"><div class="kicker">STEP 03 · 반복 설명 끝</div><div class="sec-h"><span class="n">3</span><h2>프로젝트: 매번 처음부터 설명하지 않기</h2></div><p>프로젝트는 채팅, 파일, 지침을 한곳에 모아 두는 폴더예요. 그 안에서 하는 대화는 같은 자료와 지침을 계속 써요.</p><ol class="steps"><li>왼쪽 사이드바에서 <b>새 프로젝트</b>를 눌러요.</li><li>이름을 정하고(예: "블로그 글쓰기"), 아이콘과 색을 골라요.</li><li>자료 파일을 올려요. 무료 계정은 프로젝트 하나에 <b>파일 5개</b>까지예요.</li><li>프로젝트 오른쪽 위 <b>•••</b> 메뉴 → <b>프로젝트 설정</b> → 지침 칸에 이 프로젝트에서만 쓸 규칙을 적어요. 예: "내 블로그 말투는 해요체, 문단은 짧게."</li><li><b>이렇게 보이면 성공:</b> 그 프로젝트 안에서 새 채팅을 열고 "이 프로젝트 자료로 글 하나 써 줘"라고 하면 올린 파일을 보고 써요.</li></ol><div class="note">프로젝트 지침은 그 프로젝트 안에서만 적용되고, 맞춤형 지침보다 먼저 적용돼요.</div></section><section class="sec"><div class="kicker">STEP 04 · 취향 기억</div><div class="sec-h"><span class="n">4</span><h2>메모리: 내 일과 취향 기억시키기</h2></div><ol class="steps"><li><b>설정 → 개인화 → 메모리</b>로 가요.</li><li>메모리를 켜요.</li><li>대화에서 "앞으로 내가 블로그 글을 쓴다는 걸 기억해 줘"처럼 말하면 기억해요.</li><li><b>이렇게 보이면 성공:</b> "나에 대해 뭘 기억하고 있어?"라고 물으면 기억한 내용을 말해요.</li></ol><div class="note">무료 계정의 메모리는 <b>일부만</b> 돼요(요금 페이지에 'Limited'로 표시). 기억한 내용은 같은 메뉴에서 보고 지울 수 있어요. 민감한 정보는 말하지 않는 게 좋아요.</div></section><section class="sec"><div class="kicker">STEP 05 · 가장 중요</div><div class="sec-h"><span class="n">5</span><h2>데이터 제어: 내 대화를 학습에 안 쓰게 하기</h2></div><ol class="steps"><li><b>설정 → 데이터 제어</b>로 가요. 휴대폰 앱은 사이드바 → 내 프로필 → 설정 → 데이터 제어예요.</li><li><b>모두를 위한 모델 개선</b>을 꺼요.</li><li><b>이렇게 보이면 성공:</b> 스위치가 꺼져 있어요. 이후 새 대화는 모델 학습에 쓰이지 않아요.</li></ol><ul class="plain"><li>꺼 놔도 답에 <b>좋아요·싫어요(엄지)를 누르면</b> 그 대화 전체가 학습에 쓰일 수 있어요.</li><li><b>음성 모드</b>는 학습 설정이 따로 있어요. <b>Codex</b>도 설정이 따로 있어요.</li><li>꺼도 이미 있는 채팅은 지워지지 않아요. 지우고 싶으면 채팅을 따로 지워요.</li><li>아예 기록을 안 남기고 싶은 대화는 <b>임시 채팅</b>으로 해요. 기록에 안 남고, 메모리도 안 만들고, 학습에도 안 쓰여요. 다만 안전 목적으로 최대 30일은 보관돼요.</li></ul></section><section class="sec"><div class="kicker">STEP 06 · 막히면</div><div class="sec-h"><span class="n">6</span><h2>그래도 메뉴를 못 찾겠으면</h2></div><p>챗GPT에 아래 글을 그대로 붙여 넣어요. 챗GPT가 설정을 대신 바꿔 주지는 못하지만, 내 화면에서 어디를 누르면 되는지 알려 줘요.</p><div class="prompt"><div class="prompt-h"><span>챗GPT에 붙여 넣기 ([ ] 채우기)</span><em>복사해서 붙여 넣기</em></div><pre>나는 [웹 / 아이폰 앱 / 안드로이드 앱]에서 챗GPT 무료 계정을 쓰고 있어.
+[맞춤형 지침 / 메모리 / 데이터 제어의 모델 개선 스위치] 메뉴를 못 찾겠어.
+지금 내 화면에서 어디를 눌러야 하는지 한 단계씩 알려 줘.
+모르면 지어내지 말고 OpenAI 도움말 문서 링크를 알려 줘.</pre></div></section>
+<section class="sec">
+  <div class="kicker">한 장 요약 · 인쇄해서 책상에</div>
+  <div class="sec-h"><span class="n">✓</span><h2>이 순서대로만 하면 돼요</h2></div>
+  <table><thead><tr><th style="width:8%">순서</th><th style="width:32%">할 일</th><th style="width:34%">명령·도구</th><th style="width:26%">결과</th></tr></thead><tbody><tr><td>1</td><td>맞춤형 지침</td><td>설정 → 개인화 → 맞춤형 지침</td><td>모르면 모른다고 말해요</td></tr><tr><td>2</td><td>검색 켜기</td><td>+ 버튼 → 검색</td><td>답에 출처가 붙어요</td></tr><tr><td>3</td><td>프로젝트</td><td>새 프로젝트 → 파일·지침</td><td>매번 설명 안 해도 돼요</td></tr><tr><td>4</td><td>메모리</td><td>설정 → 개인화 → 메모리</td><td>내 일과 취향을 기억해요</td></tr><tr><td>5</td><td>학습 끄기</td><td>설정 → 데이터 제어 → 모델 개선 끄기</td><td>새 대화가 학습에 안 쓰여요</td></tr></tbody></table>
+  <div class="note">끄고 나서도 좋아요·싫어요를 누른 대화는 학습에 쓰일 수 있어요.</div>
+  <div class="kicker">출처</div>
+  <ul class="plain"><li>ChatGPT 요금제 비교(무료 플랜 기능) — https://chatgpt.com/pricing · 2026년 11월 14일 확인</li><li>ChatGPT의 메모리 — https://help.openai.com/ko-kr/articles/8590148-memory-in-chatgpt · 2026년 11월 14일 확인</li><li>ChatGPT의 프로젝트 — https://help.openai.com/ko-kr/articles/10169521-projects-in-chatgpt · 2026년 11월 14일 확인</li><li>ChatGPT 맞춤형 지침 — https://help.openai.com/en/articles/8096356-chatgpt-custom-instructions · 2026년 11월 14일 확인(무료 1,500자)</li><li>Data controls in ChatGPT — https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt · 2026년 11월 14일 확인</li><li>How your data is used to improve model performance — https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance · 2026년 11월 14일 확인</li></ul>
+  <div class="footer-note">2026년 11월 14일에 OpenAI 공식 요금 페이지와 도움말을 보고 쓴 안내예요. 메뉴 이름은 앱 버전과 기기에 따라 조금 다를 수 있어요. 영상 속 화면은 이해를 돕는 그림이에요.</div>
+  <div class="end">
+    <div><div class="end-brand">@ai.onepage</div><div class="end-desc">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요. 새 가이드는 인스타와 허브에 올라와요.</div></div>
+    <div class="end-meta">#24 · 챗GPT 처음이라면 바꿔 둘 설정 5개: 무료 계정 기준<br>11월 15일<br>lalapert.github.io/ai-onepage</div>
+  </div>
+</section>
+</body>
+</html>
