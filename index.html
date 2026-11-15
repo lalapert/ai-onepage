@@ -130,7 +130,6 @@
     margin-top:6px;font-size:11px;color:#8A8277;letter-spacing:-.2px;
     display:flex;align-items:center;gap:4px;
   }
-  .foot .go{color:var(--teal-dark);font-weight:700}
   .foot .dot{color:#C9C2B6}
   .thumb{
     flex:0 0 auto;width:58px;height:58px;border-radius:11px;overflow:hidden;
@@ -270,8 +269,7 @@ function cardHTML(g){
         <p class="sum">${esc(g.summary)}</p>
         <div class="foot">
           <span>${esc(fmtDate(g.date))} 가이드</span><span class="dot">·</span>
-          <span>${esc(g.category)}</span><span class="dot">·</span>
-          <span class="go">가이드 보기&nbsp;›</span>
+          <span>${esc(g.category)}</span>
         </div>
       </div>
       ${thumb}
