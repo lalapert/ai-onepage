@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FAF7F1">
+<meta name="description" content="@ai.onepage AI 툴·클로드 가이드 모음. 1번부터 최신 번호까지 한눈에 보고 노션 가이드로 바로 이동하세요.">
+<title>ai.onepage — AI 툴 가이드 모음</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"NotoKR";src:url("fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+  @font-face{font-family:"NotoKR";src:url("fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:swap}
+
+  :root{
+    --bg:#FAF7F1;        /* 페이지 배경 */
+    --card:#FFFFFF;      /* 카드·입력창·알약 배경 */
+    --ink:#211E1A;       /* 본문 텍스트 */
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;      /* 포인트 색(번호, 인기 배지) */
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"NotoKR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+    word-break:keep-all;
+  }
+  .page{max-width:430px;margin:0 auto;padding-bottom:56px;overflow-X:hidden}
+
+  /* ---------- profile ---------- */
+  .profile{padding:18px 22px 0;text-align:center}
+  .avatar-wrap{
+    width:68px;height:68px;margin:0 auto 10px;border-radius:50%;
+    background:var(--card);padding:2.5px;
+    box-shadow:0 0 0 1px rgba(15,138,114,.16), 0 5px 14px rgba(35,30,20,.10);
+  }
+  .avatar{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;background:#E9E4DA}
+  .name{
+    margin:0;font-size:23px;font-weight:900;letter-spacing:-.6px;line-height:1.2;
+  }
+  .role-badge{
+    display:inline-block;margin-top:6px;
+    background:var(--teal-soft);color:var(--teal-dark);
+    font-size:11px;font-weight:700;letter-spacing:-.2px;
+    padding:3px 8px;border-radius:6px;
+  }
+  .intro{
+    margin:8px auto 0;max-width:320px;
+    font-size:12.8px;line-height:1.55;color:#5F594F;letter-spacing:-.2px;
+  }
+  .socials{display:flex;gap:7px;justify-content:center;margin-top:9px}
+  .socials a{
+    width:30px;height:30px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--card);border:1px solid var(--line);color:#5A544A;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .socials a:active{transform:scale(.94)}
+  .socials svg{width:15px;height:15px;display:block}
+
+  /* ---------- filters ---------- */
+  .filters{padding:14px 18px 0}
+  .pills{display:flex;flex-wrap:wrap;gap:6px}
+  .pill{
+    -webkit-appearance:none;appearance:none;font-family:inherit;cursor:pointer;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:6.5px 11px;font-size:12.8px;font-weight:700;color:#3A342C;
+    letter-spacing:-.3px;line-height:1;display:inline-flex;align-items:center;gap:5px;
+    transition:background .15s ease,color .15s ease,border-color .15s ease;
+  }
+  .pill .n{font-size:11.5px;font-weight:700;color:#9C9488}
+  .pill[aria-pressed="true"]{background:#211E1A;border-color:#211E1A;color:#fff}
+  .pill[aria-pressed="true"] .n{color:#C9C2B6}
+  .pill:active{transform:scale(.98)}
+
+  .search{
+    margin-top:8px;display:flex;align-items:center;gap:8px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:0 13px;height:38px;
+  }
+  .search svg{width:15px;height:15px;color:#9C9488;flex:0 0 auto}
+  .search input{
+    border:0;outline:0;width:100%;height:100%;background:transparent;
+    font-family:inherit;font-size:13.5px;color:var(--ink);letter-spacing:-.2px;
+  }
+  .search input::placeholder{color:#A8A093}
+  .search input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+
+  .resultbar{
+    display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+    padding:11px 22px 4px;
+    font-size:11.5px;color:#8A8277;letter-spacing:-.2px;
+  }
+  .resultbar b{color:var(--teal-dark);font-weight:700}
+
+  /* ---------- list ---------- */
+  .list{padding:0 22px}
+  .card{
+    display:flex;gap:13px;align-items:flex-start;
+    padding:13px 0 13px;border-top:1px solid var(--line);
+    text-decoration:none;color:inherit;
+  }
+  .card:first-child{border-top:0;padding-top:2px}
+  .card-body{flex:1 1 auto;min-width:0}
+  .tags{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:5px}
+  .chip{
+    font-size:10px;font-weight:700;line-height:1;padding:3.5px 6px;border-radius:5px;letter-spacing:-.1px;
+  }
+  .chip.new{background:var(--red);color:#fff;letter-spacing:.2px}
+  .chip.hot{background:var(--teal);color:#fff}
+  .card h2{
+    margin:0;font-size:14.4px;font-weight:700;line-height:1.4;letter-spacing:-.35px;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+  }
+  .card h2 .num{color:var(--teal);font-weight:900;letter-spacing:-.3px}
+  .card h2 .bar{color:#C9C2B6;font-weight:400;margin:0 5px 0 4px}
+  .card .sum{
+    margin:4px 0 0;font-size:12px;line-height:1.5;color:#6F685D;letter-spacing:-.25px;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  }
+  .foot{
+    margin-top:6px;font-size:11px;color:#8A8277;letter-spacing:-.2px;
+    display:flex;align-items:center;gap:4px;
+  }
+  .foot .go{color:var(--teal-dark);font-weight:700}
+  .foot .dot{color:#C9C2B6}
+  .thumb{
+    flex:0 0 auto;width:58px;height:58px;border-radius:11px;overflow:hidden;
+    background:#EFEAE0;box-shadow:0 1px 2px rgba(35,30,20,.08),0 0 0 1px rgba(35,30,20,.05);
+  }
+  .thumb img{width:100%;height:100%;object-fit:cover;object-position:50% 45%;display:block}
+
+  .empty{padding:44px 0 30px;text-align:center;color:#9C9488;font-size:13px;letter-spacing:-.2px}
+  .empty b{display:block;color:#5F594F;font-size:14px;margin-bottom:4px}
+
+  .footnote{
+    margin:26px 22px 0;padding-top:16px;border-top:1px solid var(--line);
+    text-align:center;font-size:11px;color:#A8A093;line-height:1.7;letter-spacing:-.1px;
+  }
+  .footnote a{color:#8A8277;text-decoration:none;border-bottom:1px solid #DDD6CA}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="profile">
+    <div class="avatar-wrap"><img class="avatar" src="avatar.jpg" alt="ai.onepage 프로필 사진"></div>
+    <h1 class="name">ai.onepage</h1>
+    <div class="role-badge">AI 툴 · 클로드 가이드</div>
+    <p class="intro">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요.</p>
+    <div class="socials">
+      <a href="https://instagram.com/ai.onepage" target="_blank" rel="noopener" aria-label="인스타그램 @ai.onepage">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.3" cy="6.7" r="1.05" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="mailto:yenaback.universe@gmail.com" aria-label="이메일 보내기">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.6" y="4.8" width="18.8" height="14.4" rx="3.2"/><path d="M3.6 6.6 12 12.6l8.4-6"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <section class="filters">
+    <div class="pills" id="pills"></div>
+    <label class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="10.6" cy="10.6" r="6.6"/><path d="M15.6 15.6 20.5 20.5"/></svg>
+      <input id="q" type="search" inputmode="search" autocomplete="off" placeholder="번호나 키워드 검색 (예: 23번, 올라마, 클로드)">
+    </label>
+  </section>
+
+  <div class="resultbar" id="resultbar"></div>
+  <main class="list" id="list"></main>
+
+  <p class="footnote" id="footnote">@ai.onepage 가이드 모음 · 최신 릴스 순서<br>
+  카드를 누르면 노션 가이드가 새 탭에서 열려요.</p>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   데이터는 guides.json 에서 불러옵니다. (index.html 은 UI만 담당)
+   새 가이드는 guides.json 배열 맨 앞에 num = 기존 최대 num + 1 로 추가.
+   ───────────────────────────────────────────────────────────── */
+
+/* 필터 알약 순서. key 는 guides.json 의 category 값과 그대로 맞춰야 합니다. */
+const CATS = [
+  {key:"all",          label:"전체"},
+  {key:"클로드 코드",    label:"클로드 코드"},
+  {key:"로컬·무료 AI",   label:"로컬·무료 AI"},
+  {key:"영상·이미지",    label:"영상·이미지"},
+  {key:"수익·마케팅",    label:"수익·마케팅"}
+];
+
+const state = {cat:"all", q:""};
+let GUIDES = [];
+
+const pillsEl    = document.getElementById("pills");
+const qEl        = document.getElementById("q");
+const listEl     = document.getElementById("list");
+const barEl      = document.getElementById("resultbar");
+const footnoteEl = document.getElementById("footnote");
+
+function esc(s){
+  return String(s == null ? "" : s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+function fmtDate(iso){
+  const p = String(iso || "").split("-");
+  if (p.length < 3) return String(iso || "");
+  return `${Number(p[1])}월 ${Number(p[2])}일`;
+}
+
+/* ── 필터 알약 ── */
+function buildPills(){
+  pillsEl.innerHTML = "";
+  CATS.forEach(c=>{
+    const b = document.createElement("button");
+    b.className = "pill";
+    b.type = "button";
+    b.dataset.cat = c.key;
+    b.setAttribute("aria-pressed", String(state.cat === c.key));
+    b.innerHTML = `${esc(c.label)} <span class="n">${countFor(c.key)}</span>`;
+    b.addEventListener("click", ()=>{
+      state.cat = c.key;
+      pillsEl.querySelectorAll(".pill").forEach(p=>
+        p.setAttribute("aria-pressed", String(p.dataset.cat === c.key)));
+      render();
+    });
+    pillsEl.appendChild(b);
+  });
+}
+function countFor(key){
+  return key === "all" ? GUIDES.length : GUIDES.filter(g=>g.category === key).length;
+}
+
+/* ── 검색 ── */
+/* "1", "1번", "23 번" 처럼 숫자만 / 숫자+번 이면 번호 정확 검색(1건만) */
+function exactNumber(q){
+  const m = q.match(/^(\d{1,3})\s*번?$/);
+  return m ? parseInt(m[1], 10) : null;
+}
+function matches(g){
+  if(!state.q) return state.cat === "all" || g.category === state.cat;
+  const n = exactNumber(state.q);
+  if(n !== null) return g.num === n;                     /* 번호는 카테고리 필터보다 우선 */
+  if(state.cat !== "all" && g.category !== state.cat) return false;
+  const hay = [g.title, g.summary, g.category, g.tags, g.num + "번", g.date, g.badge || ""]
+                .join(" ").toLowerCase();
+  return state.q.split(/\s+/).filter(Boolean).every(t => hay.includes(t));
+}
+
+/* ── 카드 ── */
+function cardHTML(g){
+  const chips = [];
+  if(g.badge === "NEW")      chips.push('<span class="chip new">NEW</span>');
+  if(g.badge === "지금 인기") chips.push('<span class="chip hot">지금 인기</span>');
+  const thumb = g.thumb
+    ? `<div class="thumb"><img src="${esc(g.thumb)}" alt="" loading="lazy"></div>` : "";
+  return `
+    <a class="card" href="${esc(g.url)}" target="_blank" rel="noopener">
+      <div class="card-body">
+        ${chips.length ? `<div class="tags">${chips.join("")}</div>` : ""}
+        <h2><span class="num">${esc(g.num)}번</span><span class="bar">|</span>${esc(g.title)}</h2>
+        <p class="sum">${esc(g.summary)}</p>
+        <div class="foot">
+          <span>${esc(fmtDate(g.date))} 가이드</span><span class="dot">·</span>
+          <span>${esc(g.category)}</span><span class="dot">·</span>
+          <span class="go">노션 바로보기&nbsp;›</span>
+        </div>
+      </div>
+      ${thumb}
+    </a>`;
+}
+
+function render(){
+  const shown = GUIDES.filter(matches);
+  listEl.innerHTML = shown.length
+    ? shown.map(cardHTML).join("")
+    : `<div class="empty"><b>찾는 가이드가 없어요</b>다른 번호나 말로 검색해 보세요.</div>`;
+
+  if(state.q){
+    const n = exactNumber(state.q);
+    barEl.innerHTML = n !== null
+      ? `<span>‘${esc(n)}번’ 가이드 <b>${shown.length}개</b></span><span>번호 정확 검색</span>`
+      : `<span>‘${esc(state.q)}’ 검색 결과 <b>${shown.length}개</b></span>`;
+  } else if(state.cat === "all"){
+    barEl.innerHTML = `<span>전체 가이드 <b>${GUIDES.length}개</b></span><span>최신 릴스 순</span>`;
+  } else {
+    barEl.innerHTML = `<span>${esc(state.cat)} <b>${shown.length}개</b></span>`;
+  }
+}
+
+/* ── 시작 ── */
+qEl.addEventListener("input", e=>{
+  state.q = e.target.value.trim().toLowerCase();
+  render();
+});
+
+listEl.innerHTML = `<div class="empty"><b>가이드 목록을 불러오는 중…</b></div>`;
+
+fetch("./guides.json", {cache:"no-cache"})
+  .then(r=>{ if(!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+  .then(data=>{
+    GUIDES = (Array.isArray(data) ? data : [])
+      .map(g=>({
+        num: Number(g.num),
+        title: g.title || "",
+        summary: g.summary || "",
+        category: g.category || "",
+        date: g.date || "",
+        url: g.url || "#",
+        thumb: g.thumb || "",
+        badge: g.badge || null,
+        tags: g.tags || ""
+      }))
+      .filter(g=>Number.isFinite(g.num))
+      .sort((a,b)=>b.num - a.num);          /* 최신 번호가 위로 */
+    buildPills();
+    footnoteEl.innerHTML = `@ai.onepage 가이드 ${GUIDES.length}편 · 최신 릴스 순서<br>
+      카드를 누르면 노션 가이드가 새 탭에서 열려요.`;
+    render();
+  })
+  .catch(err=>{
+    listEl.innerHTML = `<div class="empty"><b>가이드 목록을 불러오지 못했어요</b>
+      guides.json 을 읽을 수 없습니다.<br>잠시 뒤 새로고침해 주세요.</div>`;
+    barEl.innerHTML = "";
+    console.error("[ai.onepage hub] guides.json load failed:", err);
+  });
+</script>
+</body>
+</html>
