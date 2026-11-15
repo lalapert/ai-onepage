@@ -183,6 +183,7 @@ python3 render.py --shots ./shots
 - [ ] 모바일 390px: 가로 스크롤 없음, 긴 코드가 넘치지 않음
 - [ ] `[복사]` 버튼이 실제로 복사하고 `복사됨 ✓` 로 바뀜 (실제 폰 인스타 인앱에서 한 번 더 확인하면 가장 좋다)
 - [ ] 출처·확인일이 본문 주장과 맞음. 원문에 없는 숫자 없음
+- [ ] Anthropic이 아닌 곳에서 만든 스킬·플러그인·프로그램 설치를 안내하면, `꼭 알아 둘 점` 첫 줄에 '누가 만들었는지 + 설치 이름이 맞는지 확인 + 처음엔 중요한 파일이 없는 곳에서'를 넣었음
 - [ ] `guides.json` 의 `num`·`title`·`category`·`date`·`url`·`thumb` 가 실제와 일치. `num` 중복·건너뜀 없음
 - [ ] 라이브 URL 확인: 허브 카드 → 상세 페이지 → `다운받기` → PDF 열림
 
@@ -225,7 +226,8 @@ git status --short
 git diff --cached | grep -nEi "token|secret|password|api[_-]?key|@gmail|@naver|010[- ]?[0-9]{3,4}" || echo "민감정보 패턴 없음"
 ```
 
-6. 렌더링 검증 스크린샷은 `guides/{num}/shots/` 같은 곳에 두고 **커밋하지 않는다**(`.gitignore` 에 `shots/` 를 두어도 된다).
+6. **허브 링크 검사 유지**: `index.html` 의 `safeUrl()`(카드 주소는 `https://` 와 `./` 만)·`safeThumb()`(썸네일은 `thumbs/` 그림만)를 빼지 않는다. 메일 주소는 소스에 통째로 쓰지 않고 누를 때 조립한다(`#mail`).
+7. 렌더링 검증 스크린샷은 `guides/{num}/shots/` 같은 곳에 두고 **커밋하지 않는다**(`.gitignore` 에 `shots/` 를 두어도 된다).
 
 ---
 
