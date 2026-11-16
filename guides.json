@@ -1,5 +1,16 @@
 [
   {
+    "num": 25,
+    "title": "AI 순위표 보는 법: 전체 1등과 한국어 1등이 다른 이유",
+    "summary": "이름을 가린 투표 순위표(LMArena) 읽는 법. 11/11 기준 전체 1등은 제미나이, 한국어 부문 1~3위는 클로드. 한국어 순위 보는 주소와 표 수·점수 차이 읽는 법",
+    "category": "로컬·무료 AI",
+    "date": "2026-11-16",
+    "url": "./guides/25/",
+    "thumb": "thumbs/25_ai_arena.jpg",
+    "badge": "NEW",
+    "tags": "순위 AI순위 랭킹 LMArena 아레나 리더보드 한국어 제미나이 클로드 GPT 그록 비교 투표 Artificial Analysis"
+  },
+  {
     "num": 24,
     "title": "챗GPT 처음이라면 바꿔 둘 설정 5개: 무료 계정 기준",
     "summary": "맞춤형 지침, 검색, 프로젝트, 메모리, 데이터 제어(학습 끄기). 무료 계정에서 다 되는 설정 5개의 메뉴 위치와 붙여 넣을 지침 문장",
@@ -7,7 +18,7 @@
     "date": "2026-11-15",
     "url": "./guides/24/",
     "thumb": "thumbs/24_chatgpt_first5.jpg",
-    "badge": "NEW",
+    "badge": null,
     "tags": "챗GPT ChatGPT GPT 오픈AI 설정 맞춤형지침 지침 메모리 프로젝트 검색 학습 데이터제어 개인정보 무료 처음 입문"
   },
   {
