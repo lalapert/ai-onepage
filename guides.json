@@ -1,5 +1,16 @@
 [
   {
+    "num": 26,
+    "title": "클로드 한도 아끼기: /clear·/usage·RTK로 다시 읽는 양 줄이기",
+    "summary": "클로드 코드는 말할 때마다 대화 전체를 다시 읽어요. 일이 바뀌면 /clear, 새는 곳은 /usage와 f 키, 긴 명령 결과는 무료 도구 RTK(직접 잰 값 포함)",
+    "category": "클로드 코드",
+    "date": "2026-11-17",
+    "url": "./guides/26/",
+    "thumb": "thumbs/26_claude_limit.jpg",
+    "badge": "NEW",
+    "tags": "클로드 클로드코드 한도 사용량 토큰 토큰절약 clear usage compact mcp context RTK rtk 비용 절약 캐시 리밋"
+  },
+  {
     "num": 25,
     "title": "AI 순위표 보는 법: 전체 1등과 한국어 1등이 다른 이유",
     "summary": "이름을 가린 투표 순위표(LMArena) 읽는 법. 11/11 기준 전체 1등은 제미나이, 한국어 부문 1~3위는 클로드. 한국어 순위 보는 주소와 표 수·점수 차이 읽는 법",
@@ -7,7 +18,7 @@
     "date": "2026-11-16",
     "url": "./guides/25/",
     "thumb": "thumbs/25_ai_arena.jpg",
-    "badge": "NEW",
+    "badge": null,
     "tags": "순위 AI순위 랭킹 LMArena 아레나 리더보드 한국어 제미나이 클로드 GPT 그록 비교 투표 Artificial Analysis"
   },
   {
