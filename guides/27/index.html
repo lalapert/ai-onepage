@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FAF7F1">
+<meta name="description" content="무료 커넥터 korean-law-mcp로 법제처 법령을 클로드에 연결해요. 조문 원문을 찾아 근거로 붙이고, 답에 나온 조항이 진짜 있는지 검사해요(실제 결과 포함)">
+<title>클로드에 한국 법령 연결: 조문 찾기·인용 검사 · ai.onepage #27</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:swap}
+
+  :root{
+    --bg:#FAF7F1;
+    --card:#FFFFFF;
+    --ink:#211E1A;
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+    --code-bg:#F4F0E8;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:"NotoKR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.62;word-break:keep-all;
+    font-size:15px;
+  }
+  .page{max-width:480px;margin:0 auto;padding:0 18px 40px;overflow-x:hidden}
+  a{color:var(--teal-dark);text-decoration:underline;text-decoration-color:#BFDCD3;
+    text-decoration-thickness:1px;text-underline-offset:2px}
+  code.brk{white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+  code{
+    font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,"NotoKR",monospace;
+    font-size:.9em;background:var(--code-bg);border:1px solid #E6DFD2;
+    border-radius:5px;padding:1px 5px;white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  }
+
+  /* ── 상단 네비 ── */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:14px 0 0;
+  }
+  .back{
+    display:inline-flex;align-items:center;gap:5px;
+    text-decoration:none;color:#5A544A;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:6px 12px 6px 10px;font-size:12.5px;font-weight:700;letter-spacing:-.3px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04);
+  }
+  .back:active{transform:scale(.97)}
+  .back svg{width:12px;height:12px}
+  .num-badge{
+    font-size:11.5px;font-weight:700;letter-spacing:-.2px;
+    color:var(--teal-dark);background:var(--teal-soft);
+    border-radius:999px;padding:5px 11px;white-space:nowrap;
+  }
+
+  /* ── 히어로 ── */
+  .hero{padding:22px 2px 0}
+  .eyebrow{
+    font-size:11.5px;font-weight:700;color:var(--teal-dark);letter-spacing:-.1px;
+    display:flex;align-items:center;gap:6px;margin-bottom:9px;
+  }
+  .eyebrow i{width:5px;height:5px;border-radius:50%;background:var(--teal);display:inline-block}
+  h1{
+    margin:0;font-size:29px;font-weight:900;line-height:1.26;letter-spacing:-1.1px;
+  }
+  .sub{
+    margin:9px 0 0;font-size:16.5px;font-weight:700;color:var(--teal-dark);
+    line-height:1.45;letter-spacing:-.5px;
+  }
+  .lede{
+    margin:12px 0 0;font-size:14px;line-height:1.68;color:#5F594F;letter-spacing:-.2px;
+  }
+  .pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .pill{
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:6px 11px;font-size:12.3px;font-weight:700;color:#3A342C;letter-spacing:-.3px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04);
+  }
+  .pill b{color:var(--teal);font-weight:900}
+  .hero-meta{
+    margin-top:12px;font-size:11.5px;color:#8A8277;letter-spacing:-.2px;
+    display:flex;flex-wrap:wrap;align-items:center;gap:5px;
+  }
+  .hero-meta .dot{color:#C9C2B6}
+
+  /* ── 공통 카드 ── */
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:16px 16px 15px;margin-top:12px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04),0 6px 16px rgba(35,30,20,.035);
+  }
+  .card-h{display:flex;align-items:center;gap:8px;margin:0 0 8px}
+  .card-h .n{
+    flex:0 0 auto;width:22px;height:22px;border-radius:7px;
+    background:var(--teal-soft);color:var(--teal-dark);
+    font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;
+    letter-spacing:-.2px;
+  }
+  .card-h h2{margin:0;font-size:16.5px;font-weight:900;letter-spacing:-.55px;line-height:1.35}
+  .card p{margin:0 0 9px;font-size:14px;line-height:1.68;color:#3A342C;letter-spacing:-.2px}
+  .card p:last-child{margin-bottom:0}
+  .card b,.card strong{font-weight:700;color:var(--ink)}
+  .card ul{margin:0 0 2px;padding-left:17px}
+  .card ul li{font-size:14px;line-height:1.68;color:#3A342C;margin-bottom:7px;letter-spacing:-.2px}
+  .card ul li:last-child{margin-bottom:0}
+  .card ul li::marker{color:#C9C2B6}
+
+  /* ── 섹션 타이틀(카드 밖) ── */
+  .block-title{
+    display:flex;align-items:baseline;gap:7px;margin:26px 2px 0;
+    font-size:12px;font-weight:700;color:#8A8277;letter-spacing:.02em;
+  }
+  .block-title span{color:var(--teal-dark)}
+
+  /* ── 한눈에 비교 (필요 없으면 이 블록 통째로 삭제) ── */
+  .cmp{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:16px;
+    box-shadow:0 1px 2px rgba(35,30,20,.04),0 8px 20px rgba(35,30,20,.04)}
+  .cmp h2{margin:0 0 12px;font-size:14px;font-weight:900;letter-spacing:-.4px;display:flex;align-items:center;gap:6px}
+  .cmp h2 em{font-style:normal;font-size:11px;font-weight:700;color:#8A8277;letter-spacing:-.1px}
+  .cmp-item{padding:12px 0;border-top:1px dashed #E6DFD2}
+  .cmp-item:first-of-type{border-top:0;padding-top:0}
+  .cmp-label{font-size:11.5px;font-weight:700;color:#8A8277;letter-spacing:-.2px;margin-bottom:8px}
+  .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+  .bar-row:last-of-type{margin-bottom:0}
+  .bar-name{flex:0 0 96px;font-size:11.6px;color:#5F594F;letter-spacing:-.3px;line-height:1.35}
+  .bar-track{flex:1 1 auto;height:9px;border-radius:999px;background:#F2EDE3;overflow:hidden}
+  .bar-fill{height:100%;border-radius:999px;background:var(--red)}
+  .bar-fill.mild{background:#E8B7AC}
+  .bar-fill.teal{background:var(--teal)}
+  .bar-val{flex:0 0 auto;font-size:12px;font-weight:900;color:var(--ink);letter-spacing:-.3px;min-width:66px;text-align:right}
+  .bar-val small{font-size:10.5px;font-weight:700;color:#8A8277}
+  .cmp-foot{
+    margin-top:10px;font-size:11.5px;line-height:1.55;color:#6F685D;letter-spacing:-.2px;
+    background:#FBF8F2;border-radius:9px;padding:8px 10px;
+  }
+  .x-tag{
+    display:inline-block;background:var(--red-soft);color:#B33320;font-weight:900;
+    font-size:11px;border-radius:6px;padding:1.5px 6px;margin-left:4px;letter-spacing:-.1px;
+  }
+
+  /* ── 목차 ── */
+  .toc{
+    background:#FBF8F2;border:1px solid var(--line);border-radius:16px;
+    padding:14px 16px 12px;margin-top:14px;
+  }
+  .toc h2{margin:0 0 8px;font-size:12px;font-weight:900;color:#8A8277;letter-spacing:.03em}
+  .toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+  .toc li{margin:0}
+  .toc a{
+    display:flex;align-items:baseline;gap:8px;
+    text-decoration:none;color:#3A342C;font-size:13.3px;letter-spacing:-.25px;
+    padding:5.5px 0;border-top:1px solid #EFE9DE;
+  }
+  .toc li:first-child a{border-top:0}
+  .toc a .i{flex:0 0 14px;font-size:11.5px;font-weight:900;color:var(--teal)}
+  .toc a .t{flex:1 1 auto}
+  .toc a .c{flex:0 0 auto;font-size:10.5px;font-weight:700;color:#A8A093}
+
+  /* ── 코드/프롬프트 박스 ── */
+  .prompt{
+    margin:10px 0 4px;border:1px solid #E2DACB;border-radius:12px;overflow:hidden;
+    background:var(--code-bg);
+  }
+  .prompt-h{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    background:#EDE7DA;padding:7px 9px 7px 11px;
+  }
+  .prompt-h .lbl{
+    font-size:11px;font-weight:700;color:#6F685D;letter-spacing:-.2px;
+    display:flex;align-items:center;gap:5px;min-width:0;
+  }
+  .prompt-h .lbl svg{width:12px;height:12px;flex:0 0 auto;color:#8A8277}
+  .copy-btn{
+    -webkit-appearance:none;appearance:none;font-family:inherit;cursor:pointer;
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--card);border:1px solid #DCD3C4;border-radius:7px;
+    padding:4px 9px;font-size:11.5px;font-weight:700;color:#3A342C;letter-spacing:-.2px;
+    line-height:1;white-space:nowrap;transition:background .15s,color .15s,border-color .15s;
+  }
+  .copy-btn svg{width:11px;height:11px}
+  .copy-btn:active{transform:scale(.96)}
+  .copy-btn.done{background:var(--teal);border-color:var(--teal);color:#fff}
+  .prompt pre{
+    margin:0;padding:11px 12px 12px;font-family:"SFMono-Regular",ui-monospace,Menlo,Consolas,"NotoKR",monospace;
+    font-size:12px;line-height:1.62;color:#2A2620;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ── 단계 목록 ── */
+  .steps{list-style:none;margin:2px 0 0;padding:0;counter-reset:s}
+  .steps li{
+    position:relative;padding-left:26px;margin-bottom:10px;
+    font-size:14px;line-height:1.66;color:#3A342C;letter-spacing:-.2px;
+  }
+  .steps li:last-child{margin-bottom:0}
+  .steps li::before{
+    counter-increment:s;content:counter(s);
+    position:absolute;left:0;top:1px;
+    width:18px;height:18px;border-radius:50%;
+    background:#F4F0E8;border:1px solid #E6DFD2;color:#6F685D;
+    font-size:10.5px;font-weight:900;display:flex;align-items:center;justify-content:center;
+    line-height:1;
+  }
+
+  .steps li .os{display:block;margin-top:3px}
+  .sources li{margin-bottom:9px}
+  .src-meta{display:block;margin-top:1px;font-size:11.5px;line-height:1.5;color:#A8A093;letter-spacing:-.1px}
+  .ok{
+    margin:11px 0 2px;background:var(--teal-soft);border-radius:10px;padding:9px 11px;
+    font-size:13px;line-height:1.6;color:#0A4F42;letter-spacing:-.2px;
+  }
+  .ok b{color:#0A4F42}
+  .ok .tag{
+    display:inline-block;font-size:10.5px;font-weight:900;background:var(--teal);color:#fff;
+    border-radius:5px;padding:1.5px 6px;margin-right:5px;letter-spacing:-.1px;vertical-align:1px;
+  }
+  .note{
+    margin:10px 0 2px;background:#FBF8F2;border-left:3px solid #E6DFD2;border-radius:0 9px 9px 0;
+    padding:9px 11px;font-size:12.8px;line-height:1.62;color:#5F594F;letter-spacing:-.2px;
+  }
+
+  /* ── 준비물 표: 모바일에서는 행마다 3칸을 세로로 쌓아 390px 가로 넘침을 막는다 ── */
+  .tbl{width:100%;border-collapse:collapse;margin:2px 0 0;font-size:13px;table-layout:fixed}
+  .tbl thead{display:none}
+  .tbl tr{display:block;border-top:1px solid var(--line);padding:10px 0}
+  .tbl tr:first-child{border-top:0;padding-top:2px}
+  .tbl td{display:block;padding:0;font-size:13px;line-height:1.6;color:#3A342C;letter-spacing:-.2px}
+  .tbl td[data-l="준비물"]{font-weight:700;color:var(--ink);font-size:13.6px;margin-bottom:3px}
+  .tbl td[data-l="왜 필요해요?"]{margin-bottom:4px}
+  .tbl td[data-l="왜 필요해요?"]::before{
+    content:"왜 ";font-weight:700;color:#A8A093;font-size:11.5px;
+  }
+  .tbl td[data-l="어디서 받아요?"]::before{
+    content:"받는 곳 ";font-weight:700;color:var(--teal-dark);font-size:11.5px;
+  }
+  .tbl td[data-l="어디서 받아요?"]{color:#4E483E;font-size:12.6px}
+
+  /* ── 측정 결과 막대 (숫자 비교 시각화) ── */
+  .measure{margin:14px 0 0 !important;line-height:1.45}
+  .measure b{display:block;font-size:14px;margin-bottom:2px}
+  .measure span{display:block;font-weight:400;color:#8A8277;font-size:11.8px;letter-spacing:-.2px}
+  .gain{list-style:none;margin:10px 0 0;padding:0}
+  .gain li{border-top:1px solid var(--line);padding:9px 0}
+  .gain li:first-child{border-top:0;padding-top:2px}
+  .gain .g-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .gain .g-cmd{font-size:13px;font-weight:700;color:var(--ink);letter-spacing:-.25px;line-height:1.4}
+  .gain .g-cut{
+    flex:0 0 auto;font-size:11.5px;font-weight:900;color:var(--teal-dark);
+    background:var(--teal-soft);border-radius:6px;padding:2px 6px;letter-spacing:-.2px;
+  }
+  .gain .g-cut.low{color:#8A5A12;background:#FBEFD8}
+  .gain .g-num{margin-top:3px;font-size:11.8px;color:#6F685D;letter-spacing:-.2px}
+  .gain .g-num b{color:var(--ink);font-weight:900}
+  .gain .g-bar{margin-top:6px;height:6px;border-radius:999px;background:#F2EDE3;overflow:hidden}
+  .gain .g-bar i{display:block;height:100%;border-radius:999px;background:var(--teal)}
+
+  /* ── 꼭 알아 둘 점 체크리스트 ── */
+  .checks{list-style:none;margin:0;padding:0}
+  .checks li{
+    position:relative;padding-left:22px;margin-bottom:11px;
+    font-size:13.6px;line-height:1.66;color:#3A342C;letter-spacing:-.2px;
+  }
+  .checks li:last-child{margin-bottom:0}
+  .checks li::before{
+    content:"";position:absolute;left:2px;top:7px;width:9px;height:9px;border-radius:3px;
+    background:var(--red-soft);border:1px solid #F0C9C1;
+  }
+
+  /* ── PDF 다운로드 카드 ── */
+  .pdf-card{
+    margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:16px;box-shadow:0 1px 2px rgba(35,30,20,.05),0 10px 24px rgba(35,30,20,.05);
+  }
+  .pdf-top{display:flex;align-items:center;gap:10px}
+  .pdf-badge{
+    flex:0 0 auto;width:40px;height:46px;border-radius:7px;background:var(--red);
+    color:#fff;font-size:10.5px;font-weight:900;letter-spacing:.04em;
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:7px;
+    position:relative;box-shadow:0 3px 8px rgba(224,69,46,.28);
+  }
+  .pdf-badge::before{
+    content:"";position:absolute;top:0;right:0;
+    border-width:0 11px 11px 0;border-style:solid;
+    border-color:transparent #FAF7F1 transparent transparent;
+  }
+  .pdf-tt{flex:1 1 auto;min-width:0}
+  .pdf-tt strong{display:block;font-size:14.8px;font-weight:900;letter-spacing:-.45px;line-height:1.35}
+  .pdf-tt span{display:block;margin-top:2px;font-size:11.8px;color:#8A8277;letter-spacing:-.2px}
+  .pdf-cta{
+    display:flex;align-items:center;justify-content:center;gap:7px;
+    margin-top:13px;text-decoration:none;
+    background:var(--ink);color:#fff;border-radius:11px;
+    padding:12px 14px;font-size:14px;font-weight:900;letter-spacing:-.4px;
+    box-shadow:0 3px 10px rgba(33,30,26,.16);
+  }
+  .pdf-cta:active{transform:scale(.99)}
+  .pdf-cta svg{width:15px;height:15px}
+  .pdf-fine{margin:9px 2px 0;font-size:11.3px;line-height:1.55;color:#A8A093;letter-spacing:-.1px;text-align:center}
+
+  /* ── 푸터 ── */
+  footer{
+    margin-top:26px;padding-top:18px;border-top:1px solid var(--line);text-align:center;
+  }
+  .foot-name{font-size:14px;font-weight:900;letter-spacing:-.4px}
+  .foot-name b{color:var(--teal-dark)}
+  .foot-desc{margin:5px auto 0;max-width:300px;font-size:11.5px;line-height:1.65;color:#8A8277;letter-spacing:-.2px}
+  .foot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:11px}
+  .foot-links a{
+    text-decoration:none;font-size:11.5px;font-weight:700;color:#5A544A;letter-spacing:-.2px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 11px;
+  }
+  .foot-copy{margin-top:14px;font-size:10.5px;color:#B3ABA0;line-height:1.7;letter-spacing:-.1px}
+
+  /* ── 토스트 ── */
+  #toast{
+    position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);
+    background:#211E1A;color:#fff;font-size:12.5px;font-weight:700;letter-spacing:-.2px;
+    padding:9px 15px;border-radius:999px;box-shadow:0 8px 22px rgba(33,30,26,.28);
+    opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:50;
+    white-space:nowrap;
+  }
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media (min-width:520px){
+    body{font-size:15.5px}
+    .page{padding:0 22px 56px}
+    h1{font-size:33px}
+  }
+  /* 인쇄로 뽑아도 깨지지 않게 */
+  @media print{
+    body{background:#fff}
+    .topbar .back,.pdf-card,#toast{display:none}
+    .card,.cmp,.toc{box-shadow:none;break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="topbar">
+    <a class="back" href="../../"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>전체 가이드</a>
+    <span class="num-badge">#27 · 11월 18일</span>
+  </nav>
+  <header class="hero">
+    <div class="eyebrow"><i></i>클로드 코드</div>
+    <h1>클로드에 한국 법령 연결:<br>조문 찾기·인용 검사</h1>
+    <p class="sub">법제처 원문을 찾아 조 번호까지 붙이고, 없는 조항은 걸러 내요</p>
+    <p class="lede">전세가 끝났는데 보증금을 안 준다고 물었더니, 클로드가 <b>주택임대차보호법 제3조의3(임차권등기명령)</b> 원문을 찾아 왔어요. 일부러 틀린 조항을 섞은 답을 넣었을 땐 <b>없는 항 두 개</b>를 바로 짚어 냈고요. 둘 다 11월 17일에 실제로 돌린 결과예요.</p>
+    <div class="pills"><span class="pill"><b>무료</b> MIT · 법제처 키 선택</span><span class="pill"><b>실제 결과</b> 11/17 조회 그대로</span><span class="pill"><b>2가지</b> 조문 찾기 · 인용 검사</span></div>
+    <div class="hero-meta"><span>2026년 11월 17일 확인</span><span class="dot">·</span><span>Claude 계정(무료 요금제도 커넥터 1개)</span><span class="dot">·</span><span>korean-law-mcp · MIT 무료</span></div>
+  </header>
+  
+  <nav class="toc" aria-label="목차"><h2>목차</h2><ol><li><a href="#s0"><span class="i">0</span><span class="t">무엇이 달라져요?</span><span class="c">개요</span></a></li><li><a href="#s1"><span class="i">1</span><span class="t">준비물</span><span class="c">2개</span></a></li><li><a href="#s2"><span class="i">2</span><span class="t">claude.ai 연결</span><span class="c">설치 없음</span></a></li><li><a href="#s3"><span class="i">3</span><span class="t">클로드 코드</span><span class="c">선택</span></a></li><li><a href="#s4"><span class="i">4</span><span class="t">물어보는 법</span><span class="c">복사</span></a></li><li><a href="#s5"><span class="i">5</span><span class="t">실제 결과</span><span class="c">그대로</span></a></li><li><a href="#s6"><span class="i">6</span><span class="t">꼭 알아 둘 점</span><span class="c">주의</span></a></li></ol></nav>
+  <div class="block-title"><span>STEP 00</span> 먼저 이것만</div><article class="card" id="s0"><div class="card-h"><span class="n">0</span><h2>무엇이 달라져요?</h2></div><p>그냥 물으면 클로드는 법제처 원문을 보지 않고 답해요. 그래서 답에 나온 <b>조 번호와 항 번호가 진짜인지</b> 대화 안에서는 확인할 길이 없어요.</p><p>korean-law-mcp를 연결하면 클로드가 법제처 국가법령정보센터에서 <b>지금 시행 중인 조문 원문</b>을 가져와 근거로 붙여요. 답이나 글에 나온 조항이 실제로 있는지 대조하는 <b>인용 검사</b>도 할 수 있어요.</p><div class="ok"><span class="tag">핵심</span>claude.ai는 주소 한 줄이면 연결돼요. 법제처 키가 없어도 시작할 수 있어요.</div></article><div class="block-title"><span>STEP 01</span> 시작 전에</div><article class="card" id="s1"><div class="card-h"><span class="n">1</span><h2>준비물</h2></div><table class="tbl"><thead><tr><th>준비물</th><th>왜 필요해요?</th><th>어디서 받아요?</th></tr></thead><tbody><tr><td data-l="준비물">Claude 계정</td><td data-l="왜 필요해요?">무료 요금제도 사용자 지정 커넥터를 1개까지 붙일 수 있어요(1개 제한은 무료 요금제에만 적혀 있어요).</td><td data-l="어디서 받아요?"><a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a></td></tr><tr><td data-l="준비물">(선택) 법제처 Open API 인증키</td><td data-l="왜 필요해요?">없으면 다 같이 쓰는 한도로 돌아가요. 자주 쓰면 내 키를 넣는 게 안정적이에요. 무료예요.</td><td data-l="어디서 받아요?"><a href="https://open.law.go.kr" target="_blank" rel="noopener">open.law.go.kr</a> 회원가입 → Open API 사용 신청</td></tr></tbody></table></article><div class="block-title"><span>STEP 02</span> 가장 쉬워요</div><article class="card" id="s2"><div class="card-h"><span class="n">2</span><h2>claude.ai에 주소 한 줄로 연결</h2></div><ol class="steps"><li>claude.ai 왼쪽 아래 내 이름 → <b>설정</b>(Customize) → <b>커넥터</b>(Connectors)로 가요.</li><li><b>+ 추가</b> → <b>사용자 지정 커넥터 추가</b>(Add custom connector)를 눌러요.</li><li>이름은 아무거나(예: <code>korean-law</code>), 주소는 <code>https://mcp.gomdori.app/law</code>를 넣어요. 키가 있으면 끝에 <code>?oc=내키</code>를 붙여요.</li><li>추가한 뒤 커넥터 <b>구성</b>에서 도구를 항상 허용으로 두면 매번 승인하지 않아도 돼요(처음엔 승인 창을 보며 쓰는 것도 괜찮아요).</li><li>채팅창 왼쪽 아래 <b>+</b> → 커넥터에서 korean-law가 켜져 있는지 보고, <code>근로기준법 제60조 알려줘</code>처럼 물어봐요.</li><li><b>이렇게 보이면 성공:</b> 답에 '법령 검색', '조문 원문' 같은 도구를 쓴 표시가 뜨고, 조문 원문과 시행일이 같이 나와요.</li></ol><div class="note">주소와 단계는 korean-law-mcp 설명서와 Claude 도움말(11/17 확인) 그대로예요. 화면 이름은 앱 버전에 따라 조금 다를 수 있어요.</div></article><div class="block-title"><span>STEP 03</span> 클로드 코드를 쓴다면</div><article class="card" id="s3"><div class="card-h"><span class="n">3</span><h2>플러그인 두 줄로 연결</h2></div><ol class="steps"><li>클로드 코드에서 <code>/plugin marketplace add chrisryugj/korean-law-mcp</code></li><li>이어서 <code>/plugin install korean-law@korean-law-marketplace</code></li><li>법제처 키를 물으면 넣거나 비워 두고 넘어가요(비우면 공용 한도).</li><li><b>이렇게 보이면 성공:</b> <code>근로기준법 제74조 알려줘</code>라고 했을 때 korean-law 도구가 불려요.</li></ol><div class="note">설명서에 따르면 이 플러그인은 내 컴퓨터에 프로그램을 깔지 않고 공개 서버(mcp.gomdori.app)에 연결해요. 설치 중 <code>Permission denied (publickey)</code>가 뜨면 설명서의 해결법을 따르세요.</div></article><div class="block-title"><span>STEP 04</span> 이렇게 물어보세요</div><article class="card" id="s4"><div class="card-h"><span class="n">4</span><h2>조문 찾기와 인용 검사</h2></div><p>법 이름이나 상황을 구체적으로 넣고, <b>조 번호와 원문을 붙여 달라</b>고 하면 정확해져요.</p><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>상황으로 조문 찾기 (클로드에 붙여 넣기, [ ] 채우기)</span><button class="copy-btn" type="button" data-copy="p-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-1">korean-law 커넥터로 찾아 줘.
+상황: [전세 계약이 끝났는데 집주인이 보증금을 안 돌려줘요]
+관련 법 조문을 찾아서 조 번호, 원문, 시행일을 붙이고 쉬운 말로 설명해 줘.
+원문에서 확인 못 한 건 확인 못 했다고 말해 줘.</pre></div><div class="prompt"><div class="prompt-h"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5 3 12l5 7"/><path d="M16 5l5 7-5 7"/></svg>답에 나온 조항이 진짜인지 검사 (붙여 넣기)</span><button class="copy-btn" type="button" data-copy="p-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.6"/><path d="M15 5.4H5.6A1.6 1.6 0 0 0 4 7v9.4"/></svg><span class="copy-label">복사</span></button></div><pre id="p-2">korean-law 커넥터의 인용 검증으로 아래 글에 나온 법 조항과 판례가 실제로 있는지 확인해 줘.
+없는 조항이 있으면 몇 항까지 있는지도 알려 줘.
+
+[검사할 답이나 글 붙여 넣기]</pre></div></article><div class="block-title"><span>STEP 05</span> 11월 17일에 돌려 본 것</div><article class="card" id="s5"><div class="card-h"><span class="n">5</span><h2>실제 결과</h2></div><p><b>조문 찾기:</b> 주택임대차보호법 제3조의3(임차권등기명령)을 찾아 왔어요. ①항은 "임대차가 끝난 후 보증금이 반환되지 아니한 경우 … 임차권등기명령을 신청할 수 있다", ⑤항은 임차권등기를 마친 뒤에는 이사로 대항요건을 잃어도 "이미 취득한 대항력이나 우선변제권을 상실하지 아니한다"예요(시행 2026.1.2 기준).</p><p><b>인용 검사:</b> 제가 일부러 틀린 조항 2개를 섞은 글을 넣었어요. 결과는 '법령 인용 4건, 실존 2, 오류 2'였어요.</p><ul><li>✓ 주택임대차보호법 제4조(임대차기간 등) 제2항: 실존</li><li>✓ 주택임대차보호법 제3조의3(임차권등기명령): 실존</li><li>✗ 제7조(차임 등의 증감청구권) 제3항: 없음(최대 제2항)</li><li>✗ 제8조(보증금 중 일정액의 보호) 제4항: 없음(최대 제3항)</li></ul><div class="note">글에 법 이름을 빼고 '제7조 제3항'만 쓰면 오류가 아니라 '확인 필요'로 나왔어요. 검사할 때는 법 이름이 들어간 글을 넣으세요. 그리고 '할 일 5단계'처럼 넓게 물었을 때는 상관없는 판례(세금 사건)가 섞여 나왔어요. 법 이름을 넣어 물으면 정확해져요.</div></article><div class="block-title"><span>STEP 06</span> 주의</div><article class="card" id="s6"><div class="card-h"><span class="n">6</span><h2>꼭 알아 둘 점</h2></div><ul class="checks"><li><b>korean-law-mcp는 Anthropic이 아닌 곳(개인 개발자, 구청 공무원)에서 공개한 도구예요.</b> 커넥터 주소가 설명서(<code class='brk'>github.com/chrisryugj/korean-law-mcp</code>)에 적힌 <code class='brk'>https://mcp.gomdori.app/law</code>와 같은지 확인하고, 처음엔 개인정보가 없는 일반 질문으로 써 보세요.</li><li><b>질문은 그 공개 서버를 거쳐요.</b> 계약서 원문, 이름, 주소, 주민등록번호 같은 개인정보는 넣지 마세요. 서버를 거치기 싫으면 설명서의 '내 컴퓨터에 직접 설치' 방법이 있어요.</li><li><b>법률 판단은 사람에게 확인하세요.</b> 조문을 찾아 주는 도구지, 내 사건의 결론을 내려 주는 도구가 아니에요. 금전·소송 문제는 대한법률구조공단(☎132) 같은 전문 상담을 받으세요.</li><li>법은 바뀌어요. 답에 나온 <b>시행일</b>을 보고, 중요한 건 국가법령정보센터 원문을 직접 확인하세요.</li><li>키 없이 쓰면 모두가 함께 쓰는 한도라 붐빌 때 막힐 수 있어요. 자주 쓰면 내 키를 넣으세요.</li><li>무료 요금제는 사용자 지정 커넥터가 1개까지예요. 다른 커넥터를 이미 쓰고 있으면 하나를 빼야 해요.</li></ul></article>
+  <article class="card" id="src"><div class="card-h"><span class="n">↗</span><h2>출처</h2></div>
+    <ul class="sources"><li><a href="https://github.com/chrisryugj/korean-law-mcp" target="_blank" rel="noopener">korean-law-mcp GitHub (README)</a><span class="src-meta">2026년 11월 17일 확인(별 2.9천, MIT, v4.15.23)</span></li><li><a href="https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp" target="_blank" rel="noopener">Claude 도움말: Get started with custom connectors using remote MCP</a><span class="src-meta">2026년 11월 17일 확인(무료 요금제 커넥터 1개)</span></li><li><a href="https://www.law.go.kr" target="_blank" rel="noopener">국가법령정보센터: 주택임대차보호법</a><span class="src-meta">시행 2026.1.2 본문, 2026년 11월 17일 조회</span></li></ul>
+    <div class="note">조문과 검사 결과는 제가 11월 17일에 korean-law-mcp로 실제로 조회한 결과를 그대로 옮겼어요. 영상 속 대화 화면은 그 결과를 옮긴 그래픽이에요.</div>
+  </article>
+  <section class="pdf-card">
+    <div class="pdf-top"><div class="pdf-badge">PDF</div><div class="pdf-tt"><strong>이 가이드 PDF로 다운받기</strong><span>A4 3쪽 · 저장해 두고 따라 하세요</span></div></div>
+    <a class="pdf-cta" href="guide.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.8v10.4"/><path d="M7.6 10.2 12 14.6l4.4-4.4"/><path d="M4.6 19.4h14.8"/></svg>다운받기</a>
+    <p class="pdf-fine">인쇄해서 책상에 두고 봐도 되게 만들었어요. 폰에서 열어도 글씨가 깨지지 않아요.</p>
+  </section>
+  <footer>
+    <div class="foot-name"><b>@ai.onepage</b></div>
+    <p class="foot-desc">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요. 새 가이드는 인스타와 허브에 올라와요.</p>
+    <div class="foot-links"><a href="../../">전체 가이드 허브</a><a href="https://instagram.com/ai.onepage" target="_blank" rel="noopener">인스타 @ai.onepage</a></div>
+    <p class="foot-copy">#27 · 클로드에 한국 법령 연결: 조문 찾기·인용 검사 · 11월 18일<br>korean-law-mcp 설명서, Claude 도움말(사용자 지정 커넥터), 국가법령정보센터 원문(2026년 11월 17일 확인)과 제가 직접 돌린 조회 결과를 보고 썼어요.</p>
+  </footer>
+</div>
+<div id="toast" role="status" aria-live="polite">복사됐어요 ✓</div>
+
+<script>
+/* 복사 버튼: navigator.clipboard → 실패하면 textarea + execCommand (인스타 인앱 웹뷰 대응).
+   이 스크립트는 손대지 않는다. 버튼은 .copy-btn, 대상은 data-copy="pre의 id". */
+(function(){
+  var timers = new WeakMap();
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1800);
+  }
+
+  function legacyCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly','');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '-9999px';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    var ok = false;
+    try {
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      ok = document.execCommand('copy');
+    } catch(e){ ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function copyText(text, done){
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function(){ done(true); },
+        function(){ done(legacyCopy(text)); });
+    } else {
+      done(legacyCopy(text));
+    }
+  }
+
+  document.querySelectorAll('.copy-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var box = document.getElementById(btn.getAttribute('data-copy'));
+      if (!box) return;
+      var text = box.innerText.replace(/\u00a0/g, ' ').trim();
+      var label = btn.querySelector('.copy-label');
+      copyText(text, function(ok){
+        if (ok) {
+          btn.classList.add('done');
+          if (label) label.textContent = '복사됨 ✓';
+        }
+        showToast(ok ? '복사됐어요 ✓' : '복사하지 못했어요');
+        clearTimeout(timers.get(btn));
+        timers.set(btn, setTimeout(function(){
+          btn.classList.remove('done');
+          if (label) label.textContent = '복사';
+        }, 2200));
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,5 +1,16 @@
 [
   {
+    "num": 27,
+    "title": "클로드에 한국 법령 연결: 조문 찾기·인용 검사",
+    "summary": "무료 커넥터 korean-law-mcp로 법제처 법령을 클로드에 연결해요. 조문 원문을 근거로 붙이고, 답에 나온 조항이 진짜 있는지 검사해요",
+    "category": "클로드 코드",
+    "date": "2026-11-18",
+    "url": "./guides/27/",
+    "thumb": "thumbs/27_korean_law.jpg",
+    "badge": "NEW",
+    "tags": "클로드 클로드코드 법령 법률 법 조문 판례 법제처 국가법령정보센터 korean-law-mcp mcp 커넥터 전세 보증금 임대차 임차권등기명령 인용 검증 무료"
+  },
+  {
     "num": 26,
     "title": "클로드 한도 아끼기: /clear·/usage·RTK로 다시 읽는 양 줄이기",
     "summary": "클로드 코드는 말할 때마다 대화 전체를 다시 읽어요. 일이 바뀌면 /clear, 새는 곳은 /usage와 f 키, 긴 명령 결과는 무료 도구 RTK(직접 잰 값 포함)",
@@ -7,7 +18,7 @@
     "date": "2026-11-17",
     "url": "./guides/26/",
     "thumb": "thumbs/26_claude_limit.jpg",
-    "badge": "NEW",
+    "badge": null,
     "tags": "클로드 클로드코드 한도 사용량 토큰 토큰절약 clear usage compact mcp context RTK rtk 비용 절약 캐시 리밋"
   },
   {
