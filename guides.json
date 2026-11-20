@@ -1,5 +1,16 @@
 [
   {
+    "num": 28,
+    "title": "오픈AI 받아쓰기 AI를 내 컴퓨터에서 무료로",
+    "summary": "오픈AI가 공개한 받아쓰기 AI Whisper를 무료 앱 Vibe로 돌려요. 회의·강의 녹음을 글과 자막 파일(SRT)로 바꾸는 순서와 실제 결과",
+    "category": "로컬·무료 AI",
+    "date": "2026-11-20",
+    "url": "./guides/28/",
+    "thumb": "thumbs/28_whisper.jpg",
+    "badge": "NEW",
+    "tags": "받아쓰기 음성 녹음 회의록 강의 자막 SRT Whisper 위스퍼 오픈AI OpenAI Vibe 바이브 무료 오프라인 내컴퓨터 로컬"
+  },
+  {
     "num": 27,
     "title": "클로드에 한국 법령 연결: 조문 찾기·인용 검사",
     "summary": "무료 커넥터 korean-law-mcp로 법제처 법령을 클로드에 연결해요. 조문 원문을 근거로 붙이고, 답에 나온 조항이 진짜 있는지 검사해요",
@@ -7,7 +18,7 @@
     "date": "2026-11-18",
     "url": "./guides/27/",
     "thumb": "thumbs/27_korean_law.jpg",
-    "badge": "NEW",
+    "badge": null,
     "tags": "클로드 클로드코드 법령 법률 법 조문 판례 법제처 국가법령정보센터 korean-law-mcp mcp 커넥터 전세 보증금 임대차 임차권등기명령 인용 검증 무료"
   },
   {
