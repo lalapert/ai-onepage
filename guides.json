@@ -1,5 +1,16 @@
 [
   {
+    "num": 29,
+    "title": "만든 홈페이지가 네이버에 안 나올 때",
+    "summary": "클로드로 만든 홈페이지가 네이버에 안 나오는 이유와 서치어드바이저 등록 3단계(내 주소, 확인 태그, 사이트맵). 클로드에게 붙여 넣을 말 포함",
+    "category": "수익·마케팅",
+    "date": "2026-11-21",
+    "url": "./guides/29/",
+    "thumb": "thumbs/29_naver.jpg",
+    "badge": "NEW",
+    "tags": "네이버 검색 등록 서치어드바이저 웹마스터 사이트맵 sitemap robots 홈페이지 SEO 검색엔진 노출 가게 클로드 아티팩트 깃허브 페이지"
+  },
+  {
     "num": 28,
     "title": "오픈AI 받아쓰기 AI를 내 컴퓨터에서 무료로",
     "summary": "오픈AI가 공개한 받아쓰기 AI Whisper를 무료 앱 Vibe로 돌려요. 회의·강의 녹음을 글과 자막 파일(SRT)로 바꾸는 순서와 실제 결과",
@@ -7,7 +18,7 @@
     "date": "2026-11-20",
     "url": "./guides/28/",
     "thumb": "thumbs/28_whisper.jpg",
-    "badge": "NEW",
+    "badge": null,
     "tags": "받아쓰기 음성 녹음 회의록 강의 자막 SRT Whisper 위스퍼 오픈AI OpenAI Vibe 바이브 무료 오프라인 내컴퓨터 로컬"
   },
   {
