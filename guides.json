@@ -1,5 +1,16 @@
 [
   {
+    "num": 31,
+    "title": "DM 자동화 대신 프로필 링크 검색 페이지",
+    "summary": "댓글 키워드 DM 자동화 대신 프로필 링크에 번호·단어로 찾는 정리 페이지를 클로드로 만들기. 깃허브 페이지 무료 호스팅, 클로드에게 붙여 넣을 말 포함",
+    "category": "수익·마케팅",
+    "date": "2026-11-23",
+    "url": "./guides/31/",
+    "thumb": "thumbs/31_profile_hub.jpg",
+    "badge": "NEW",
+    "tags": "DM 자동화 매니챗 ManyChat 프로필 링크 검색 페이지 정리본 깃허브 페이지 GitHub Pages 무료 호스팅 번호 클로드 코드 링크 페이지"
+  },
+  {
     "num": 30,
     "title": "클로드에 인스타 운영팀 통째로 들이기",
     "summary": "무료 클로드 스킬 13개로 릴스 아이디어부터 대본, 캡션 첫 줄, AI 흔적 검사까지. 설치 순서와 내 말투 넣는 법, 한국어로 쓸 때 주의할 점",
@@ -7,7 +18,7 @@
     "date": "2026-11-22",
     "url": "./guides/30/",
     "thumb": "thumbs/30_instagram.jpg",
-    "badge": "NEW",
+    "badge": null,
     "tags": "인스타 인스타그램 릴스 캡션 운영 운영팀 스킬 instagram-agent-skill 클로드 코드 플러그인 훅 첫문장 바이럴 무료 MIT 대본"
   },
   {

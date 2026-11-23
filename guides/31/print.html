@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>DM 자동화 대신 프로필 링크 검색 페이지 · ai.onepage #31</title>
+<style>
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Regular.woff2") format("woff2");font-weight:400;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Bold.woff2") format("woff2");font-weight:700;font-display:block}
+  @font-face{font-family:"NotoKR";src:url("../../fonts/NotoSansKR-Black.woff2") format("woff2");font-weight:900;font-display:block}
+
+  :root{
+    --ink:#211E1A;
+    --muted:#7C756B;
+    --line:#EDE7DB;
+    --teal:#0F8A72;
+    --teal-dark:#0B6B59;
+    --teal-soft:#DBF2E9;
+    --red:#E0452E;
+    --red-soft:#FBE3DE;
+    --code-bg:#F5F1E9;
+    --paper:#FAF7F1;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#fff}
+  body{
+    font-family:"NotoKR",sans-serif;color:var(--ink);
+    font-size:9.35pt;line-height:1.56;word-break:keep-all;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  @page{size:A4;margin:14mm 15mm 16mm}
+
+  /* ── 머리글 ── */
+  .head{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:6.2mm 6.5mm 5.6mm;margin-bottom:4.2mm;
+  }
+  .head-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4mm}
+  .head-brand{font-size:8.4pt;font-weight:900;letter-spacing:.04em;color:var(--teal-dark)}
+  .head-num{
+    font-size:8pt;font-weight:700;color:var(--teal-dark);background:var(--teal-soft);
+    border-radius:20px;padding:1.2mm 3mm;
+  }
+  .head h1{margin:0;font-size:21pt;font-weight:900;letter-spacing:-.03em;line-height:1.24}
+  .head .sub{margin:2mm 0 0;font-size:11pt;font-weight:700;color:var(--teal-dark);letter-spacing:-.02em}
+  .head .lede{margin:3mm 0 0;font-size:9.4pt;line-height:1.66;color:#4E483E}
+  .head .pills{display:flex;gap:1.6mm;margin-top:3.4mm;flex-wrap:wrap}
+  .head .pill{
+    background:#fff;border:1px solid var(--line);border-radius:20px;
+    padding:1.1mm 2.6mm;font-size:8.4pt;font-weight:700;color:#3A342C;
+  }
+  .head .meta{margin-top:3mm;font-size:7.9pt;color:var(--muted)}
+  .head .meta b{color:#5F594F;font-weight:700}
+
+  /* ── 비교 (선택) ── */
+  .cmp{border:1px solid var(--line);border-radius:4mm;padding:4.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid}
+  .cmp h2{margin:0 0 3mm;font-size:10.5pt;font-weight:900;letter-spacing:-.02em}
+  .cmp h2 em{font-style:normal;font-weight:700;font-size:7.8pt;color:var(--muted);margin-left:2mm}
+  .cmp-row{display:flex;gap:6mm}
+  .cmp-col{flex:1 1 0;min-width:0}
+  .cmp-col + .cmp-col{border-left:1px solid var(--line);padding-left:6mm}
+  .cmp-label{font-size:7.9pt;font-weight:700;color:var(--muted);margin-bottom:2.4mm}
+  .bar-row{display:flex;align-items:center;gap:2mm;margin-bottom:1.8mm}
+  .bar-name{flex:0 0 27mm;font-size:7.9pt;color:#5F594F;line-height:1.3}
+  .bar-track{flex:1 1 auto;height:2.4mm;border-radius:20px;background:#F2EDE3;overflow:hidden}
+  .bar-fill{height:100%;border-radius:20px;background:var(--red)}
+  .bar-fill.mild{background:#E8B7AC}
+  .bar-fill.teal{background:var(--teal)}
+  .bar-val{flex:0 0 auto;font-size:8.2pt;font-weight:900;min-width:17mm;text-align:right}
+  .cmp-foot{margin-top:2mm;font-size:7.8pt;line-height:1.5;color:#5F594F}
+  .cmp-foot b{font-weight:700;color:var(--ink)}
+
+  /* ── 목차 ── */
+  .toc{
+    background:var(--paper);border:1px solid var(--line);border-radius:4mm;
+    padding:3.4mm 5.4mm;margin-bottom:4.2mm;break-inside:avoid;
+  }
+  .toc h2{margin:0 0 1.6mm;font-size:8pt;font-weight:900;color:var(--muted);letter-spacing:.06em}
+  .toc ol{list-style:none;margin:0;padding:0;columns:2;column-gap:7mm}
+  .toc li{font-size:8.4pt;color:#3A342C;padding:.7mm 0;break-inside:avoid}
+  .toc li b{color:var(--teal);font-weight:900;margin-right:1.4mm}
+  .toc li span{color:#A8A093;font-size:7.4pt}
+
+  /* ── 섹션 ── */
+  .sec{margin-bottom:3.4mm}
+  .sec-h{break-after:avoid}
+  .sec>.kicker{break-after:avoid}
+  p{orphans:3;widows:3}
+  li{orphans:2;widows:2}
+  .sec>.kicker:first-child{margin-top:0}
+  .sec-h{display:flex;align-items:baseline;gap:2mm;margin:0 0 1.6mm}
+  .sec-h .n{
+    flex:0 0 auto;font-size:8pt;font-weight:900;color:var(--teal-dark);
+    background:var(--teal-soft);border-radius:1.4mm;padding:.3mm 1.6mm;
+  }
+  .sec-h h2{margin:0;font-size:11.4pt;font-weight:900;letter-spacing:-.03em}
+  .sec p{margin:0 0 1.8mm;font-size:9.4pt;line-height:1.64;color:#2C2822}
+  .sec p:last-child{margin-bottom:0}
+  .sec b,.sec strong{font-weight:700;color:var(--ink)}
+  code.brk{white-space:normal;overflow-wrap:anywhere}
+  code{
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;font-size:8.3pt;
+    background:var(--code-bg);border:.4pt solid #E3DCCE;border-radius:1mm;padding:0 .8mm;
+    white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  }
+
+  ol.steps{margin:0 0 1.8mm;padding-left:5.2mm}
+  ol.steps li{font-size:9.1pt;line-height:1.55;margin-bottom:1mm;padding-left:.6mm}
+  ol.steps li::marker{color:var(--teal);font-weight:700}
+  ul.plain{margin:0 0 1.8mm;padding-left:4.4mm}
+  ul.plain li{font-size:9.1pt;line-height:1.56;margin-bottom:1.2mm}
+  ul.plain li::marker{color:#C0B7A8}
+
+  .ok{
+    background:var(--teal-soft);border-radius:2mm;padding:2.2mm 3mm;margin:1.6mm 0;
+    font-size:8.6pt;line-height:1.55;color:#0A4F42;break-inside:avoid;
+  }
+  .ok b{color:#0A4F42}
+  .ok .tag{
+    display:inline-block;background:var(--teal);color:#fff;font-size:7.2pt;font-weight:900;
+    border-radius:1mm;padding:0 1.4mm;margin-right:1.4mm;
+  }
+  .note{
+    background:var(--paper);border-left:.9mm solid #E3DCCE;border-radius:0 2mm 2mm 0;
+    padding:2mm 3mm;margin:1.6mm 0;font-size:8.5pt;line-height:1.58;color:#5F594F;break-inside:avoid;
+  }
+
+  /* ── 표 ── */
+  table{width:100%;border-collapse:collapse;margin:1mm 0 1.8mm;font-size:8.6pt;break-inside:avoid}
+  thead th{
+    background:var(--paper);text-align:left;font-weight:900;font-size:8pt;color:#5F594F;
+    padding:1.8mm 2.4mm;border-bottom:.5pt solid #DDD6C8;
+  }
+  tbody td{padding:1.8mm 2.4mm;border-bottom:.4pt solid var(--line);vertical-align:top;line-height:1.55}
+  tbody tr{break-inside:avoid}
+  tbody tr:last-child td{border-bottom:0}
+  tbody td:first-child{font-weight:700;color:var(--ink)}
+  td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  td.cut{
+    font-weight:900;color:var(--teal-dark);white-space:nowrap;text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  td.cut.low{color:#8A5A12}
+  a{color:var(--teal-dark);text-decoration:none;border-bottom:.3pt solid #C9DCD5}
+
+  /* ── 프롬프트 ── */
+  .prompt{border:.5pt solid #E0D8C8;border-radius:2.4mm;overflow:hidden;margin:1.6mm 0 2mm;break-inside:avoid}
+  .prompt-h{
+    background:#EDE7DA;padding:1.6mm 3mm;font-size:7.9pt;font-weight:700;color:#6F685D;
+    display:flex;justify-content:space-between;
+  }
+  .prompt-h span{font-weight:700}
+  .prompt-h em{font-style:normal;font-size:7.2pt;color:#8E877A}
+  .prompt pre{
+    margin:0;padding:2.6mm 3mm;background:var(--code-bg);
+    font-family:"SFMono-Regular",Menlo,Consolas,"NotoKR",monospace;
+    font-size:8.2pt;line-height:1.6;color:#2A2620;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ── 푸터(마지막 페이지) ── */
+  .end{
+    margin-top:4mm;border-top:1px solid var(--line);padding-top:3mm;
+    display:flex;justify-content:space-between;gap:5mm;break-inside:avoid;
+  }
+  .end-brand{font-size:9pt;font-weight:900;color:var(--teal-dark);letter-spacing:.02em}
+  .end-desc{font-size:7.8pt;color:var(--muted);line-height:1.55;margin-top:.8mm;max-width:95mm}
+  .end-meta{font-size:7.4pt;color:#A8A093;text-align:right;line-height:1.6}
+
+  .kicker{font-size:7.6pt;font-weight:900;color:#A8A093;letter-spacing:.1em;margin:4mm 0 1.4mm}
+  .kicker:first-child{margin-top:0}
+  .measure-cap{font-size:7.9pt;color:var(--muted);margin:0 0 1.2mm}
+  .measure-cap b{color:var(--ink);font-weight:700}
+  .footer-note{
+    margin-top:3mm;background:var(--paper);border:1px solid var(--line);border-radius:2mm;
+    padding:2.4mm 3mm;font-size:7.9pt;line-height:1.58;color:#5F594F;
+  }
+</style>
+</head>
+<body>
+<div class="head">
+  <div class="head-top"><div class="head-brand">@ai.onepage · AI 툴 가이드</div><div class="head-num">#31 · 11월 23일</div></div>
+  <h1>DM 자동화 대신 프로필 링크 검색 페이지</h1>
+  <p class="sub">번호나 단어를 치면 정리본이 나오는 무료 페이지, 클로드로 만들기</p>
+  <p class="lede">댓글에 키워드를 남기면 DM으로 자료를 보내 주는 자동화는 편하지만, 많이 쓰는 매니챗은 <b>무료 플랜이 한 달 25명까지</b>예요(11월 21일 공식 가격표). 이 계정은 대신 프로필 링크에 <b>번호·단어 검색 페이지</b>를 두고, 릴스마다 번호를 붙였어요. 깃허브 페이지(공개 저장소 무료)에 올려 매달 나가는 돈이 없어요.</p>
+  <div class="pills"><span class="pill">0원 깃허브 페이지 · 공개 저장소</span><span class="pill">실제 사례 이 계정 프로필 링크</span><span class="pill">4단계 저장소 · 페이지 · 추가 · 번호</span></div>
+  <div class="meta"><b>2026년 11월 21일 확인</b> · 깃허브 계정(무료), 클로드(채팅 또는 Claude Code) · GitHub Pages · 무료(공개 저장소)</div>
+</div>
+
+<div class="toc"><h2>목차</h2><ol><li><b>0</b>왜 검색 페이지?</li><li><b>1</b>1단계 저장소</li><li><b>2</b>2단계 페이지</li><li><b>3</b>3단계 번호</li><li><b>4</b>실제 결과</li><li><b>5</b>꼭 알아 둘 점</li></ol></div>
+<section class="sec"><div class="kicker">STEP 00 · 먼저 이것만</div><div class="sec-h"><span class="n">0</span><h2>왜 DM 대신 검색 페이지?</h2></div><ul class="plain"><li><b>DM 자동화</b>: 매니챗 무료 플랜은 한 달 25명까지, 유료 Essential은 월 결제 17달러(연 결제면 월 14달러)부터예요(세금 별도).</li><li><b>검색 페이지</b>: 프로필 링크 하나에 정리본을 모으고, 번호나 단어로 찾게 해요. 공개 저장소면 깃허브 페이지가 무료예요.</li></ul><div class="note">DM 자동화가 나쁘다는 뜻은 아니에요. 댓글이 늘어나는 장점이 있어요. 이 계정은 DM 대신 검색 페이지를 고른 뒤 릴스 댓글이 줄었어요. 둘 중 내 계정에 맞는 쪽을 고르세요.</div></section><section class="sec"><div class="kicker">STEP 01 · 1단계</div><div class="sec-h"><span class="n">1</span><h2>저장소 만들기</h2></div><ol class="steps"><li>깃허브(github.com)에 가입하고 로그인해요.</li><li>새 저장소(New repository)를 만들고 이름을 <code>내아이디.github.io</code>로 해요. 공개(Public)로 둬요.</li><li>저장소 Settings → Pages에서 배포 브랜치를 main으로 골라요.</li><li><b>이렇게 보이면 성공:</b> 몇 분 뒤 <code>https://내아이디.github.io</code>가 열리면 성공이에요. 주소 앞부분이 내 것이라 나중에 네이버 서치어드바이저 등록도 돼요(29번 가이드).</li></ol></section><section class="sec"><div class="kicker">STEP 02 · 2단계</div><div class="sec-h"><span class="n">2</span><h2>클로드에게 페이지 만들게 하기</h2></div><div class="prompt"><div class="prompt-h"><span>클로드에게: 검색 페이지</span><em>복사해서 붙여 넣기</em></div><pre>인스타 프로필 링크에 걸 정리본 검색 페이지를 만들어 줘.
+파일은 index.html 하나와 guides.json 하나로. 빌드 도구 없이 깃허브 페이지에 그대로 올릴 거야.
+- guides.json은 배열이고 항목마다 num(번호), title, summary, category, date, url, tags가 있어
+- 맨 위에 프로필 사진·이름·한 줄 소개, 그 아래 카테고리 버튼과 검색창
+- 검색창에 숫자만 치면 그 번호 하나만, 글자를 치면 제목·요약·태그에서 찾아 줘
+- 최신 번호가 맨 위, 카드를 누르면 url이 새 탭으로 열려
+- 휴대폰 폭 390px에서 가로 스크롤이 없게
+- 내 이메일·전화번호는 넣지 마</pre></div><ol class="steps"><li>클로드가 준 두 파일을 저장소에 올려요(깃허브 화면의 Add file → Upload files).</li><li>guides.json에 내 첫 정리본 한 개를 넣어요(url은 노션·구글 문서 공개 링크나 PDF 주소).</li><li><b>이렇게 보이면 성공:</b> 휴대폰으로 내 주소를 열고 검색창에 1을 쳤을 때 1번 카드 하나만 나오면 성공이에요.</li></ol></section><section class="sec"><div class="kicker">STEP 03 · 3단계</div><div class="sec-h"><span class="n">3</span><h2>릴스마다 번호 붙이기</h2></div><ul class="plain"><li>새 정리본은 guides.json 맨 앞에 넣고, 번호는 <b>지금 가장 큰 번호 + 1</b>로 줘요. 한번 준 번호는 바꾸지 않아요(캡션에 이미 나간 번호라서요).</li><li>릴스 끝 말은 '정리본은 프로필 링크에서 {단어} 검색하세요'처럼 단어 하나만, 캡션에는 'N번(또는 {단어})'처럼 번호를 같이 적어요.</li><li>그 단어로 검색했을 때 그 편 하나만 나오는지 확인해요.</li></ul><div class="prompt"><div class="prompt-h"><span>클로드에게: 정리본 추가</span><em>복사해서 붙여 넣기</em></div><pre>guides.json 맨 앞에 새 항목을 넣어 줘. 번호는 지금 가장 큰 번호 + 1이야.
+제목: [제목], 요약: [한 줄], 카테고리: [카테고리], 날짜: [YYYY-MM-DD], 주소: [정리본 링크], 태그: [검색될 단어들]
+넣은 뒤 번호가 1부터 빠짐없이 이어지는지 확인해 줘.</pre></div></section><section class="sec"><div class="kicker">STEP 04 · 11월 21일에 해 본 것</div><div class="sec-h"><span class="n">4</span><h2>실제 결과</h2></div><p>이 계정 프로필 링크 페이지(<code class='brk'>lalapert.github.io/ai-onepage</code>)를 휴대폰 폭으로 열어 봤어요. 정리본 29편이 최신 번호 순으로 있었고, <code>28</code>을 치면 28번 하나, <code>네이버</code>를 치면 29번 하나가 나왔어요.</p><p>카드를 누르면 상세 정리본이 열리고, A4 PDF로 내려받을 수 있어요(29번은 3쪽).</p></section><section class="sec"><div class="kicker">STEP 05 · 주의</div><div class="sec-h"><span class="n">5</span><h2>꼭 알아 둘 점</h2></div><ul class="plain"><li><b>공개 저장소는 누구나 파일을 볼 수 있어요.</b> 이메일·전화번호·초안·비밀번호는 올리지 마세요.</li><li><b>깃허브 페이지는 장사용 무료 호스팅이 아니에요.</b> 공식 문서에 온라인 쇼핑몰·결제처럼 거래가 주목적인 사이트는 안 된다고 적혀 있어요. 정리본 모음 같은 정보 페이지에 써요.</li><li>주소가 <code>내아이디.github.io/폴더</code>처럼 뒤에 폴더가 붙으면 네이버 사이트 등록이 안 돼요(29번). 처음부터 <code>내아이디.github.io</code>로 만들면 좋아요.</li><li>DM처럼 '보내 주는' 게 아니라 '찾아가는' 방식이라, 캡션과 끝 말에서 번호와 단어를 꼭 알려 줘야 해요.</li><li>가격은 바뀔 수 있어요. 매니챗 가격은 2026년 11월 21일 공식 가격표 기준(세금 별도)이에요.</li></ul></section>
+<section class="sec">
+  <div class="kicker">한 장 요약 · 인쇄해서 책상에</div>
+  <div class="sec-h"><span class="n">✓</span><h2>이 순서대로만 하면 돼요</h2></div>
+  <table><thead><tr><th style="width:8%">순서</th><th style="width:32%">할 일</th><th style="width:34%">명령·도구</th><th style="width:26%">결과</th></tr></thead><tbody><tr><td>1</td><td>저장소</td><td>내아이디.github.io 공개 저장소 + Pages 켜기</td><td>주소 앞부분이 내 것</td></tr><tr><td>2</td><td>페이지</td><td>클로드에게 index.html + guides.json</td><td>390px 확인</td></tr><tr><td>3</td><td>번호</td><td>새 정리본 = 가장 큰 번호 + 1</td><td>번호는 바꾸지 않기</td></tr><tr><td>4</td><td>알리기</td><td>끝 말은 단어, 캡션은 번호</td><td>그 편만 찾히는지</td></tr></tbody></table>
+  <div class="note">공개 저장소 깃허브 페이지는 무료예요. 장사용 사이트에는 쓰지 않아요.</div>
+  <div class="kicker">출처</div>
+  <ul class="plain"><li>Manychat 가격표 — https://manychat.com/pricing · 2026년 11월 21일 확인(Free 월 25명, Essential 월 결제 $17 · 연 결제 월 $14)</li><li>GitHub Docs: What is GitHub Pages? — https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages · 2026년 11월 21일 확인(공개 저장소는 GitHub Free에서 사용 가능, 사용자 사이트는 내아이디.github.io)</li><li>GitHub Docs: GitHub Pages limits — https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits · 2026년 11월 21일 확인(온라인 사업·쇼핑몰 용도 금지, 용량 1GB 등)</li></ul>
+  <div class="footer-note">가격과 조건은 11월 21일 공식 페이지 그대로 옮겼어요. 검색 결과는 이 계정 페이지를 그날 직접 열어 본 그대로예요.</div>
+  <div class="end">
+    <div><div class="end-brand">@ai.onepage</div><div class="end-desc">누구나 따라 하는 AI 툴 사용법. 보고 바로 따라만 하면 돼요. 새 가이드는 인스타와 허브에 올라와요.</div></div>
+    <div class="end-meta">#31 · DM 자동화 대신 프로필 링크 검색 페이지<br>11월 23일<br>lalapert.github.io/ai-onepage</div>
+  </div>
+</section>
+</body>
+</html>
