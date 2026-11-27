@@ -1,5 +1,16 @@
 [
   {
+    "num": 34,
+    "title": "클로드가 내 말투로 쓰게: 글 세 개로 말투 스킬 만들기",
+    "summary": "내가 쓴 글 세 개로 클로드 말투 스킬(SKILL.md)을 만들고 압축해서 올리는 법. 무료 요금제도 됨. 같은 부탁의 스킬 전후 실제 결과와 그대로 붙여 넣을 부탁 세 개",
+    "category": "클로드 코드",
+    "date": "2026-11-27",
+    "url": "./guides/34/",
+    "thumb": "thumbs/34_voiceskill.jpg",
+    "badge": "NEW",
+    "tags": "말투 내말투 스킬 SKILL.md 클로드 글쓰기 인스타 캡션 가게 사장님 홍보 skill-creator 업로드 무료"
+  },
+  {
     "num": 33,
     "title": "말 없는 구간 컷편집, 클로드 코드에 맡기기",
     "summary": "클로드 코드에 영상 하나와 한 줄을 주면 말 없는 구간 자르기, 한국어 자막, 세로 9:16, -14 LUFS까지. 무료 FFmpeg·Whisper, 그대로 붙여 넣을 요청문과 실제 결과",
@@ -7,7 +18,7 @@
     "date": "2026-11-25",
     "url": "./guides/33/",
     "thumb": "thumbs/33_autoedit.jpg",
-    "badge": "NEW",
+    "badge": null,
     "tags": "컷편집 편집 자막 쇼츠 릴스 무음 클로드코드 클로드 코드 ffmpeg whisper 위스퍼 영상 세로 자동"
   },
   {
