@@ -1,5 +1,16 @@
 [
   {
+    "num": 35,
+    "title": "한글(HWP) 근로계약서 빈칸 채우기: 클로드 코드 + kordoc",
+    "summary": "클로드가 못 여는 한글(HWP) 파일을 kordoc(무료 오픈소스)으로 읽고, 노동부 표준근로계약서 빈칸을 서식 그대로 채우는 법. 그대로 붙여 넣을 부탁과 11/27 실제 결과",
+    "category": "클로드 코드",
+    "date": "2026-11-28",
+    "url": "./guides/35/",
+    "thumb": "thumbs/35_hwp_contract.jpg",
+    "badge": "NEW",
+    "tags": "계약서 근로계약서 알바 단시간 표준근로계약서 노동부 한글 HWP HWPX kordoc 코독 클로드 코드 빈칸 서식 사장님"
+  },
+  {
     "num": 34,
     "title": "클로드가 내 말투로 쓰게: 글 세 개로 말투 스킬 만들기",
     "summary": "내가 쓴 글 세 개로 클로드 말투 스킬(SKILL.md)을 만들고 압축해서 올리는 법. 무료 요금제도 됨. 같은 부탁의 스킬 전후 실제 결과와 그대로 붙여 넣을 부탁 세 개",
@@ -7,7 +18,7 @@
     "date": "2026-11-27",
     "url": "./guides/34/",
     "thumb": "thumbs/34_voiceskill.jpg",
-    "badge": "NEW",
+    "badge": null,
     "tags": "말투 내말투 스킬 SKILL.md 클로드 글쓰기 인스타 캡션 가게 사장님 홍보 skill-creator 업로드 무료"
   },
   {
